@@ -1,6 +1,18 @@
 ### Project 
 
-## Features
+## Scope (5days)
+
+
+## User Stories
+
+
+## Wireframes
+
+## Data Models
+
+
+
+## Delegating Tasks
 * J - Posts/Comments
 * S, J - Groups/Friends (Connections)
 * S - Markets(Payment)
