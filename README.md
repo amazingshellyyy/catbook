@@ -9,8 +9,7 @@
 ## Wireframes
 
 ## Data Models
-![CatBook ERD](https://user-images.githubusercontent.com/9824307/74782513-7282dd00-5258-11ea-8921-c5589ff72ad4.png)
-
+![CatBook ERD (1)](https://user-images.githubusercontent.com/9824307/74787603-6bfa6280-5264-11ea-8c70-ba636f948722.png)
 
 ## Delegating Tasks
 * J - Posts/Comments
