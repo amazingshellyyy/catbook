@@ -12,22 +12,18 @@
 ![CatBook ERD (1)](https://user-images.githubusercontent.com/9824307/74787603-6bfa6280-5264-11ea-8c70-ba636f948722.png)
 
 ## Delegating Tasks
-* J - Posts/Comments
-* S, J - Groups/Friends (Connections)
+* John
+	- Posts/Comments
+	- Groups/Friends (Connections)
+* Shelly
+	- text, email(verify and password change)
+	- image upload(profile, post)
+* Kenneth
+	- search (product)
+	- following/see their activity
+
+## Stretch Goals
 * S - Markets(Payment)
 * K - Real time messaging
-* S - text, email
-* J - google login
-* S - image upload
-* K - search (product)
 * K - lazy registration
-* K - following/see their activity
-
-## Example
-* community 
-	* connection
-	* following
-* market
-	* messaging
-	* payments
-	* search
+* J - google login
