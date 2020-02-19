@@ -3,15 +3,17 @@ from django.http import HttpResponse
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 # Create your views here.
 def index(request):
 	return render(request, 'index.html')
 
 # -------- Post views -------- #
 @login_required
-def post_list(request):
-	posts = Post.objects.all()
-	return render(request, 'post_list.html', {'posts' : posts})
+def profile(request, username):
+	user = User.objects.get(username=username)
+	posts = Post.objects.filter(user=user)
+	return render(request, 'profile.html', {'username':username, 'posts' : posts})
 
 def post_detail(request, pk):
 	post = Post.objects.get(id = pk)
