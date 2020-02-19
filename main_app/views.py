@@ -16,8 +16,10 @@ def global_view(request):
 			return render(request, 'global_view.html', {'posts': posts, 'form': form})
 	form = SearchForm()
 	posts = Post.post_relevent(Post.objects.all())
+
 	# **** Sanity Check for Posts are by ordered by relevance
-	# for post in posts:
-	# 	print(post)
-	# 	print(post.dateCreated)
+	for post in posts:
+		print(post)
+		print(post.dateCreated)
+	
 	return render(request, 'global_view.html', {'posts': posts, 'form': form})
