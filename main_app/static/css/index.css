@@ -1,13 +1,62 @@
 .box1 {
   /* background-image: url('../images/cat-laptop.jpg'); */
-  background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url('../images/cat-laptop.jpg');
+  background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.8)), url('../images/cat-laptop.jpg');
   background-size: cover;
   background-repeat: no-repeat; 
   width:100vw;
   height: 100vh;
-  
 }
 
+p{
+  font-size: 18px;
+}
+.join-btn {
+  background-color:#CB6E17;
+  border: none;
+  margin-bottom: 5vh;
+}
+
+.join-btn:hover {
+  background-color:#F7C948;
+}
+
+.box2 {
+  /* height: 10vh; */
+  width: 100vw;
+  padding: 5vh 0;
+  background-color: #FFF3C4;
+}
+
+.box3 {
+    /* background-image: url('../images/cat-laptop.jpg'); */
+    background-image: url('../images/connect.jpg');
+    background-size: cover;
+    background-repeat: no-repeat; 
+    width:100vw;
+    background-position: center;
+}
+.box4 {
+    /* background-image: url('../images/cat-laptop.jpg'); */
+    background-image: url('../images/see.jpg');
+    background-size: cover;
+    background-repeat: no-repeat; 
+    width:100vw;
+    background-position: center;
+}
+.box5 {
+    /* background-image: url('../images/cat-laptop.jpg'); */
+    background-image: url('../images/share.jpg');
+    background-size: cover;
+    background-repeat: no-repeat; 
+    width:100vw;
+    background-position: center;
+}
+
+.content {
+  background-color: rgba(255,255,255,.5);
+  margin:20vh 0;
+  padding: 30px;
+}
 
 .cover {
   background-color: aliceblue;
@@ -16,3 +65,38 @@
   height: 100vh;
 }
 
+.title {
+  padding-top: 45vh;
+  font-family: 'Lato', sans-serif;
+}
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) { 
+  .content {
+    background-color: rgba(255,255,255,.5);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 30px;
+    font-size: 14px;
+  }
+  p{
+    font-size: 13px;
+  }
+  .box3 > .row {
+    height: 100%;
+  }
+  .content > h3 {
+   border-bottom: #CB6E17 5px solid;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 768px) { 
+  .content {
+    background-color: rgba(255,255,255,.5);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 30px;
+  }
+}
