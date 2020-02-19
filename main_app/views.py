@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Post, Form
+from .models import Post, Comment
 from .forms import PostForm, CommentForm
 
 # Create your views here.
