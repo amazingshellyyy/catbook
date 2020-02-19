@@ -8,7 +8,7 @@ class Post(models.Model):
     date = models.DateField()
     # image = models.ImageField(uploadto = 'img' default = 'img/none.jpg')
     likes = models.IntegerField(default = 0)
-    # user = models.ForeignKey(User, on_delete = models.CASCADE, related, related_name = 'Post')
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
 
     def __str__(self):
         return self.title
