@@ -1,0 +1,18 @@
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+footer {
+  background-color: #FFF3C4;
+}
+
+.search-btn {
+  border-color: #CB6E17;
+  color:#CB6E17;
+}
+
+.search-btn:hover {
+  background-color: #CB6E17;
+  color: white;
+  border-color: #CB6E17;
+}

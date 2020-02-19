@@ -18,10 +18,10 @@
 		<a href="">
 			<p>{{ post.title }}</p>
 		</a>
-		<small>Created: {{post.dateCreated}}</small>
+		<small>Created: {{post.date}}</small>
 		<p>{{ post.context }}</p>
 		<button data-id="{{ post.id}}">Likes: {% if post.likes > 0 %} {{ post.likes }} {% else %} None, ur cat ugly :( {% endif %}</button>
-		<span>Last Updated: {{ post.dateUpdated }}</span>
+		<span>Last Updated: {{ post.updateDate }}</span>
 	</div>
 	{% endfor %}
 </main>
