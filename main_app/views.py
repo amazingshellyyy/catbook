@@ -99,6 +99,7 @@ def global_view(request):
 		if form.is_valid():
 			q = form.cleaned_data['query']
 			posts = Post.post_query(Post.objects.all(), q)
+			print(posts)
 			form = SearchForm()
 			return render(request, 'global_view.html', {'posts': posts, 'form': form})
 	form = SearchForm()
@@ -106,6 +107,7 @@ def global_view(request):
 
 	return render(request, 'global_view.html', {'posts': posts, 'form': form})
 
+@login_required
 def like_post(request, post_id):
 	likes = 0
 	if (post_id):

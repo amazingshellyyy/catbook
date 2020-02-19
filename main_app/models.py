@@ -20,7 +20,10 @@ class Post(models.Model):
     	return Post.objects.order_by('-updateDate')
 
     def post_query(self, query):
-    	return Post.objects.filter(Q(title__icontains='%{query}%')|Q(context__icontains='%{query}%'))
+        pattern = query
+        print(pattern)
+        filtered = Post.objects.filter(title__icontains=query, context__icontains=query)
+        return filtered
 
 
 class Comment(models.Model):
