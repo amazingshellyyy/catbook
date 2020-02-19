@@ -8,8 +8,8 @@ class Post(models.Model):
 	context = models.CharField(max_length = 200)
 	photo_url = models.TextField()
 	likes = models.IntegerField(default = 0)
-	dateCreated = models.TimeField(auto_now_add=True)
-	dateUpdated = models.TimeField(auto_now_add=True)
+	dateCreated = models.DateTimeField(auto_now_add=True)
+	dateUpdated = models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):
 		return self.title
