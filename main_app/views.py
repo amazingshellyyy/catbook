@@ -21,5 +21,16 @@ def global_view(request):
 	for post in posts:
 		print(post)
 		print(post.dateCreated)
-	
+
 	return render(request, 'global_view.html', {'posts': posts, 'form': form})
+
+def like_post(request, post_id):
+	likes = 0
+	if (post_id):
+		post = Post.objects.get(id=int(post_id))
+		if post is not None:
+			likes = post.likes + 1
+			post.likes = likes
+			post.save()
+		print(likes)
+	return HttpResponse(likes)
