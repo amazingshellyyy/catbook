@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.db.models import Q
 
 # Create your models here.
 class Post(models.Model):
@@ -15,6 +16,9 @@ class Post(models.Model):
 
 	def post_relevent(self):
 		return Post.objects.order_by('-dateUpdated')
+
+	def post_query(self, query):
+		return Post.objects.filter(Q(title__icontains='%{query}%')|Q(context__icontains='%{query}%'))
 
 class Comment(models.Model):
 	context = models.CharField(max_length = 200)
