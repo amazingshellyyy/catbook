@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,5 +12,19 @@
   {{ form.as_p}}
   <input type="submit" value="Submit" />
 </form>
+<main>
+	{% for post in posts %}
+	<div>
+		<a href="">
+			<p>{{ post.title }}</p>
+		</a>
+		<small>Created: {{post.dateCreated}}</small>
+		<p>{{ post.context }}</p>
+		<button data-id="{{ post.id}}">Likes: {% if post.likes > 0 %} {{ post.likes }} {% else %} None, ur cat ugly :( {% endif %}</button>
+		<span>Last Updated: {{ post.dateUpdated }}</span>
+	</div>
+	{% endfor %}
+</main>
+<script src="{% static 'js/likes.js' %}"></script>
 </body>
 </html>
