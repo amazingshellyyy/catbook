@@ -5,7 +5,7 @@ from .forms import PostForm, CommentForm
 
 # Create your views here.
 def index(request):
-	return HttpResponse('<h1>Catbook</h1>')
+	return render(request, 'index.html')
 
 # -------- Post views -------- #
 def post_list(request):
