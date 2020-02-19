@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  {% if error %}
+    <p style="background-color:firebrick;">{{error}}</p>
+  {% endif %}
+
+  <section class="form-section">
+    <form action="{% url 'login' %}" method="POST">
+      {% csrf_token %}
+      <p>
+        <label for="username">Username</label>
+        <input type="text" name="username" maxlength="25" minlength="2" required>
+      </p>
+      <p>
+        <label for="password">Password</label>
+        <input type="password" name="password" maxlength="25" minlength="4" required>
+      </p>
+      <button type="submit">Login</button>
+    </form>
+  </section>
+
+{% endblock %}
