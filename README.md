@@ -1,13 +1,9 @@
 ### Project 
 
-## Scope (5days)
-
-
-## User Stories
-
-#### User Story:
+## User Story
 Everyone has that one friend. You know them. That crazy cat person (if you don’t know them, is it possibly you?). CatBook is an internet community where you can share your love of cats through your daily thoughts, read about other cats (don’t worry, your cat is not jealous and doesn’t care since it doesn’t love you anyways), and follow other cat lovers.
 
+## Views
 #### Landing Page:
 Landing page shows information about CatBook with a link to view the global feed. Users will not be able to post/comment/like while on the global feed until they sign up. The landing page will have links for the users to log in or sign up for Catbook. 
 
@@ -38,7 +34,7 @@ After Users click on the post on global, profile-personal post and profile-activ
 If the users click on others' posts, they will be able to comment or like only.
 If the users click on their own post, they will also be able to edit and delete.
  
-#### Functionality: 
+## Functionality
 * User can create many posts (One to Many)
 * User can like many posts (One to Many)
 * User can follow many users ( One to Many)
