@@ -8,8 +8,12 @@
 
 ## Wireframes
 
+
+
+
 ## Data Models
-![CatBook ERD (1)](https://user-images.githubusercontent.com/9824307/74787603-6bfa6280-5264-11ea-8c70-ba636f948722.png)
+![CatBook ERD (3)](https://user-images.githubusercontent.com/9824307/74788969-22137b80-5268-11ea-844c-51df76ad202b.png)
+
 
 ## Delegating Tasks
 * John
