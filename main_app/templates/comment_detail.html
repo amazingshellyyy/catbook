@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="post-header">
+    <section class="post-info">
+        <h2>
+            {{ comment.context }}
+            <a href="{% url 'comment_edit' pk=comment.pk %}">edit</a>
+        </h2>
+        <h4>
+            <a href="{% url 'comment_delete' pk=comment.pk %}" class="delete">delete</a>
+        </h4>
+    </section>
+</section>
+<h3>Post <a href="">(+)</a></h3>
+
+{% endblock %}
