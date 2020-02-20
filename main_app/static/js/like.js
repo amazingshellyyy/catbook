@@ -13,4 +13,4 @@ const handleLikes = () => {
 		.catch(error => console.warn(error));
 };
 
-document.querySelectorAll('button').forEach(btn => btn.addEventListener('click', handleLikes));
+document.querySelectorAll('.like-btn').forEach(btn => btn.addEventListener('click', handleLikes));
