@@ -8,14 +8,15 @@ class Post(models.Model):
     date = models.DateField()
     # image = models.ImageField(uploadto = 'img' default = 'img/none.jpg')
     likes = models.IntegerField(default = 0)
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name ='posts')
 
     def __str__(self):
         return self.title
 
 class Comment(models.Model):
     context = models.CharField(max_length = 400)
-    date = models.DateField()
+    post = models.ForeignKey(Post, on_delete = models.CASCADE, related_name = 'comments')
+    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'comments')
 
     def __str__(self):
         return self.context

@@ -13,7 +13,7 @@
         </h4>
     </section>
 </section>
-<h3>Comment <a href="">(+)</a></h3>
+<h3>Comment <a href="{% url 'comment_create' pk=post.pk %}">(+)</a></h3>
 <ul>
     {% for comment in post.comments.all %}
         <li>
