@@ -3,9 +3,12 @@ from django.http import HttpResponse
 from .models import Post, Comment
 from .forms import PostForm, CommentForm, SearchForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 # Create your views here.
 def index(request):
+	if request.method == 'POST':
+		print(request.POST)
 	return render(request, 'index.html')
 
 # -------- Post views -------- #
@@ -98,8 +101,12 @@ def global_view(request):
 		form = SearchForm(request.POST)
 		if form.is_valid():
 			q = form.cleaned_data['query']
-			posts = Post.post_query(Post.objects.all(), q)
+			posts = Post.post_query(q)
 			print(posts)
+
+			# Return users with global_view
+			filtered_users = User.objects.filter(username__icontains = q)
+			print(filtered_users)
 			return render(request, 'global_view.html', {'posts': posts})
 	posts = Post.post_relevent()
 
@@ -116,3 +123,7 @@ def like_post(request, post_id):
 			post.save()
 		print(likes)
 	return HttpResponse(likes)
+
+@login_required
+def activity_list(request):
+	return render(request, 'activity_list.html')

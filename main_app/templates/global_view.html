@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
-
-{% block js %}
+{% block styles %}
 <script defer src="{% static 'js/like.js' %}"></script>
-{% endblock js %}
+{% endblock styles %}
 
 {% block content %}
 <h1>This is the Global View</h1>
@@ -15,7 +14,7 @@
 		</a>
 		<small>Created: {{post.date}}</small>
 		<p>{{ post.context }}</p>
-		<button data-id="{{ post.id}}">Likes: {% if post.likes > 0 %} {{ post.likes }} {% else %} None, ur cat ugly :( {% endif %}</button>
+		<button class="like-btn" data-id="{{ post.id}}">Likes: {% if post.likes > 0 %} {{ post.likes }} {% else %} None, ur cat ugly :( {% endif %}</button>
 		<span>Last Updated: {{ post.updateDate }}</span>
 	</div>
 	{% endfor %}

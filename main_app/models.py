@@ -19,9 +19,14 @@ class Post(models.Model):
     def post_relevent():
     	return Post.objects.order_by('-updateDate')
 
-    def post_query(self, query):
-        filtered = Post.objects.filter(title__icontains=query, context__icontains=query)
-        return filtered
+    def post_query(query):
+        print(query)
+
+        # Note!!!! Will not return a filtered querySet of both
+        filtered_posts = Post.objects.filter(title__icontains = query) | Post.objects.filter(context__icontains = query)
+
+        # filtered = Post.objects.filter(title__icontains=query, context__icontains=query)
+        return filtered_posts
 
 
 class Comment(models.Model):
