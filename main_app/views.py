@@ -10,12 +10,8 @@ def load_fake():
 	return
 
 def is_search_requested(request):
-	print('search')
-	print(request)
 	if request.method == 'POST':
-		print(request.POST)
 		if 'query' in request.POST.keys():
-			print('hi')
 			return True
 		return False
 	return False
@@ -37,7 +33,6 @@ def profile(request, pk):
 	return render(request, 'profile.html', {'user':user, 'posts' : posts})
 
 def post_detail(request, pk):
-	print('hi')
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
 	post = Post.objects.get(id = pk)
