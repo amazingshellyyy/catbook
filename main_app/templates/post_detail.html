@@ -28,6 +28,7 @@
                         </ion-icon>{{post.likes}}</a>
                     <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon name="chatbox-outline"
                             style="position:relative;top:3px;"></ion-icon></a>
+                            {{ post.body | linebreaks }}
                     {% for comment in comments %}
                     <div class="row">
                         <p class="font-weight-normal">
