@@ -8,9 +8,9 @@
 <body>
 <h1>This is the Global View</h1>
 <form method="POST" action=".">
-  {% csrf_token %}
-  {{ form.as_p}}
-  <input type="submit" value="Submit" />
+	{% csrf_token %}
+	{{ form.as_p}}
+	<input type="submit" value="Submit" />
 </form>
 <main>
 	{% for post in posts %}

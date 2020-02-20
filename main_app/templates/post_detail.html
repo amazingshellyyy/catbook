@@ -1,25 +1,60 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
+{% endblock styles %}
+{% block script %}
+<!-- <link rel="stylesheet" href="{% static 'js/profile.js' %}" defer> -->
+{% endblock script %}
 
 {% block content %}
 
-<section class="post-header">
+<!-- <section class="post-header">
     <section class="post-info">
         <h2>
             {{ post.title }}
-            <a href="{% url 'post_edit' pk=post.pk %}">edit</a>
         </h2>
+        <a href="{% url 'post_edit' pk=post.pk %}">edit</a>
+        <a href="{% url 'post_delete' pk=post.pk %}" class="delete">delete</a>
         <h4>
-            <a href="{% url 'post_delete' pk=post.pk %}" class="delete">delete</a>
+            {{ post.context }}
         </h4>
     </section>
 </section>
-<h3>Comment <a href="{% url 'comment_create' pk=post.pk %}">(+)</a></h3>
+<a href="{% url 'comment_create' pk=post.pk %}"><button type="submit" class="btn btn-primary">Add Comment</button></a>
 <ul>
     {% for comment in post.comments.all %}
         <li>
             <a href="">{{ comment.context }}</a>
         </li>
     {% endfor %}
-</ul>
-
+</ul> -->
+<div class="container">
+    <div class="posts">
+        <h3>Personal Post</h3>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="card col-sm-6" style="width: 18rem;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-2"><img class="profile-img"
+                                src="{% static 'images/user-placeholder.jpg'%}" alt="" style="height:50px;">
+                        </div>
+                        <div class="col-sm-10">
+                            <h5 class="card-title">{{post.title}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
+                        </div>
+                    </div>
+                    <p class="card-text">{{post.context}}</p>
+                    <a href="#" class="card-link">Like <ion-icon name="heart"
+                            style="position:relative;top:3px;">
+                        </ion-icon>{{post.likes}}</a>
+                    <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon name="chatbox-outline"
+                            style="position:relative;top:3px;"></ion-icon></a>
+                </div>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </div>
+</div>
 {% endblock %}
