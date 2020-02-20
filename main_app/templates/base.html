@@ -39,6 +39,9 @@
         </form>
         {% if user.is_authenticated %}
         <li class="nav-item">
+          <a class="nav-link" href="{% url 'profile' pk=user.pk %}">Profile</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="/accounts/logout">Log Out</a>
         </li>
         {% else %}
@@ -78,7 +81,7 @@
         <hr class="clearfix w-100 d-md-none pb-3">
 
         <!-- Grid column -->
-        <div class="col-md-3 mb-md-0 mb-3">
+        <div class="col-md-3 mb-3">
 
           <!-- Links -->
           <h5 class="text-uppercase">Links</h5>
