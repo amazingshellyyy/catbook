@@ -30,10 +30,6 @@ def post_detail(request, pk):
 
 	return render(request, 'post_detail.html', {'post' : post, 'comments': comments, 'new_comment': new_comment, 'comment_form': comment_form})
 
-# def post_detail(request, pk):
-# 	post = Post.objects.get(id = pk)
-# 	return render(request, 'post_detail.html', {'post' : post})
-
 @login_required
 def post_create(request):
 	if request.method == 'POST':
@@ -64,7 +60,7 @@ def post_edit(request, pk):
 @login_required
 def post_delete(request, pk):
 	Post.objects.get(id = pk).delete()
-	return redirect('post_list')
+	return redirect('profile.html')
 
 # -------- Comment views -------- #
 @login_required
