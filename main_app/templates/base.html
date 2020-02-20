@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   {% block styles %}
   {% endblock styles %}
+  {% block script %}
+  {% endblock script %}
   <title>CatBook | Worldwide Cat Social Network</title>
 </head>
 
@@ -38,11 +40,11 @@
         </form>
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="accounts/logout">Log Out</a>
+          <a class="nav-link" href="/accounts/logout">Log Out</a>
         </li>
         {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="accounts/login">Log In</a>
+          <a class="nav-link" href="/accounts/login">Log In</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/accounts/register">Sign Up</a>
@@ -56,87 +58,87 @@
   {% block content %}
   {% endblock %}
   <!-- Footer -->
-<footer class="page-footer font-small blue pt-4">
+  <footer class="page-footer font-small blue pt-4">
 
-  <!-- Footer Links -->
-  <div class="container-fluid text-center text-md-left">
+    <!-- Footer Links -->
+    <div class="container-fluid text-center text-md-left">
 
-    <!-- Grid row -->
-    <div class="row">
+      <!-- Grid row -->
+      <div class="row">
 
-      <!-- Grid column -->
-      <div class="col-md-6 mt-md-0 mt-3">
+        <!-- Grid column -->
+        <div class="col-md-6 mt-md-0 mt-3">
 
-        <!-- Content -->
-        <h5 class="text-uppercase">Footer Content</h5>
-        <p>Here you can use rows and columns to organize your footer content.</p>
+          <!-- Content -->
+          <h5 class="text-uppercase">Footer Content</h5>
+          <p>Here you can use rows and columns to organize your footer content.</p>
+
+        </div>
+        <!-- Grid column -->
+
+        <hr class="clearfix w-100 d-md-none pb-3">
+
+        <!-- Grid column -->
+        <div class="col-md-3 mb-md-0 mb-3">
+
+          <!-- Links -->
+          <h5 class="text-uppercase">Links</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <a href="#!">Link 1</a>
+            </li>
+            <li>
+              <a href="#!">Link 2</a>
+            </li>
+            <li>
+              <a href="#!">Link 3</a>
+            </li>
+            <li>
+              <a href="#!">Link 4</a>
+            </li>
+          </ul>
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 mb-md-0 mb-3">
+
+          <!-- Links -->
+          <h5 class="text-uppercase">Links</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <a href="#!">Link 1</a>
+            </li>
+            <li>
+              <a href="#!">Link 2</a>
+            </li>
+            <li>
+              <a href="#!">Link 3</a>
+            </li>
+            <li>
+              <a href="#!">Link 4</a>
+            </li>
+          </ul>
+
+        </div>
+        <!-- Grid column -->
 
       </div>
-      <!-- Grid column -->
-
-      <hr class="clearfix w-100 d-md-none pb-3">
-
-      <!-- Grid column -->
-      <div class="col-md-3 mb-md-0 mb-3">
-
-        <!-- Links -->
-        <h5 class="text-uppercase">Links</h5>
-
-        <ul class="list-unstyled">
-          <li>
-            <a href="#!">Link 1</a>
-          </li>
-          <li>
-            <a href="#!">Link 2</a>
-          </li>
-          <li>
-            <a href="#!">Link 3</a>
-          </li>
-          <li>
-            <a href="#!">Link 4</a>
-          </li>
-        </ul>
-
-      </div>
-      <!-- Grid column -->
-
-      <!-- Grid column -->
-      <div class="col-md-3 mb-md-0 mb-3">
-
-        <!-- Links -->
-        <h5 class="text-uppercase">Links</h5>
-
-        <ul class="list-unstyled">
-          <li>
-            <a href="#!">Link 1</a>
-          </li>
-          <li>
-            <a href="#!">Link 2</a>
-          </li>
-          <li>
-            <a href="#!">Link 3</a>
-          </li>
-          <li>
-            <a href="#!">Link 4</a>
-          </li>
-        </ul>
-
-      </div>
-      <!-- Grid column -->
+      <!-- Grid row -->
 
     </div>
-    <!-- Grid row -->
+    <!-- Footer Links -->
 
-  </div>
-  <!-- Footer Links -->
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">Copyright © 2020 &nbsp CatBook.Inc &nbsp All Right Reserved
+    </div>
+    <!-- Copyright -->
 
-  <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">Copyright © 2020 &nbsp CatBook.Inc &nbsp All Right Reserved
-  </div>
-  <!-- Copyright -->
-
-</footer>
-<!-- Footer -->
+  </footer>
+  <!-- Footer -->
   {% comment %} bootstrap {% endcomment %}
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
@@ -147,6 +149,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
   </script>
+  <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 </body>
 
 </html>

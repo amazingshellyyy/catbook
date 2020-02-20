@@ -18,9 +18,10 @@ def index(request):
 
 # -------- Post views -------- #
 @login_required
-def post_list(request):
-	posts = Post.objects.all()
-	return render(request, 'post_list.html', {'posts' : posts})
+def profile(request, pk):
+	user = User.objects.get(pk=pk)
+	posts = Post.objects.filter(user=user)
+	return render(request, 'profile.html', {'user':user, 'posts' : posts})
 
 def post_detail(request, pk):
 	post = Post.objects.get(id = pk)
