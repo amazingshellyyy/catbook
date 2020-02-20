@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
@@ -12,6 +12,6 @@ urlpatterns = [
 	path('comments/<int:pk>', views.comment_detail, name = 'comment_detail'),
 	path('comments/<int:pk>/edit', views.comment_edit, name = 'comment_edit'),
 	path('comments/<int:pk>/delete', views.comment_delete, name = 'comment_delete'),
-	path('search/', views.global_view, name="global_view"),
+	re_path(r'^search/$', views.global_view, name="global_view"),
 	path('like_post/<int:post_id>/', views.like_post, name="like_post"),
 ]
