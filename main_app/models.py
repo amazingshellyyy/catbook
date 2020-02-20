@@ -20,8 +20,6 @@ class Post(models.Model):
     	return Post.objects.order_by('-updateDate')
 
     def post_query(self, query):
-        pattern = query
-        print(pattern)
         filtered = Post.objects.filter(title__icontains=query, context__icontains=query)
         return filtered
 
