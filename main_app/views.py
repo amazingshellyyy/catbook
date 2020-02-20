@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Post, Comment
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, SearchForm
 from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 def index(request):
 	return render(request, 'index.html')
@@ -93,3 +94,27 @@ def comment_edit(request, pk):
 def comment_delete(request, pk):
 	Comment.objects.get(id = pk).delete()
 	return redirect('comment_list')
+
+def global_view(request):
+	if request.method == 'POST':
+		form = SearchForm(request.POST)
+		if form.is_valid():
+			q = form.cleaned_data['query']
+			posts = Post.post_query(Post.objects.all(), q)
+			form = SearchForm()
+			return render(request, 'global_view.html', {'posts': posts, 'form': form})
+	form = SearchForm()
+	posts = Post.post_relevent()
+
+	return render(request, 'global_view.html', {'posts': posts, 'form': form})
+
+def like_post(request, post_id):
+	likes = 0
+	if (post_id):
+		post = Post.objects.get(id=int(post_id))
+		if post is not None:
+			likes = post.likes + 1
+			post.likes = likes
+			post.save()
+		print(likes)
+	return HttpResponse(likes)

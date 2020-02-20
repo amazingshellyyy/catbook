@@ -1,0 +1,30 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CatBook | Home </title>
+</head>
+<body>
+<h1>This is the Global View</h1>
+<form method="POST" action=".">
+  {% csrf_token %}
+  {{ form.as_p}}
+  <input type="submit" value="Submit" />
+</form>
+<main>
+	{% for post in posts %}
+	<div>
+		<a href="">
+			<p>{{ post.title }}</p>
+		</a>
+		<small>Created: {{post.date}}</small>
+		<p>{{ post.context }}</p>
+		<button data-id="{{ post.id}}">Likes: {% if post.likes > 0 %} {{ post.likes }} {% else %} None, ur cat ugly :( {% endif %}</button>
+		<span>Last Updated: {{ post.updateDate }}</span>
+	</div>
+	{% endfor %}
+</main>
+<script src="{% static 'js/like.js' %}"></script>
+</body>
+</html>
