@@ -2,8 +2,19 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
 
+# Check if User Searches
+def is_search_requested(request):
+  if request.method == 'POST':
+    if 'query' in request.POST.keys():
+      return True
+    return False
+  return False
+
 # Create your views here.
 def register(request):
+  # if user search redirect to global view
+  if(is_search_requested(request)):
+    return redirect('global_view', request.POST['query'])
   # if post
   if request.method == "POST":
     # build out data from form
@@ -39,6 +50,10 @@ def register(request):
 
 
 def login(request):
+  # if user search redirect to global view
+  if(is_search_requested(request)):
+    return redirect('global_view', request.POST['query'])
+
   if request.method == 'POST':
     username_form = request.POST['username']
     password_form = request.POST['password']

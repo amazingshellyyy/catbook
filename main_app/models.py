@@ -19,8 +19,14 @@ class Post(models.Model):
     def post_relevent():
         return Post.objects.order_by('-updateDate')
 
-    def post_query(self, query):
-        return Post.objects.filter(Q(title__icontains='%{query}%')|Q(context__icontains='%{query}%'))
+    def post_query(query):
+        print(query)
+
+        # Note!!!! Will not return a filtered querySet of both
+        filtered_posts = (Post.objects.filter(title__icontains = query) | Post.objects.filter(context__icontains = query) | Post.objects.filter(updateDate__icontains = query)).order_by('-updateDate') 
+
+        # filtered = Post.objects.filter(title__icontains=query, context__icontains=query)
+        return filtered_posts
 
 
 class Comment(models.Model):
@@ -31,3 +37,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.context
+
+###### Error FK referencing for two FK's that point to the same model
+class FollowingUser(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'user_id')
+    follow_user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'follow_user_id')
+
+    # def activity_following_users():
+    #     activity = Post.objects.select_related('follow_user_id').gets(id = id)
+    #     return activity
