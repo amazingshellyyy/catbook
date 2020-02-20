@@ -8,7 +8,12 @@ from django.contrib.auth.models import User
 # Create your views here.
 def index(request):
 	if request.method == 'POST':
-		print(request.POST)
+		query = request.POST['query']
+		if (query):
+			return redirect('global_view', query = query)
+		else:
+			print('query is None')
+
 	return render(request, 'index.html')
 
 # -------- Post views -------- #
@@ -96,7 +101,7 @@ def comment_delete(request, pk):
 	Comment.objects.get(id = pk).delete()
 	return redirect('comment_list')
 
-def global_view(request):
+def global_view(request, query = ''):
 	if request.method == 'POST':
 		form = SearchForm(request.POST)
 		if form.is_valid():
@@ -108,6 +113,15 @@ def global_view(request):
 			filtered_users = User.objects.filter(username__icontains = q)
 			print(filtered_users)
 			return render(request, 'global_view.html', {'posts': posts})
+
+	if (query):
+		posts = Post.post_query(query)
+		print(posts)
+		# Return users with global_view
+		filtered_users = User.objects.filter(username__icontains = query)
+		print(filtered_users)
+		return render(request, 'global_view.html', {'posts': posts})
+
 	posts = Post.post_relevent()
 
 	return render(request, 'global_view.html', {'posts': posts })
