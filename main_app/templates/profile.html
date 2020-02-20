@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock styles %}
+{% block script %}
+<link rel="stylesheet" href="{% static 'js/profile.js' %}" defer>
+{% endblock script %}
+
+{% block content %}
+<div class="box1">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <img class="profile-img" src="{% static 'images/user-placeholder.jpg'%}" alt="">
+            </div>
+            <div class="col-sm-8">
+                <h2>{{ user.username }}&nbsp&nbsp&nbsp{{ user.email }}</h2>
+                <ul class="pl-0" style="list-style-type: none;">
+                    <h3> Cat Information</h3>
+                    <li>Name</li>
+                    <li>Breed</li>
+                    <li>Age</li>
+                </ul>
+                <button type="button" class="btn btn-primary mt-5">Edit</button>
+                <button type="button" class="btn btn-primary mt-5">Follow</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-2">
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="pills-posts-tab" data-toggle="pill" href="#pills-posts" role="tab"
+                aria-controls="pills-posts" aria-selected="true">
+                <ion-icon name="person-outline" class="tab-icon"></ion-icon>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-act-feed-tab" data-toggle="pill" href="#pills-act-feed" role="tab"
+                aria-controls="pills-act-feed" aria-selected="false">
+                <ion-icon name="paw-outline" class="tab-icon"></ion-icon>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-followers-tab" data-toggle="pill" href="#pills-followers" role="tab"
+                aria-controls="pills-followers" aria-selected="false">
+                <ion-icon name="people-outline" class="tab-icon"></ion-icon>
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-posts" role="tabpanel" aria-labelledby="pills-posts-tab">
+            <div class="posts">
+                <h3>Personal Post</h3>
+                {% for post in posts%}
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="card col-sm-6" style="width: 18rem;">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-2"><img class="profile-img"
+                                        src="{% static 'images/user-placeholder.jpg'%}" alt="" style="height:50px;">
+                                </div>
+                                <div class="col-sm-10">
+                                    <h5 class="card-title">{{post.title}}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
+                                </div>
+                            </div>
+                            <p class="card-text">{{post.context}}</p>
+                            <a href="#" class="card-link">Like <ion-icon name="heart"
+                                    style="position:relative;top:3px;">
+                                </ion-icon>{{post.likes}}</a>
+                            <a href="#" class="card-link">comment <ion-icon name="chatbox-outline"
+                                    style="position:relative;top:3px;"></ion-icon></a>
+                        </div>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-act-feed" role="tabpanel" aria-labelledby="pills-act-feed-tab">
+            <div class="act-feed">
+                <h3>Activity Feed</h3>
+                <!-- need to generate based on post commented, following post and post likes  -->
+                {% for post in posts%}
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="card col-sm-6" style="width: 18rem;">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-2"><img class="profile-img"
+                                        src="{% static 'images/user-placeholder.jpg'%}" alt="" style="height:50px;">
+                                </div>
+                                <div class="col-sm-10">
+                                    <h5 class="card-title">{{post.title}}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
+                                </div>
+                            </div>
+                            <p class="card-text">{{post.context}}</p>
+                            <a href="#" class="card-link">Like <ion-icon name="heart"
+                                    style="position:relative;top:3px;">
+                                </ion-icon>{{post.likes}}</a>
+                            <a href="#" class="card-link">comment <ion-icon name="chatbox-outline"
+                                    style="position:relative;top:3px;"></ion-icon></a>
+                        </div>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
+            <h3>Followers</h3>
+        </div>
+    </div>
+</div>
+{% endblock %}

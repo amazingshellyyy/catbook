@@ -48,7 +48,8 @@ def login(request):
       # login
       auth.login(request, user)
       #redirect
-      return redirect('index')
+      return redirect('profile', pk=user.pk )
+      
     else:
       context = {'error':'Invalid Credentials'}
       return render(request, 'login.html', context)
