@@ -23,9 +23,7 @@ class Post(models.Model):
         print(query)
 
         # Note!!!! Will not return a filtered querySet of both
-        filtered_posts = Post.objects.filter(title__icontains = query) | Post.objects.filter(context__icontains = query) | Post.objects.filter(updateDate__icontains = query)
-
-        filtered_posts = filtered_posts.post_relevent()
+        filtered_posts = (Post.objects.filter(title__icontains = query) | Post.objects.filter(context__icontains = query) | Post.objects.filter(updateDate__icontains = query)).order_by('-updateDate') 
 
         # filtered = Post.objects.filter(title__icontains=query, context__icontains=query)
         return filtered_posts

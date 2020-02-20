@@ -2,6 +2,7 @@ const handleLikes = () => {
 	event.preventDefault();
 
 	const element = event.target;
+	console.log(element)
 	const id = event.target.getAttribute('data-id');
 	console.log(id);
 
