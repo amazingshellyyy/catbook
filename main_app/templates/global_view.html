@@ -5,7 +5,7 @@
 <script defer src="{% static 'js/like.js' %}"></script>
 {% endblock js %}
 
-{% block content%}
+{% block content %}
 <h1>This is the Global View</h1>
 <main>
 	{% for post in posts %}
@@ -21,10 +21,3 @@
 	{% endfor %}
 </main>
 {% endblock content %}
-
-<!-- Old Search Bar -->
-<!-- <form method="POST" action=".">
-  {% csrf_token %}
-  {{ form.as_p}}
-  <input type="submit" value="Submit" />
-</form> -->

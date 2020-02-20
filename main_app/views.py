@@ -100,12 +100,10 @@ def global_view(request):
 			q = form.cleaned_data['query']
 			posts = Post.post_query(Post.objects.all(), q)
 			print(posts)
-			form = SearchForm()
-			return render(request, 'global_view.html', {'posts': posts, 'form': form})
-	form = SearchForm()
+			return render(request, 'global_view.html', {'posts': posts})
 	posts = Post.post_relevent()
 
-	return render(request, 'global_view.html', {'posts': posts, 'form': form})
+	return render(request, 'global_view.html', {'posts': posts })
 
 @login_required
 def like_post(request, post_id):
