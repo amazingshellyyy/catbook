@@ -6,3 +6,21 @@
   padding: 50px 0;
   background-color: #FFF3C4;
 }
+
+
+.nav-pills .nav-link {
+  border-radius: 0;
+  color:#CB6E17;
+  
+}
+.nav-pills .nav-link.active{
+  color:#CB6E17;
+  background-color:white;
+  border-bottom: #CB6E17 5px solid;
+  border-radius: 0;
+}
+
+.tab-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+}
