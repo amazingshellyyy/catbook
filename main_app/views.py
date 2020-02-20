@@ -35,7 +35,7 @@ def post_create(request):
 			post = form.save(commit=False)
 			post.user = request.user
 			post.save()
-			return redirect('comment_detail', pk = post.pk)
+			return redirect('post_detail', pk = post.pk)
 	else:
 		form = PostForm()
 	context = {'form' : form, 'header': "Add New Post"}
@@ -57,7 +57,7 @@ def post_edit(request, pk):
 @login_required
 def post_delete(request, pk):
 	Post.objects.get(id = pk).delete()
-	return redirect('comment_list')
+	return redirect('post_list')
 
 # -------- Comment views -------- #
 @login_required
@@ -70,11 +70,13 @@ def comment_detail(request, pk):
 	return render(request, 'comment_detail.html', {'comment' : comment})
 
 @login_required
-def comment_create(request):
+def comment_create(request, pk):
 	if request.method == 'POST':
 		form = CommentForm(request.POST)
 		if form.is_valid():
-			comment = form.save()
+			comment = form.save(commit=False)
+			post = Post.objects.get(pk = pk)
+			comment.post=post
 			comment.user = request.user
 			comment.save()
 			return redirect('comment_detail', pk = comment.pk)

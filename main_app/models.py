@@ -11,13 +11,13 @@ class Post(models.Model):
     updateDate = models.DateTimeField(auto_now_add = True)
     # image = models.ImageField(uploadto = 'img' default = 'img/none.jpg')
     likes = models.IntegerField(default = 0)
-    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='posts')
+    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'posts')
 
     def __str__(self):
         return self.title
 
     def post_relevent():
-    	return Post.objects.order_by('-updateDate')
+        return Post.objects.order_by('-updateDate')
 
     def post_query(query):
         print(query)
@@ -33,8 +33,9 @@ class Post(models.Model):
 
 class Comment(models.Model):
     context = models.CharField(max_length = 400)
+    post = models.ForeignKey(Post, on_delete = models.CASCADE, related_name = 'comments')
+    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'comments')
     date = models.DateField(auto_now_add = True)
-    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='comments')
 
     def __str__(self):
         return self.context
