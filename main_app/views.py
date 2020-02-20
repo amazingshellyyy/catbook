@@ -10,10 +10,10 @@ def index(request):
 
 # -------- Post views -------- #
 @login_required
-def profile(request, username):
-	user = User.objects.get(username=username)
+def profile(request, pk):
+	user = User.objects.get(pk=pk)
 	posts = Post.objects.filter(user=user)
-	return render(request, 'profile.html', {'username':username, 'posts' : posts})
+	return render(request, 'profile.html', {'user':user, 'posts' : posts})
 
 def post_detail(request, pk):
 	post = Post.objects.get(id = pk)
