@@ -36,7 +36,22 @@ def post_detail(request, pk):
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
 	post = Post.objects.get(id = pk)
-	return render(request, 'post_detail.html', {'post' : post})
+	comments = post.comments.filter(post_id = True)
+	new_comment = None
+	if request.method == 'POST':
+		comment_form = CommentForm(data = request.POST)
+		if comment_form.is_valid():
+			new_comment = comment_form.save(commit = False)
+			new_comment.post = post
+			new_comment.save()
+	else:
+		comment_form = CommentForm()
+
+	return render(request, 'post_detail.html', {'post' : post, 'comments': comments, 'new_comment': new_comment, 'comment_form': comment_form})
+
+# def post_detail(request, pk):
+# 	post = Post.objects.get(id = pk)
+# 	return render(request, 'post_detail.html', {'post' : post})
 
 @login_required
 def post_create(request):
@@ -98,10 +113,11 @@ def comment_create(request, pk):
 		if form.is_valid():
 			comment = form.save(commit=False)
 			post = Post.objects.get(pk = pk)
-			comment.post=post
+			comment.post = post
 			comment.user = request.user
 			comment.save()
-			return redirect('comment_detail', pk = comment.pk)
+			return redirect('post_detail', pk = post.pk)
+			# return redirect('comment_detail', pk = comment.pk)
 
 	else:
 		form = CommentForm()
