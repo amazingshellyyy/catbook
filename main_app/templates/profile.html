@@ -73,6 +73,17 @@
                                 </ion-icon>{{post.likes}}</a>
                             <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon name="chatbox-outline"
                                     style="position:relative;top:3px;"></ion-icon></a>
+                            {% for comment in comments %}
+                            <div class="row">
+                                <p class="font-weight-normal">
+                                    {{ comment.context }}
+                                    <span class="text-muted font-weight-normal">
+                                        {{ comment.created_on }}
+                                    </span>
+                                </p>
+                                {{ comment.body | linebreaks }}
+                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="col-sm-3"></div>
@@ -102,8 +113,19 @@
                             <a href="#" class="card-link">Like <ion-icon name="heart"
                                     style="position:relative;top:3px;">
                                 </ion-icon>{{post.likes}}</a>
-                            <a href="#" class="card-link">comment <ion-icon name="chatbox-outline"
+                            <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon name="chatbox-outline"
                                     style="position:relative;top:3px;"></ion-icon></a>
+                            {% for comment in comments %}
+                            <div class="row">
+                                <p class="font-weight-normal">
+                                    {{ comment.context }}
+                                    <span class="text-muted font-weight-normal">
+                                        {{ comment.created_on }}
+                                    </span>
+                                </p>
+                                {{ comment.body | linebreaks }}
+                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="col-sm-3"></div>
