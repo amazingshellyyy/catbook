@@ -15,7 +15,7 @@ urlpatterns = [
 	path('comments/<int:pk>/delete', views.comment_delete, name = 'comment_delete'),
 	# re_path(r'^search/$', views.global_view, name="global_view"),
 	re_path(r'^search', include([
-		re_path(r'^/$', views.global_view, name="global_view"),
+		re_path(r'^$', views.global_view, name="global_view"),
 		path('?q=<str:query>/', views.global_view, name="global_view"),
 		# re_path(r'^\A?q=[<query>]+', views.global_view, name="global_view"),
 	])),

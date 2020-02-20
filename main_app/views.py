@@ -5,44 +5,65 @@ from .forms import PostForm, CommentForm, SearchForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
+# *******Fake Data*********
+def load_fake():
+	return
+
+def is_search_requested(request):
+	print('search')
+	print(request)
+	if request.method == 'POST':
+		print(request.POST)
+		if 'query' in request.POST.keys():
+			print('hi')
+			return True
+		return False
+	return False
+
 # Create your views here.
 def index(request):
-	if request.method == 'POST':
-		query = request.POST['query']
-		if (query):
-			return redirect('global_view', query = query)
-		else:
-			print('query is None')
-
-	return render(request, 'index.html')
+	# if user search redirect to global view
+  if(is_search_requested(request)):
+    return redirect('global_view', request.POST['query'])
+  return render(request, 'index.html')
 
 # -------- Post views -------- #
 @login_required
 def profile(request, pk):
+	if(is_search_requested(request)):
+		return redirect('global_view', request.POST['query'])
 	user = User.objects.get(pk=pk)
 	posts = Post.objects.filter(user=user)
 	return render(request, 'profile.html', {'user':user, 'posts' : posts})
 
 def post_detail(request, pk):
+	print('hi')
+	if(is_search_requested(request)):
+		return redirect('global_view', request.POST['query'])
 	post = Post.objects.get(id = pk)
 	return render(request, 'post_detail.html', {'post' : post})
 
 @login_required
 def post_create(request):
-	if request.method == 'POST':
-		form = PostForm(request.POST)
-		if form.is_valid():
-			post = form.save(commit=False)
-			post.user = request.user
-			post.save()
-			return redirect('post_detail', pk = post.pk)
+	if(is_search_requested(request)):
+		return redirect('global_view', request.POST['query'])
 	else:
-		form = PostForm()
+		if request.method == 'POST':
+			form = PostForm(request.POST)
+			if form.is_valid():
+				post = form.save(commit=False)
+				post.user = request.user
+				post.save()
+				return redirect('post_detail', pk = post.pk)
+		else:
+			form = PostForm()
 	context = {'form' : form, 'header': "Add New Post"}
 	return render(request, 'post_form.html', context)
 
 @login_required
 def post_edit(request, pk):
+	if(is_search_requested(request)):
+		return redirect('global_view', request.POST['query'])
 	post = Post.objects.get(pk = pk)
 	if request.method == 'POST':
 		form = PostForm(request.POST, instance = post)
@@ -62,15 +83,21 @@ def post_delete(request, pk):
 # -------- Comment views -------- #
 @login_required
 def comment_list(request):
+	if(is_search_requested(request)):
+		return redirect('global_view', request.POST['query'])
 	comments = Comment.objects.all()
 	return render(request, 'comment_list.html', {'comments' : comments})
 
 def comment_detail(request, pk):
+	if(is_search_requested(request)):
+		return redirect('global_view', request.POST['query'])
 	comment = Comment.objects(id = pk)
 	return render(request, 'comment_detail.html', {'comment' : comment})
 
 @login_required
 def comment_create(request, pk):
+	if(is_search_requested(request)):
+		return redirect('global_view', request.POST['query'])
 	if request.method == 'POST':
 		form = CommentForm(request.POST)
 		if form.is_valid():
