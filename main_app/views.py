@@ -61,6 +61,7 @@ def profile(request, pk):
 		return redirect('global_view', request.POST['query'])
 	user = User.objects.get(pk=pk)
 	posts = Post.objects.filter(user=user)
+	followers = FollowingUser.objects.filter(user_id = user)
 	# ****Check if current user is not viewing their profile
 	if (request.user.id != pk):
 		current_user = False
@@ -71,7 +72,7 @@ def profile(request, pk):
 		current_user = True
 		activity = FollowingUser.activity_following_users(pk)
 	following = False
-	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'current_user': current_user, 'activity': activity})
+	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'current_user': current_user, 'activity': activity, 'followers': followers })
 
 def post_detail(request, pk):
 	if(is_search_requested(request)):

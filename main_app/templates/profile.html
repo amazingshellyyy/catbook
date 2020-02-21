@@ -113,12 +113,12 @@
                                 <div class="row">
                                     <div class="col-sm-2"><img class="profile-img"
                                             src="{% static 'images/user-placeholder.jpg'%}" alt="" style="height:50px;">
+                                            <a href="{% url 'profile' pk=post.user.id %}" class="card-text">{{post.user.username}}</a>
 
                                     </div>
                                     <div class="col-sm-10">
                                         <a href="{% url 'post_detail' pk=post.pk %}" class="card-title">{{post.title}}</a>
                                         <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
-                                        <a href="{% url 'profile' pk=post.user.id %}" class="card-text">{{post.user.username}}</a>
                                     </div>
                                 </div>
                                 <p class="card-text">{{post.context}}</p>
@@ -147,6 +147,9 @@
         {% endif %} 
         <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
             <h3>Followers</h3>
+            {% for f in followers %}
+                <div>{{ f.follow_user_id }}</div>
+            {% endfor %}
         </div>
     </div>
 </div>
