@@ -48,7 +48,7 @@ def is_search_requested(request):
 
 # Create your views here.
 def index(request):
-	# load_fake()
+	load_fake()
 	# if user search redirect to global view
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
@@ -144,7 +144,6 @@ def comment_create(request, pk):
 			comment.user = request.user
 			comment.save()
 			return redirect('post_detail', pk = post.pk)
-			# return redirect('comment_detail', pk = comment.pk)
 
 	else:
 		form = CommentForm()

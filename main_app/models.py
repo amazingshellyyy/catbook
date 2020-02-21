@@ -9,7 +9,6 @@ class Post(models.Model):
     context = models.CharField(max_length = 750)
     date = models.DateTimeField(auto_now_add = True)
     updateDate = models.DateTimeField(auto_now_add = True)
-    # image = models.ImageField(uploadto = 'img' default = 'img/none.jpg')
     likes = models.IntegerField(default = 0)
     user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'posts')
 

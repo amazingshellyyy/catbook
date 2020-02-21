@@ -34,8 +34,8 @@
                     {% for comment in comments %}
                     <div class="row">
                         <div class="col-sm-10">
-                            <h5 class="font-weight-normal">{{comment.context}}</h5>
-                            <h6 class="text-muted font-weight-normal">{{post.user.username}} - {{comment.date}}</h6>
+                            <h5 class="card-title font-weight-normal">{{comment.context}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted font-weight-normal">{{post.user.username}} - {{comment.date}}</h6>
                         </div>
                         {{ comment.body | linebreaks }}
                     </div>
