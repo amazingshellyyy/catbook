@@ -38,7 +38,6 @@ class Comment(models.Model):
     def __str__(self):
         return self.context
 
-###### Error FK referencing for two FK's that point to the same model
 class FollowingUser(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'user_id')
     follow_user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'follow_user_id')
@@ -46,3 +45,7 @@ class FollowingUser(models.Model):
     # def activity_following_users():
     #     activity = Post.objects.select_related('follow_user_id').gets(id = id)
     #     return activity
+
+class UserLikesPost(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)

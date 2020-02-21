@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Post, Comment
+from .models import Post, Comment, UserLikesPost
 from .forms import PostForm, CommentForm, SearchForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -13,7 +13,7 @@ def load_fake():
 	fake = Faker()
 
 	# ***** Create Fake User ************
-	for _ in range(20):
+	for _ in range(10):
 		user = User.objects.create_user(
 			username = fake.name(),
 			email = fake.email(),
@@ -200,14 +200,46 @@ def global_view(request, query = ''):
 
 @login_required
 def like_post(request, post_id):
+	# likes = 0
+	# if (post_id):
+	# 	post = Post.objects.get(id=int(post_id))
+	# 	if post is not None:
+	# 		likes = post.likes + 1
+	# 		post.likes = likes
+	# 		post.save()
+	# 	print(likes)
+	# return HttpResponse(likes)
+
 	likes = 0
-	if (post_id):
-		post = Post.objects.get(id=int(post_id))
+
+	if (post_id) :
+
+		# print(UserLikesPost.objects.filter(user_id = request.user.id, post_id = post_id).exists())
+		# print(request.user.username)
+		# print(Post.objects.filter(user = request.user.id, id = post_id).exists())
+
+		post = Post.objects.get(id = post_id)
+
 		if post is not None:
-			likes = post.likes + 1
-			post.likes = likes
-			post.save()
-		print(likes)
+			if not UserLikesPost.objects.filter(user_id = request.user.id, post_id = post_id).exists() and not Post.objects.filter(user = request.user.id, id = post_id).exists():
+
+				print('create entry')
+
+				liked_post = UserLikesPost.objects.create(
+					user_id = request.user,
+					post_id = post,
+					)
+				liked_post.save()
+
+				user_likes = UserLikesPost.objects.filter(post_id = post_id).count()
+
+				likes = post.likes + user_likes
+				post.likes = post.likes + user_likes
+				post.save()
+				
+		likes = UserLikesPost.objects.filter(post_id=post_id).count()
+			
+	print(likes)	
 	return HttpResponse(likes)
 
 @login_required
