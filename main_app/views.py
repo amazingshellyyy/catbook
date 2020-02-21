@@ -56,10 +56,13 @@ def index(request):
 
 # -------- Post views -------- #
 @login_required
-def profile(request, pk):
+def profile(request, pk=None):
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
-	user = User.objects.get(pk=pk)
+	if pk == None:
+		user = request.user
+	else:
+		user = User.objects.get(pk=pk)
 	posts = Post.objects.filter(user=user)
 	# ****Check if current user is not viewing their profile
 	if (request.user.id != pk):
