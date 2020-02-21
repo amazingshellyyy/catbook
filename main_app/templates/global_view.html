@@ -18,7 +18,7 @@
                           src="{% static 'images/user-placeholder.jpg'%}" alt="" style="height:50px;">
                   </div>
                   <div class="col-sm-10">
-                      <h5 class="card-title">{{post.title}}</h5>
+                      <a href="{% url 'post_detail' pk=post.pk %}" class="card-title">{{post.title}}</a>
                       <h6 class="card-subtitle mb-2 text-muted">Updated: {{post.updateDate}}</h6>
                       <p class="card-text">{{post.context}}</p>
                   </div>
@@ -26,7 +26,7 @@
               <p class="card-text">{{post.user.username}}</p>
               <a href="#" class="card-link like-btn" data-id="{{ post.id }}"> Like <ion-icon name="heart" style="position:relative;top:3px;" data-id="{{ post.id }}">
                 </ion-icon>{{post.likes}}</a>
-              <a href="#" class="card-link">comment <ion-icon name="chatbox-outline"
+              <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon name="chatbox-outline"
                       style="position:relative;top:3px;"></ion-icon></a>
           </div>
       </div>
