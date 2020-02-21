@@ -64,6 +64,7 @@ def profile(request, pk):
 	# ****Check if current user is not viewing their profile
 	if (request.user.id != pk):
 		not_current_user = True
+		# ******Check if current user is following this person
 		following = FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = pk).exists()
 		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'not_current_user': not_current_user})
 	else:
