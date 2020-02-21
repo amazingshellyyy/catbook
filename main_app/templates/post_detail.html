@@ -8,7 +8,7 @@
 
 <div class="container">
     <div class="posts">
-        <h3>Personal Post</h3>
+        <h3>{{ post.title }}</h3>
         <div class="row">
             <div class="col-sm-3"></div>
             <div class="card col-sm-6" style="width: 18rem;">
@@ -20,6 +20,8 @@
                         <div class="col-sm-10">
                             <h5 class="card-title">{{post.title}}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
+                            <a href="{% url 'post_edit' pk=post.pk %}">Edit</a>
+                            <a href="{% url 'profile' pk=post.pk %}" class="delete">Delete</a>
                         </div>
                     </div>
                     <p class="card-text">{{post.context}}</p>
@@ -31,12 +33,10 @@
                             {{ post.body | linebreaks }}
                     {% for comment in comments %}
                     <div class="row">
-                        <p class="font-weight-normal">
-                            {{ comment.context }}
-                            <span class="text-muted font-weight-normal">
-                                {{ comment.created_on }}
-                            </span>
-                        </p>
+                        <div class="col-sm-10">
+                            <h5 class="card-title font-weight-normal">{{comment.context}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted font-weight-normal">{{post.user.username}} - {{comment.date}}</h6>
+                        </div>
                         {{ comment.body | linebreaks }}
                     </div>
                     {% endfor %}
