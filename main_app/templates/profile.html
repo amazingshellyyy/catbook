@@ -5,6 +5,7 @@
 {% endblock styles %}
 {% block script %}
 <link rel="stylesheet" href="{% static 'js/profile.js' %}" defer>
+<script defer type="text/javascript" src="{% static 'js/follow.js' %}"></script>
 {% endblock script %}
 
 {% block content %}
@@ -23,7 +24,7 @@
                     <li>Age</li>
                 </ul>
                 <button type="button" class="btn btn-primary mt-5">Edit</button>
-                <button type="button" class="btn btn-primary mt-5">Follow</button>
+                <button id="followBtn" type="button" class="btn btn-primary mt-5" data-id="{{ user.id }}">Follow</button>
             </div>
         </div>
     </div>
