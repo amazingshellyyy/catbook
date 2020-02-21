@@ -61,7 +61,15 @@ def profile(request, pk):
 		return redirect('global_view', request.POST['query'])
 	user = User.objects.get(pk=pk)
 	posts = Post.objects.filter(user=user)
-	return render(request, 'profile.html', {'user':user, 'posts' : posts})
+	# ****Check if current user is not viewing their profile
+	if (request.user.id != pk):
+		not_current_user = True
+		following = FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = pk).exists()
+		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'not_current_user': not_current_user})
+	else:
+		not_current_user = False
+	following = False
+	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'not_current_user': not_current_user})
 
 def post_detail(request, pk):
 	if(is_search_requested(request)):
