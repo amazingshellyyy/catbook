@@ -48,7 +48,7 @@ def is_search_requested(request):
 
 # Create your views here.
 def index(request):
-	# load_fake()
+	load_fake()
 	# if user search redirect to global view
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
@@ -89,10 +89,6 @@ def post_detail(request, pk):
 
 	return render(request, 'post_detail.html', {'post' : post, 'comments': comments, 'new_comment': new_comment, 'comment_form': comment_form})
 
-# def post_detail(request, pk):
-# 	post = Post.objects.get(id = pk)
-# 	return render(request, 'post_detail.html', {'post' : post})
-
 @login_required
 def post_create(request):
 	if(is_search_requested(request)):
@@ -128,7 +124,7 @@ def post_edit(request, pk):
 @login_required
 def post_delete(request, pk):
 	Post.objects.get(id = pk).delete()
-	return redirect('post_list')
+	return redirect('profile.html')
 
 # -------- Comment views -------- #
 @login_required
@@ -157,7 +153,6 @@ def comment_create(request, pk):
 			comment.user = request.user
 			comment.save()
 			return redirect('post_detail', pk = post.pk)
-			# return redirect('comment_detail', pk = comment.pk)
 
 	else:
 		form = CommentForm()
