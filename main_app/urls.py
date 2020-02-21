@@ -18,4 +18,5 @@ urlpatterns = [
 		path('?q=<str:query>', views.global_view, name="global_view"),
 	])),
 	path('like_post/<int:post_id>/', views.like_post, name="like_post"),
+	path('follow_user/<int:f_user_id>/', views.follow_user, name="follow_user"),
 ]
