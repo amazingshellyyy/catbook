@@ -48,13 +48,13 @@ def is_search_requested(request):
 
 # Create your views here.
 def index(request):
-	load_fake()
+	# load_fake()
 	# if user search redirect to global view
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
 	return render(request, 'index.html')
 
-# -------- Post views -------- #
+
 @login_required
 def profile(request, pk):
 	if(is_search_requested(request)):
@@ -63,6 +63,7 @@ def profile(request, pk):
 	posts = Post.objects.filter(user=user)
 	return render(request, 'profile.html', {'user':user, 'posts' : posts})
 
+# -------- Post views -------- #
 def post_detail(request, pk):
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])

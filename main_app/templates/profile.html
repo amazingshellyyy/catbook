@@ -6,7 +6,25 @@
 {% block script %}
 <link rel="stylesheet" href="{% static 'js/profile.js' %}" defer>
 {% endblock script %}
-
+{% block nav_right%}
+<form method="POST" class="form-inline my-2 my-lg-0 mr-2">
+          {% csrf_token %}
+          <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit">Search</button>
+        </form>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout'%}">Log Out</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login'%}">Log In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'signup'%}">Sign Up</a>
+        </li>
+        {% endif %}
+{% endblock nav_right%}
 {% block content %}
 <div class="box1">
     <div class="container">
@@ -15,14 +33,16 @@
                 <img class="profile-img" src="{% static 'images/user-placeholder.jpg'%}" alt="">
             </div>
             <div class="col-sm-8">
-                <h2>{{ user.username }}&nbsp&nbsp&nbsp{{ user.email }}</h2>
-                <ul class="pl-0" style="list-style-type: none;">
+                <h2>{{ user.username }}</h2>
+                <p>{{ user.email }}</p>
+                <button type="button" class="btn btn-primary mt-5" onclick="location.href='{% url 'profile_edit' pk=user.pk %}';"><ion-icon name="create-outline"></ion-icon>Edit Profile</button>
+                {% comment %} <ul class="pl-0" style="list-style-type: none;">
                     <h3> Cat Information</h3>
                     <li>Name</li>
                     <li>Breed</li>
                     <li>Age</li>
-                </ul>
-                <button type="button" class="btn btn-primary mt-5">Edit</button>
+                </ul> {% endcomment %}
+                
                 <button type="button" class="btn btn-primary mt-5">Follow</button>
             </div>
         </div>
