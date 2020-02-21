@@ -4,5 +4,6 @@ from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.ImageCreateView.as_view(), name='home'),
+    url('', views.ImageCreateView.as_view(), name='upload'),
+    url('save_image', views.save_image, name='save_image'),
 ]
