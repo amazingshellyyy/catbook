@@ -71,7 +71,7 @@ def profile(request, pk):
 		current_user = True
 		activity = FollowingUser.activity_following_users(pk)
 	following = False
-	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'current_user': current_user})
+	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'current_user': current_user, 'activity': activity})
 
 def post_detail(request, pk):
 	if(is_search_requested(request)):

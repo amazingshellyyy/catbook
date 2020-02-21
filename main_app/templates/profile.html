@@ -105,7 +105,7 @@
                 <div class="act-feed">
                     <h3>Activity Feed</h3>
                     <!-- need to generate based on post commented, following post and post likes  -->
-                    {% for post in posts%}
+                    {% for post in activity%}
                     <div class="row">
                         <div class="col-sm-3"></div>
                         <div class="card col-sm-6" style="width: 18rem;">
@@ -113,10 +113,12 @@
                                 <div class="row">
                                     <div class="col-sm-2"><img class="profile-img"
                                             src="{% static 'images/user-placeholder.jpg'%}" alt="" style="height:50px;">
+
                                     </div>
                                     <div class="col-sm-10">
                                         <a href="{% url 'post_detail' pk=post.pk %}" class="card-title">{{post.title}}</a>
                                         <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
+                                        <a href="{% url 'profile' pk=post.user.id %}" class="card-text">{{post.user.username}}</a>
                                     </div>
                                 </div>
                                 <p class="card-text">{{post.context}}</p>
