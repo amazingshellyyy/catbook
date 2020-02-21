@@ -220,23 +220,24 @@ def like_post(request, post_id):
 
 		post = Post.objects.get(id = post_id)
 
-		if not UserLikesPost.objects.filter(user_id = request.user.id, post_id = post_id).exists() and not Post.objects.filter(user = request.user.id, id = post_id).exists():
+		if post is not None:
+			if not UserLikesPost.objects.filter(user_id = request.user.id, post_id = post_id).exists() and not Post.objects.filter(user = request.user.id, id = post_id).exists():
 
-			print('create entry')
+				print('create entry')
 
-			liked_post = UserLikesPost.objects.create(
-				user_id = request.user,
-				post_id = post,
-				)
-			liked_post.save()
+				liked_post = UserLikesPost.objects.create(
+					user_id = request.user,
+					post_id = post,
+					)
+				liked_post.save()
 
-			user_likes = UserLikesPost.objects.filter(post_id = post_id).count()
+				user_likes = UserLikesPost.objects.filter(post_id = post_id).count()
 
-			likes = post.likes + user_likes
-			post.likes = post.likes + user_likes
-			post.save()
-		else:
-			likes = UserLikesPost.objects.filter(post_id=post_id).count()
+				likes = post.likes + user_likes
+				post.likes = post.likes + user_likes
+				post.save()
+				
+		likes = UserLikesPost.objects.filter(post_id=post_id).count()
 			
 	print(likes)	
 	return HttpResponse(likes)
