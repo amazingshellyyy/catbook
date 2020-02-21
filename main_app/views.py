@@ -272,6 +272,6 @@ def follow_user(request, f_user_id):
 				new_follower.save()
 
 				following = True
-			else:
-				print('unfollow but not really')
+			elif(request.user.id != f_user_id):
+				FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = f_user_id).delete()
 	return JsonResponse({"following": following})
