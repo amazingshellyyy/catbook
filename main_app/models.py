@@ -23,8 +23,7 @@ class Post(models.Model):
 
         # Note!!!! Will not return a filtered querySet of both
         filtered_posts = (Post.objects.filter(title__icontains = query) | Post.objects.filter(context__icontains = query) | Post.objects.filter(updateDate__icontains = query)).order_by('-updateDate') 
-
-        # filtered = Post.objects.filter(title__icontains=query, context__icontains=query)
+        
         return filtered_posts
 
 
@@ -42,11 +41,9 @@ class FollowingUser(models.Model):
     follow_user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'follow_user_id')
 
     def activity_following_users(id):
-        user = User.objects.get(id = id)
-
         activity = Post.objects.raw("select * from main_app_post left outer join main_app_followinguser on (main_app_post.user_id = main_app_followinguser.follow_user_id_id) where main_app_followinguser.user_id_id =" + str(id))
 
-        [print(a) for a in activity]
+        # [print(a) for a in activity]
         return activity
 
 class UserLikesPost(models.Model):
