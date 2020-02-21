@@ -23,14 +23,14 @@
                     <li>Breed</li>
                     <li>Age</li>
                 </ul>
-                {% if not_current_user %}
+                {% if current_user %}
+                    <button type="button" class="btn btn-primary mt-5">Edit</button>
+                {% else %}
                     {% if following %}
                         <button id="followBtn" type="button" class="btn btn-primary mt-5" style="opacity:0.7;"data-id="{{ user.id }}">Unfollow</button>
                     {% else %}
                         <button id="followBtn" type="button" class="btn btn-primary mt-5" data-id="{{ user.id }}">Follow</button>
                     {% endif %}
-                {% else %}
-                    <button type="button" class="btn btn-primary mt-5">Edit</button>
                 {% endif %}
             </div>
         </div>
@@ -44,12 +44,14 @@
                 <ion-icon name="person-outline" class="tab-icon"></ion-icon>
             </a>
         </li>
+        {% if current_user %}
         <li class="nav-item">
             <a class="nav-link" id="pills-act-feed-tab" data-toggle="pill" href="#pills-act-feed" role="tab"
                 aria-controls="pills-act-feed" aria-selected="false">
                 <ion-icon name="paw-outline" class="tab-icon"></ion-icon>
             </a>
         </li>
+        {% endif %}
         <li class="nav-item">
             <a class="nav-link" id="pills-followers-tab" data-toggle="pill" href="#pills-followers" role="tab"
                 aria-controls="pills-followers" aria-selected="false">
@@ -98,47 +100,49 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="tab-pane fade" id="pills-act-feed" role="tabpanel" aria-labelledby="pills-act-feed-tab">
-            <div class="act-feed">
-                <h3>Activity Feed</h3>
-                <!-- need to generate based on post commented, following post and post likes  -->
-                {% for post in posts%}
-                <div class="row">
-                    <div class="col-sm-3"></div>
-                    <div class="card col-sm-6" style="width: 18rem;">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-2"><img class="profile-img"
-                                        src="{% static 'images/user-placeholder.jpg'%}" alt="" style="height:50px;">
+        {% if current_user %}
+            <div class="tab-pane fade" id="pills-act-feed" role="tabpanel" aria-labelledby="pills-act-feed-tab">
+                <div class="act-feed">
+                    <h3>Activity Feed</h3>
+                    <!-- need to generate based on post commented, following post and post likes  -->
+                    {% for post in posts%}
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="card col-sm-6" style="width: 18rem;">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-2"><img class="profile-img"
+                                            src="{% static 'images/user-placeholder.jpg'%}" alt="" style="height:50px;">
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <a href="{% url 'post_detail' pk=post.pk %}" class="card-title">{{post.title}}</a>
+                                        <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
+                                    </div>
                                 </div>
-                                <div class="col-sm-10">
-                                    <a href="{% url 'post_detail' pk=post.pk %}" class="card-title">{{post.title}}</a>
-                                    <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
+                                <p class="card-text">{{post.context}}</p>
+                                <a href="#" class="card-link">Like <ion-icon name="heart"
+                                        style="position:relative;top:3px;">
+                                    </ion-icon>{{post.likes}}</a>
+                                <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon name="chatbox-outline"
+                                        style="position:relative;top:3px;"></ion-icon></a>
+                                        {{ post.body | linebreaks }}
+                                {% for comment in comments %}
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <h5 class="font-weight-normal">{{comment.context}}</h5>
+                                        <h6 class="text-muted font-weight-normal">{{post.user.username}} - {{comment.date}}</h6>
+                                    </div>
+                                    {{ comment.body | linebreaks }}
                                 </div>
+                                {% endfor %}
                             </div>
-                            <p class="card-text">{{post.context}}</p>
-                            <a href="#" class="card-link">Like <ion-icon name="heart"
-                                    style="position:relative;top:3px;">
-                                </ion-icon>{{post.likes}}</a>
-                            <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon name="chatbox-outline"
-                                    style="position:relative;top:3px;"></ion-icon></a>
-                                    {{ post.body | linebreaks }}
-                            {% for comment in comments %}
-                            <div class="row">
-                                <div class="col-sm-10">
-                                    <h5 class="font-weight-normal">{{comment.context}}</h5>
-                                    <h6 class="text-muted font-weight-normal">{{post.user.username}} - {{comment.date}}</h6>
-                                </div>
-                                {{ comment.body | linebreaks }}
-                            </div>
-                            {% endfor %}
                         </div>
+                        <div class="col-sm-3"></div>
                     </div>
-                    <div class="col-sm-3"></div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
-        </div>
+        {% endif %} 
         <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
             <h3>Followers</h3>
         </div>

@@ -63,14 +63,15 @@ def profile(request, pk):
 	posts = Post.objects.filter(user=user)
 	# ****Check if current user is not viewing their profile
 	if (request.user.id != pk):
-		not_current_user = True
+		current_user = False
 		# ******Check if current user is following this person
 		following = FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = pk).exists()
-		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'not_current_user': not_current_user})
+		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'current_user': current_user})
 	else:
-		not_current_user = False
+		current_user = True
+		activity = FollowingUser.activity_following_users(pk)
 	following = False
-	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'not_current_user': not_current_user})
+	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'current_user': current_user})
 
 def post_detail(request, pk):
 	if(is_search_requested(request)):
