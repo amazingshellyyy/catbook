@@ -4,40 +4,40 @@ from .models import Post, Comment, UserLikesPost
 from .forms import PostForm, CommentForm, SearchForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from faker import Faker
+# from faker import Faker
 
 # *******Fake Data*********
 # NOTE: This function is called in on the landing page to create the fake data. If you do not comment it out, you will make a lot of entries
-def load_fake():
-	default_pass = '1234'
-	fake = Faker()
+# def load_fake():
+# 	default_pass = '1234'
+# 	fake = Faker()
 
-	# ***** Create Fake User ************
-	for _ in range(10):
-		user = User.objects.create_user(
-			username = fake.name(),
-			email = fake.email(),
-			password = default_pass,
-		)
-		user.save()
+# 	# ***** Create Fake User ************
+# 	for _ in range(10):
+# 		user = User.objects.create_user(
+# 			username = fake.name(),
+# 			email = fake.email(),
+# 			password = default_pass,
+# 		)
+# 		user.save()
 
-	# ******** Create Fake Posts **********
-	for user in User.objects.all():
-		post = Post.objects.create(
-			title = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
-			context = fake.text(max_nb_chars=200, ext_word_list= None),
-			user = user
-			)
-		post.save()
+# 	# ******** Create Fake Posts **********
+# 	for user in User.objects.all():
+# 		post = Post.objects.create(
+# 			title = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
+# 			context = fake.text(max_nb_chars=200, ext_word_list= None),
+# 			user = user
+# 			)
+# 		post.save()
 
-	# ********** Create Fake Comments ********
-	for post in Post.objects.all():
-		comment = Comment.objects.create(
-			context = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
-			post = post,
-			user = post.user
-			)
-		comment.save()
+# 	# ********** Create Fake Comments ********
+# 	for post in Post.objects.all():
+# 		comment = Comment.objects.create(
+# 			context = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
+# 			post = post,
+# 			user = post.user
+# 			)
+# 		comment.save()
 
 def is_search_requested(request):
 	if request.method == 'POST':
