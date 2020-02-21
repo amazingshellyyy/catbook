@@ -1,13 +1,43 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Post, Comment
+from .models import Post, Comment, UserLikesPost
 from .forms import PostForm, CommentForm, SearchForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from faker import Faker
 
 # *******Fake Data*********
+# NOTE: This function is called in on the landing page to create the fake data. If you do not comment it out, you will make a lot of entries
 def load_fake():
-	return
+	default_pass = '1234'
+	fake = Faker()
+
+	# ***** Create Fake User ************
+	for _ in range(10):
+		user = User.objects.create_user(
+			username = fake.name(),
+			email = fake.email(),
+			password = default_pass,
+		)
+		user.save()
+
+	# ******** Create Fake Posts **********
+	for user in User.objects.all():
+		post = Post.objects.create(
+			title = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
+			context = fake.text(max_nb_chars=200, ext_word_list= None),
+			user = user
+			)
+		post.save()
+
+	# ********** Create Fake Comments ********
+	for post in Post.objects.all():
+		comment = Comment.objects.create(
+			context = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
+			post = post,
+			user = post.user
+			)
+		comment.save()
 
 def is_search_requested(request):
 	if request.method == 'POST':
@@ -18,10 +48,11 @@ def is_search_requested(request):
 
 # Create your views here.
 def index(request):
+	# load_fake()
 	# if user search redirect to global view
-  if(is_search_requested(request)):
-    return redirect('global_view', request.POST['query'])
-  return render(request, 'index.html')
+	if(is_search_requested(request)):
+		return redirect('global_view', request.POST['query'])
+	return render(request, 'index.html')
 
 # -------- Post views -------- #
 @login_required
@@ -165,14 +196,46 @@ def global_view(request, query = ''):
 
 @login_required
 def like_post(request, post_id):
+	# likes = 0
+	# if (post_id):
+	# 	post = Post.objects.get(id=int(post_id))
+	# 	if post is not None:
+	# 		likes = post.likes + 1
+	# 		post.likes = likes
+	# 		post.save()
+	# 	print(likes)
+	# return HttpResponse(likes)
+
 	likes = 0
-	if (post_id):
-		post = Post.objects.get(id=int(post_id))
+
+	if (post_id) :
+
+		# print(UserLikesPost.objects.filter(user_id = request.user.id, post_id = post_id).exists())
+		# print(request.user.username)
+		# print(Post.objects.filter(user = request.user.id, id = post_id).exists())
+
+		post = Post.objects.get(id = post_id)
+
 		if post is not None:
-			likes = post.likes + 1
-			post.likes = likes
-			post.save()
-		print(likes)
+			if not UserLikesPost.objects.filter(user_id = request.user.id, post_id = post_id).exists() and not Post.objects.filter(user = request.user.id, id = post_id).exists():
+
+				print('create entry')
+
+				liked_post = UserLikesPost.objects.create(
+					user_id = request.user,
+					post_id = post,
+					)
+				liked_post.save()
+
+				user_likes = UserLikesPost.objects.filter(post_id = post_id).count()
+
+				likes = post.likes + user_likes
+				post.likes = post.likes + user_likes
+				post.save()
+				
+		likes = UserLikesPost.objects.filter(post_id=post_id).count()
+			
+	print(likes)	
 	return HttpResponse(likes)
 
 @login_required
