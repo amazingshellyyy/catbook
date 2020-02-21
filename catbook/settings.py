@@ -50,9 +50,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main_app',
     'accounts',
+<<<<<<< HEAD
     'storages',
     'test_img'
     
+=======
+>>>>>>> shelly-dev
 ]
 
 MIDDLEWARE = [

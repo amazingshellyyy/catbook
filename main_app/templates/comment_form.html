@@ -6,7 +6,7 @@
         <form  method="POST" class="comment-form">
             {% csrf_token %}
             {{form.as_p}}
-            <button type="submit">Save</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </section>
 {% endblock %}

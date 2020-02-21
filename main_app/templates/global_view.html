@@ -1,30 +1,48 @@
+{% extends 'base.html' %}
 {% load static %}
+{% block styles %}
+<script defer src="{% static 'js/like.js' %}"></script>
+{% endblock styles %}
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>CatBook | Home </title>
-</head>
-<body>
+{% block content %}
 <h1>This is the Global View</h1>
-<form method="POST" action=".">
-  {% csrf_token %}
-  {{ form.as_p}}
-  <input type="submit" value="Submit" />
-</form>
 <main>
 	{% for post in posts %}
-	<div>
+	<div class="container">
+  <div class="row">
+      <div class="col-sm-3"></div>
+      <div class="card col-sm-6" style="width: 18rem;">
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-sm-2"><img class="profile-img"
+                          src="{% static 'images/user-placeholder.jpg'%}" alt="" style="height:50px;">
+                  </div>
+                  <div class="col-sm-10">
+                      <h5 class="card-title">{{post.title}}</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">Updated: {{post.updateDate}}</h6>
+                      <p class="card-text">{{post.context}}</p>
+                  </div>
+              </div>
+              <p class="card-text">{{post.user.username}}</p>
+              <a href="#" class="card-link like-btn" data-id="{{ post.id }}"> Like <ion-icon name="heart" style="position:relative;top:3px;" data-id="{{ post.id }}">
+                </ion-icon>{{post.likes}}</a>
+              <a href="#" class="card-link">comment <ion-icon name="chatbox-outline"
+                      style="position:relative;top:3px;"></ion-icon></a>
+          </div>
+      </div>
+      <div class="col-sm-3"></div>
+  </div>
+  </div>
+	{% endfor %}
+</main>
+{% endblock content %}
+
+<!-- <div>
 		<a href="">
 			<p>{{ post.title }}</p>
 		</a>
 		<small>Created: {{post.date}}</small>
 		<p>{{ post.context }}</p>
-		<button data-id="{{ post.id}}">Likes: {% if post.likes > 0 %} {{ post.likes }} {% else %} None, ur cat ugly :( {% endif %}</button>
+		<button class="like-btn" data-id="{{ post.id}}">Likes: {% if post.likes > 0 %} {{ post.likes }} {% else %} None, ur cat ugly :( {% endif %}</button>
 		<span>Last Updated: {{ post.updateDate }}</span>
-	</div>
-	{% endfor %}
-</main>
-<script src="{% static 'js/like.js' %}"></script>
-</body>
-</html>
+	</div> -->

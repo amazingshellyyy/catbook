@@ -33,11 +33,15 @@
       </ul>
 
       <ul class="navbar-nav ml-auto">
-        <form class="form-inline my-2 my-lg-0 mr-2">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <form method="POST" class="form-inline my-2 my-lg-0 mr-2">
+          {% csrf_token %}
+          <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit">Search</button>
         </form>
         {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'profile' pk=user.pk %}">Profile</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="/accounts/logout">Log Out</a>
         </li>
@@ -78,7 +82,7 @@
         <hr class="clearfix w-100 d-md-none pb-3">
 
         <!-- Grid column -->
-        <div class="col-md-3 mb-md-0 mb-3">
+        <div class="col-md-3 mb-3">
 
           <!-- Links -->
           <h5 class="text-uppercase">Links</h5>
