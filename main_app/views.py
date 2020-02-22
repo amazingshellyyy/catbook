@@ -59,7 +59,7 @@ def index(request):
 		return redirect('global_view', request.POST['query'])
 	return render(request, 'index.html')
 
-# -------- Post views -------- #
+
 @login_required
 def profile(request, pk=None):
 	print('i am profile view')
@@ -93,6 +93,7 @@ def profile(request, pk=None):
 
 	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'current_user': current_user, 'followers': followers, 'comments': comments, 'follower_count': follower_count})
 
+# -------- Post views -------- #
 def post_detail(request, pk):
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])

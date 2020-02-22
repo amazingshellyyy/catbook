@@ -17,3 +17,16 @@ footer {
   color: white;
   border-color: #CB6E17;
 }
+.nav-custom {
+  background-color: #F0B429;
+  color: white;
+}
+
+.nav-link {
+  color: white !important;
+}
+.navbar-brand {
+  color: white !important;
+  font-weight:700;
+  font-size: 2rem;
+}
