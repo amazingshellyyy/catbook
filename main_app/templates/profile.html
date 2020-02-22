@@ -17,12 +17,7 @@
             </div>
             <div class="col-sm-8">
                 <h2>{{ user.username }}&nbsp&nbsp&nbsp{{ user.email }}</h2>
-                <ul class="pl-0" style="list-style-type: none;">
-                    <h3> Cat Information</h3>
-                    <li>Name</li>
-                    <li>Breed</li>
-                    <li>Age</li>
-                </ul>
+                <h2>Followers: 50</h2>
                 {% if current_user %}
                     <button type="button" class="btn btn-primary mt-5">Edit</button>
                 {% else %}
@@ -148,7 +143,7 @@
         <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
             <h3>Followers</h3>
             {% for f in followers %}
-                <div>{{ f.follow_user_id }}</div>
+                <div><a href="{% url 'profile' pk=post.user.id %}" class="card-text">{{f.follow_user_id}}</a></div>
             {% endfor %}
         </div>
     </div>

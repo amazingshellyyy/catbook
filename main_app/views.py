@@ -48,7 +48,7 @@ def is_search_requested(request):
 
 # Create your views here.
 def index(request):
-	load_fake()
+	# load_fake()
 	# if user search redirect to global view
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
@@ -64,18 +64,23 @@ def profile(request, pk=None):
 	else:
 		user = User.objects.get(pk=pk)
 	posts = Post.objects.filter(user=user)
-	followers = FollowingUser.objects.filter(user_id = user)
+	followers = FollowingUser.objects.all()
+	print(user)
+	print(followers)
 	# ****Check if current user is not viewing their profile
 	if (request.user.id != pk):
 		current_user = False
 		# ******Check if current user is following this person
 		following = FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = pk).exists()
-		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'current_user': current_user})
+
+		print(user)
+		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'current_user': current_user, 'followers': followers})
 	else:
 		current_user = True
 		activity = FollowingUser.activity_following_users(pk)
 	following = False
-	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'current_user': current_user, 'activity': activity, 'followers': followers })
+
+	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'current_user': current_user, 'activity': activity, 'followers': followers})
 
 def post_detail(request, pk):
 	if(is_search_requested(request)):
