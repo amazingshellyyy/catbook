@@ -1,43 +1,48 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from .models import Post, Comment, UserLikesPost
+from django.http import HttpResponse, JsonResponse
+from .models import Post, Comment, UserLikesPost, FollowingUser
 from .forms import PostForm, CommentForm, SearchForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-# from faker import Faker
+from faker import Faker
 
 # *******Fake Data*********
 # NOTE: This function is called in on the landing page to create the fake data. If you do not comment it out, you will make a lot of entries
-# def load_fake():
-# 	default_pass = '1234'
-# 	fake = Faker()
+def load_fake():
+	default_pass = '1234'
+	fake = Faker()
+	
+	# print(fake.date_time_this_month(before_now=True, after_now=False, tzinfo=None))
 
-# 	# ***** Create Fake User ************
-# 	for _ in range(10):
-# 		user = User.objects.create_user(
-# 			username = fake.name(),
-# 			email = fake.email(),
-# 			password = default_pass,
-# 		)
-# 		user.save()
+	if(User.objects.all().count() <= 5):
+		# ***** Create Fake User ************
+		for _ in range(10):
+			user = User.objects.create_user(
+				username = fake.name(),
+				email = fake.email(),
+				password = default_pass,
+			)
+			user.save()
 
-# 	# ******** Create Fake Posts **********
-# 	for user in User.objects.all():
-# 		post = Post.objects.create(
-# 			title = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
-# 			context = fake.text(max_nb_chars=200, ext_word_list= None),
-# 			user = user
-# 			)
-# 		post.save()
+		# ******** Create Fake Posts **********
+		for user in User.objects.all():
+			post = Post.objects.create(
+				title = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
+				context = fake.text(max_nb_chars=200, ext_word_list= None),
+				user = user
+				)
+			post.save()
 
-# 	# ********** Create Fake Comments ********
-# 	for post in Post.objects.all():
-# 		comment = Comment.objects.create(
-# 			context = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
-# 			post = post,
-# 			user = post.user
-# 			)
-# 		comment.save()
+		# ********** Create Fake Comments ********
+		for post in Post.objects.all():
+			comment = Comment.objects.create(
+				context = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
+				post = post,
+				user = post.user
+				)
+			comment.save()
+
+	print(User.objects.all().count())
 
 def is_search_requested(request):
 	if request.method == 'POST':
@@ -48,26 +53,52 @@ def is_search_requested(request):
 
 # Create your views here.
 def index(request):
-	# load_fake()
+	load_fake()
 	# if user search redirect to global view
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
 	return render(request, 'index.html')
 
-# -------- Post views -------- #
+
 @login_required
-def profile(request, pk):
+def profile(request, pk=None):
+	print('i am profile view')
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
-	user = User.objects.get(pk=pk)
+	if pk == None:
+		user = request.user
+	else:
+		user = User.objects.get(pk=pk)
+	print(user)
+	print(f'request user {request.user}')
 	posts = Post.objects.filter(user=user)
-	return render(request, 'profile.html', {'user':user, 'posts' : posts})
+	followers = FollowingUser.objects.filter(follow_user_id = user)
+	comments = Comment.objects.filter()
+	follower_count = FollowingUser.objects.filter(follow_user_id = user).count()
 
+	# ========== Changes from Submaster ======
+	# return render(request, 'profile.html', {'user':user, 'posts' : posts, 'comments': comments})
+
+
+	# ****Check if current user is not viewing their profile
+	if (request.user.id != pk and request.user != user):
+		current_user = False
+		# ******Check if current user is following this person
+		following = FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = pk).exists()
+		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'current_user': current_user, 'followers': followers, 'comments': comments, 'follower_count': follower_count})
+	else:
+		current_user = True
+	following = False
+	print(current_user)
+
+	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'current_user': current_user, 'followers': followers, 'comments': comments, 'follower_count': follower_count})
+
+# -------- Post views -------- #
 def post_detail(request, pk):
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
 	post = Post.objects.get(id = pk)
-	comments = post.comments.filter(post_id = True)
+	comments = Comment.objects.filter(post = post)
 	new_comment = None
 	if request.method == 'POST':
 		comment_form = CommentForm(data = request.POST)
@@ -77,12 +108,7 @@ def post_detail(request, pk):
 			new_comment.save()
 	else:
 		comment_form = CommentForm()
-
 	return render(request, 'post_detail.html', {'post' : post, 'comments': comments, 'new_comment': new_comment, 'comment_form': comment_form})
-
-# def post_detail(request, pk):
-# 	post = Post.objects.get(id = pk)
-# 	return render(request, 'post_detail.html', {'post' : post})
 
 @login_required
 def post_create(request):
@@ -119,7 +145,7 @@ def post_edit(request, pk):
 @login_required
 def post_delete(request, pk):
 	Post.objects.get(id = pk).delete()
-	return redirect('post_list')
+	return redirect('profile.html')
 
 # -------- Comment views -------- #
 @login_required
@@ -148,7 +174,6 @@ def comment_create(request, pk):
 			comment.user = request.user
 			comment.save()
 			return redirect('post_detail', pk = post.pk)
-			# return redirect('comment_detail', pk = comment.pk)
 
 	else:
 		form = CommentForm()
@@ -200,15 +225,6 @@ def global_view(request, query = ''):
 
 @login_required
 def like_post(request, post_id):
-	# likes = 0
-	# if (post_id):
-	# 	post = Post.objects.get(id=int(post_id))
-	# 	if post is not None:
-	# 		likes = post.likes + 1
-	# 		post.likes = likes
-	# 		post.save()
-	# 	print(likes)
-	# return HttpResponse(likes)
 
 	likes = 0
 
@@ -240,8 +256,52 @@ def like_post(request, post_id):
 		likes = UserLikesPost.objects.filter(post_id=post_id).count()
 			
 	print(likes)	
+	print(HttpResponse(likes))
 	return HttpResponse(likes)
 
 @login_required
 def activity_list(request):
 	return render(request, 'activity_list.html')
+
+def about_us(request):
+	return render(request, 'about_us.html')
+	
+@login_required
+def follow_user(request, f_user_id):
+
+	print(request.user)
+
+	following = False
+
+	if f_user_id is not None:
+		follow_user = User.objects.get(id = f_user_id)
+
+		print(FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = f_user_id).exists())
+		print((request.user.id != f_user_id))
+
+		if follow_user is not None:
+			if not FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = f_user_id).exists() and  (request.user.id != f_user_id):
+
+				print('create follow entry')
+
+				new_follower = FollowingUser.objects.create(
+					user_id = request.user,
+					follow_user_id  = follow_user,
+					)
+				new_follower.save()
+
+				following = True
+			elif(request.user.id != f_user_id):
+				FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = f_user_id).delete()
+		user = User.objects.get(id = f_user_id)
+		followers = FollowingUser.objects.filter(follow_user_id = user)
+		data_followers = [f.user_id.username for f in followers]
+	return JsonResponse({"following": following, "followers": data_followers })
+
+def get_followers(request, pk):
+	user = User.objects.get(pk = pk)
+	followers = FollowingUser.objects.filter(follow_user_id = user)
+
+	data_followers = [f.user_id.username for f in followers]
+	return JsonResponse({"followers": data_followers})
+
