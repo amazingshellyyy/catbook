@@ -5,6 +5,7 @@
 {% endblock styles %}
 {% block script %}
 <link rel="stylesheet" href="{% static 'js/profile.js' %}" defer>
+<script defer type="text/javascript" src="{% static 'js/follow.js' %}"></script>
 {% endblock script %}
 {% block nav_right%}
 <form method="POST" class="form-inline my-2 my-lg-0 mr-2">
@@ -35,18 +36,19 @@
             <div class="col-sm-8">
                 <h2>{{ user.username }}</h2>
                 <p>{{ user.email }}</p>
-                <!-- <button type="button" class="btn btn-primary mt-5"
+                <h4>Followers: {{ follower_count }}</h4>
+                {% if current_user %}
+                    <button type="button" class="btn btn-primary mt-5"
                     onclick="location.href='{% url 'profile_edit' pk=user.pk %}';">
                     <ion-icon name="create-outline"></ion-icon>Edit Profile
-                </button> -->
-                {% comment %} <ul class="pl-0" style="list-style-type: none;">
-                    <h3> Cat Information</h3>
-                    <li>Name</li>
-                    <li>Breed</li>
-                    <li>Age</li>
-                </ul> {% endcomment %}
-
-                <button type="button" class="btn btn-primary mt-5">Follow</button>
+                </button> 
+                {% else %}
+                    {% if following %}
+                        <button id="followBtn" type="button" class="btn btn-primary mt-5" style="opacity:0.7;"data-id="{{ user.id }}">Unfollow</button>
+                    {% else %}
+                        <button id="followBtn" type="button" class="btn btn-primary mt-5" data-id="{{ user.id }}">Follow</button>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
     </div>
@@ -162,6 +164,15 @@
         </div>
         <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
             <h3>Followers</h3>
+            <div id="followers">
+            {% if followers %}
+                {% for f in followers %}
+                    <div><a href="{% url 'profile' pk=f.user_id.id %}">{{ f.user_id }}</a></div>
+                {% endfor %}
+            {% else %}
+                <div><p>0</p></div>
+            {% endif %}
+            </div>
         </div>
     </div>
 </div>
