@@ -243,3 +243,6 @@ def like_post(request, post_id):
 @login_required
 def activity_list(request):
 	return render(request, 'activity_list.html')
+
+def about_us(request):
+	return render(request, 'about_us.html')
