@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load socialaccount %}
 {% load static%}
 {% block styles%}
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
@@ -25,9 +26,11 @@
           <button class="login-btn" type="submit">Log in</button>
           <hr>
           <!-- google login btn -->
-          <div>Sign in with google</div>
+           {% comment %} google sign in button here, the route is wrong, need change {% endcomment %}
+            <a href="{% provider_login_url 'google' %}"><img id="signInButton" src="http://www.setyourowntests.com/_/rsrc/1468869481521/help/accounts/btn_google_signin_dark_normal_web%402x.png" style="width:60%;"></a>
           <!-- enf of google login btn -->
-          <a href="{% url 'signup' %}">Don't have an account yet? Sign up here!</a>
+          <div><a href="{% url 'signup' %}">Don't have an account yet? Sign up here!</a></div>
+          
         </form>
         
       </div>

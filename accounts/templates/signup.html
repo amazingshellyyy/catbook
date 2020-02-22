@@ -5,7 +5,6 @@
 <link rel="stylesheet" href="{% static 'css/signup.css' %}">
 {% endblock styles%}
 {% block content %}
-
 {% if error %}
 <p style="background-color: firebrick;">{{error}}</p>
 {% endif %}
@@ -32,13 +31,9 @@
             <button class="signup-btn" type="submit">Sign up</button>
 
             <hr>
-            {% if user.is_authenticated %}
-            <p>Welcome, {{ user.username }} !</p>
-
-            {% else %}
+            {% comment %} google sign in button here, the route is wrong, need change {% endcomment %}
             <a href="{% provider_login_url 'google' %}"><img id="signInButton" src="http://www.setyourowntests.com/_/rsrc/1468869481521/help/accounts/btn_google_signin_dark_normal_web%402x.png" style="width:60%;"></a>
-            
-            {% endif %}
+            <div><a href="{% url 'login' %}">Already have an account? Log in here!</a></div>
           </form>
         
       </div>
