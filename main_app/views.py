@@ -48,7 +48,7 @@ def is_search_requested(request):
 
 # Create your views here.
 def index(request):
-	load_fake()
+	# load_fake()
 	# if user search redirect to global view
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
@@ -64,13 +64,14 @@ def profile(request, pk=None):
 	else:
 		user = User.objects.get(pk=pk)
 	posts = Post.objects.filter(user=user)
-	return render(request, 'profile.html', {'user':user, 'posts' : posts})
+	comments = Comment.objects.filter()
+	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'comments': comments})
 
 def post_detail(request, pk):
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
 	post = Post.objects.get(id = pk)
-	comments = post.comments.filter(post_id = True)
+	comments = Comment.objects.filter(post = post)
 	new_comment = None
 	if request.method == 'POST':
 		comment_form = CommentForm(data = request.POST)
@@ -80,7 +81,6 @@ def post_detail(request, pk):
 			new_comment.save()
 	else:
 		comment_form = CommentForm()
-
 	return render(request, 'post_detail.html', {'post' : post, 'comments': comments, 'new_comment': new_comment, 'comment_form': comment_form})
 
 @login_required
