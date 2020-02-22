@@ -1,0 +1,25 @@
+.form-section{
+    width: max-content;
+    margin: 2em auto;
+    color: black;
+    display: grid;
+    place-content: center;
+    text-align: center;
+}
+
+.form-section form {
+    width: 100%;
+}
+
+.form-section p {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-section button {
+    background-color: #CB6E17;
+    border: none;
+    border-radius: 5%;
+    font-size: 1em;
+    padding: ;
+}
