@@ -12,6 +12,8 @@ def load_fake():
 	default_pass = '1234'
 	fake = Faker()
 	
+	# print(fake.date_time_this_month(before_now=True, after_now=False, tzinfo=None))
+
 	if(User.objects.all().count() <= 5):
 		# ***** Create Fake User ************
 		for _ in range(10):
@@ -39,7 +41,7 @@ def load_fake():
 				user = post.user
 				)
 			comment.save()
-			
+
 	print(User.objects.all().count())
 
 def is_search_requested(request):
@@ -72,6 +74,7 @@ def profile(request, pk=None):
 	posts = Post.objects.filter(user=user)
 	followers = FollowingUser.objects.filter(follow_user_id = user)
 	comments = Comment.objects.filter()
+	follower_count = FollowingUser.objects.filter(follow_user_id = user).count()
 
 	# ========== Changes from Submaster ======
 	# return render(request, 'profile.html', {'user':user, 'posts' : posts, 'comments': comments})
@@ -82,12 +85,13 @@ def profile(request, pk=None):
 		current_user = False
 		# ******Check if current user is following this person
 		following = FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = pk).exists()
-		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'current_user': current_user, 'followers': followers, 'comments': comments})
+		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'current_user': current_user, 'followers': followers, 'comments': comments, 'follower_count': follower_count})
 	else:
 		current_user = True
 	following = False
 	print(current_user)
-	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'current_user': current_user, 'followers': followers, 'comments': comments})
+
+	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'current_user': current_user, 'followers': followers, 'comments': comments, 'follower_count': follower_count})
 
 def post_detail(request, pk):
 	if(is_search_requested(request)):
