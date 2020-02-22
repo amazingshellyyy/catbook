@@ -48,7 +48,7 @@ def is_search_requested(request):
 
 # Create your views here.
 def index(request):
-	load_fake()
+	# load_fake()
 	# if user search redirect to global view
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
@@ -57,23 +57,27 @@ def index(request):
 # -------- Post views -------- #
 @login_required
 def profile(request, pk=None):
+	print('i am profile view')
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
 	if pk == None:
 		user = request.user
 	else:
 		user = User.objects.get(pk=pk)
+	print(user)
 	posts = Post.objects.filter(user=user)
+	followers = FollowingUser.objects.filter(follow_user_id = user)
 	# ****Check if current user is not viewing their profile
-	if (request.user.id != pk):
-		not_current_user = True
+	if (request.user.id != pk or request.user != user):
+		current_user = False
 		# ******Check if current user is following this person
 		following = FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = pk).exists()
-		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'not_current_user': not_current_user})
+		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'current_user': current_user, 'followers': followers})
 	else:
-		not_current_user = False
+		current_user = True
 	following = False
-	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'not_current_user': not_current_user})
+	print(current_user)
+	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'current_user': current_user, 'followers': followers})
 
 def post_detail(request, pk):
 	if(is_search_requested(request)):
@@ -272,4 +276,15 @@ def follow_user(request, f_user_id):
 				following = True
 			elif(request.user.id != f_user_id):
 				FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = f_user_id).delete()
-	return JsonResponse({"following": following})
+		user = User.objects.get(id = f_user_id)
+		followers = FollowingUser.objects.filter(follow_user_id = user)
+		data_followers = [f.user_id.username for f in followers]
+	return JsonResponse({"following": following, "followers": data_followers })
+
+def get_followers(request, pk):
+	user = User.objects.get(pk = pk)
+	followers = FollowingUser.objects.filter(follow_user_id = user)
+
+	data_followers = [f.user_id.username for f in followers]
+	return JsonResponse({"followers": data_followers})
+
