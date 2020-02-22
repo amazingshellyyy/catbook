@@ -8,22 +8,22 @@
 {% endblock script %}
 {% block nav_right%}
 <form method="POST" class="form-inline my-2 my-lg-0 mr-2">
-          {% csrf_token %}
-          <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit">Search</button>
-        </form>
-        {% if user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'logout'%}">Log Out</a>
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'login'%}">Log In</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'signup'%}">Sign Up</a>
-        </li>
-        {% endif %}
+    {% csrf_token %}
+    <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit">Search</button>
+</form>
+{% if user.is_authenticated %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout'%}">Log Out</a>
+</li>
+{% else %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'login'%}">Log In</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'signup'%}">Sign Up</a>
+</li>
+{% endif %}
 {% endblock nav_right%}
 {% block content %}
 <div class="box1">
@@ -35,14 +35,17 @@
             <div class="col-sm-8">
                 <h2>{{ user.username }}</h2>
                 <p>{{ user.email }}</p>
-                <button type="button" class="btn btn-primary mt-5" onclick="location.href='{% url 'profile_edit' pk=user.pk %}';"><ion-icon name="create-outline"></ion-icon>Edit Profile</button>
+                <!-- <button type="button" class="btn btn-primary mt-5"
+                    onclick="location.href='{% url 'profile_edit' pk=user.pk %}';">
+                    <ion-icon name="create-outline"></ion-icon>Edit Profile
+                </button> -->
                 {% comment %} <ul class="pl-0" style="list-style-type: none;">
                     <h3> Cat Information</h3>
                     <li>Name</li>
                     <li>Breed</li>
                     <li>Age</li>
                 </ul> {% endcomment %}
-                
+
                 <button type="button" class="btn btn-primary mt-5">Follow</button>
             </div>
         </div>
@@ -91,14 +94,16 @@
                             <a href="#" class="card-link">Like <ion-icon name="heart"
                                     style="position:relative;top:3px;">
                                 </ion-icon>{{post.likes}}</a>
-                            <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon name="chatbox-outline"
-                                    style="position:relative;top:3px;"></ion-icon></a>
-                                    {{ post.body | linebreaks }}
+                            <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon
+                                    name="chatbox-outline" style="position:relative;top:3px;"></ion-icon></a>
+
+                            {{ post.body | linebreaks }}
                             {% for comment in comments %}
                             <div class="row">
                                 <div class="col-sm-10">
                                     <h5 class="font-weight-normal">{{comment.context}}</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted font-weight-normal">{{post.user.username}} - {{comment.date}}</h6>
+                                    <h6 class="card-subtitle mb-2 text-muted font-weight-normal">{{post.user.username}}
+                                        - {{comment.date}}</h6>
                                 </div>
                                 {{ comment.body | linebreaks }}
                             </div>
@@ -132,23 +137,27 @@
                             <a href="#" class="card-link">Like <ion-icon name="heart"
                                     style="position:relative;top:3px;">
                                 </ion-icon>{{post.likes}}</a>
-                            <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon name="chatbox-outline"
-                                    style="position:relative;top:3px;"></ion-icon></a>
-                                    {{ post.body | linebreaks }}
-                            {% for comment in comments %}
-                            <div class="row">
-                                <div class="col-sm-10">
-                                    <h5 class="font-weight-normal">{{comment.context}}</h5>
-                                    <h6 class="text-muted font-weight-normal">{{post.user.username}} - {{comment.date}}</h6>
-                                </div>
-                                {{ comment.body | linebreaks }}
-                            </div>
-                            {% endfor %}
+                            <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon name="chatbox-outline" style="position:relative;top:3px;"></ion-icon></a>
+                            <div>hello</div>
+                            <!-- {{ post.body | linebreaks }} -->
+                            
                         </div>
+                        <!-- {% for comment in comments %}
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <h5 class="font-weight-normal">{{comment.context}}</h5>
+                                <h6 class="text-muted font-weight-normal">{{post.user.username}} - {{comment.date}}</h6>
+                            </div>
+                            {{ comment.body | linebreaks }}
+                        </div>
+                        {% endfor %} -->
                     </div>
                     <div class="col-sm-3"></div>
+                    
                 </div>
+                
                 {% endfor %}
+    
             </div>
         </div>
         <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
