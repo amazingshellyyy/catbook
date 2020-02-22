@@ -11,33 +11,38 @@ from faker import Faker
 def load_fake():
 	default_pass = '1234'
 	fake = Faker()
+	
+	# print(fake.date_time_this_month(before_now=True, after_now=False, tzinfo=None))
 
-	# ***** Create Fake User ************
-	for _ in range(10):
-		user = User.objects.create_user(
-			username = fake.name(),
-			email = fake.email(),
-			password = default_pass,
-		)
-		user.save()
-
-	# ******** Create Fake Posts **********
-	for user in User.objects.all():
-		post = Post.objects.create(
-			title = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
-			context = fake.text(max_nb_chars=200, ext_word_list= None),
-			user = user
+	if(User.objects.all().count() <= 5):
+		# ***** Create Fake User ************
+		for _ in range(10):
+			user = User.objects.create_user(
+				username = fake.name(),
+				email = fake.email(),
+				password = default_pass,
 			)
-		post.save()
+			user.save()
 
-	# ********** Create Fake Comments ********
-	for post in Post.objects.all():
-		comment = Comment.objects.create(
-			context = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
-			post = post,
-			user = post.user
-			)
-		comment.save()
+		# ******** Create Fake Posts **********
+		for user in User.objects.all():
+			post = Post.objects.create(
+				title = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
+				context = fake.text(max_nb_chars=200, ext_word_list= None),
+				user = user
+				)
+			post.save()
+
+		# ********** Create Fake Comments ********
+		for post in Post.objects.all():
+			comment = Comment.objects.create(
+				context = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
+				post = post,
+				user = post.user
+				)
+			comment.save()
+
+	print(User.objects.all().count())
 
 def is_search_requested(request):
 	if request.method == 'POST':
@@ -48,7 +53,7 @@ def is_search_requested(request):
 
 # Create your views here.
 def index(request):
-	# load_fake()
+	load_fake()
 	# if user search redirect to global view
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
@@ -57,25 +62,36 @@ def index(request):
 # -------- Post views -------- #
 @login_required
 def profile(request, pk=None):
+	print('i am profile view')
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
 	if pk == None:
 		user = request.user
 	else:
 		user = User.objects.get(pk=pk)
+	print(user)
+	print(f'request user {request.user}')
 	posts = Post.objects.filter(user=user)
+	followers = FollowingUser.objects.filter(follow_user_id = user)
 	comments = Comment.objects.filter()
-	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'comments': comments})
+	follower_count = FollowingUser.objects.filter(follow_user_id = user).count()
+
+	# ========== Changes from Submaster ======
+	# return render(request, 'profile.html', {'user':user, 'posts' : posts, 'comments': comments})
+
+
 	# ****Check if current user is not viewing their profile
-	if (request.user.id != pk):
-		not_current_user = True
+	if (request.user.id != pk and request.user != user):
+		current_user = False
 		# ******Check if current user is following this person
 		following = FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = pk).exists()
-		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'not_current_user': not_current_user})
+		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'current_user': current_user, 'followers': followers, 'comments': comments, 'follower_count': follower_count})
 	else:
-		not_current_user = False
+		current_user = True
 	following = False
-	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'not_current_user': not_current_user})
+	print(current_user)
+
+	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'current_user': current_user, 'followers': followers, 'comments': comments, 'follower_count': follower_count})
 
 def post_detail(request, pk):
 	if(is_search_requested(request)):
@@ -276,4 +292,15 @@ def follow_user(request, f_user_id):
 				following = True
 			elif(request.user.id != f_user_id):
 				FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = f_user_id).delete()
-	return JsonResponse({"following": following})
+		user = User.objects.get(id = f_user_id)
+		followers = FollowingUser.objects.filter(follow_user_id = user)
+		data_followers = [f.user_id.username for f in followers]
+	return JsonResponse({"following": following, "followers": data_followers })
+
+def get_followers(request, pk):
+	user = User.objects.get(pk = pk)
+	followers = FollowingUser.objects.filter(follow_user_id = user)
+
+	data_followers = [f.user_id.username for f in followers]
+	return JsonResponse({"followers": data_followers})
+

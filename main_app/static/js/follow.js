@@ -11,6 +11,7 @@ const handleFollow = () => {
 	})
 		.then(response => response.json())
 		.then(data => {
+			window.location.reload()
 			if (data.following) {
 				element.innerHTML = 'Unfollow';
 				element.style.opacity = '0.7';
