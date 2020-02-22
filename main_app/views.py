@@ -11,33 +11,36 @@ from faker import Faker
 def load_fake():
 	default_pass = '1234'
 	fake = Faker()
-
-	# ***** Create Fake User ************
-	for _ in range(10):
-		user = User.objects.create_user(
-			username = fake.name(),
-			email = fake.email(),
-			password = default_pass,
-		)
-		user.save()
-
-	# ******** Create Fake Posts **********
-	for user in User.objects.all():
-		post = Post.objects.create(
-			title = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
-			context = fake.text(max_nb_chars=200, ext_word_list= None),
-			user = user
+	
+	if(User.objects.all().count() <= 5):
+		# ***** Create Fake User ************
+		for _ in range(10):
+			user = User.objects.create_user(
+				username = fake.name(),
+				email = fake.email(),
+				password = default_pass,
 			)
-		post.save()
+			user.save()
 
-	# ********** Create Fake Comments ********
-	for post in Post.objects.all():
-		comment = Comment.objects.create(
-			context = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
-			post = post,
-			user = post.user
-			)
-		comment.save()
+		# ******** Create Fake Posts **********
+		for user in User.objects.all():
+			post = Post.objects.create(
+				title = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
+				context = fake.text(max_nb_chars=200, ext_word_list= None),
+				user = user
+				)
+			post.save()
+
+		# ********** Create Fake Comments ********
+		for post in Post.objects.all():
+			comment = Comment.objects.create(
+				context = fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
+				post = post,
+				user = post.user
+				)
+			comment.save()
+			
+	print(User.objects.all().count())
 
 def is_search_requested(request):
 	if request.method == 'POST':
