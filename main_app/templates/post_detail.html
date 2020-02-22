@@ -30,6 +30,15 @@
                         </ion-icon>{{post.likes}}</a>
                     <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon name="chatbox-outline"
                             style="position:relative;top:3px;"></ion-icon></a>
+                    <div class="card-body" style="border-top:1px solid grey;">
+                    <div class="row">
+                        <div class="col-sm-2"><img class="profile-img"
+                                src="{% static 'images/user-placeholder.jpg'%}" alt="" style="height:50px;">
+                        </div>
+                        <div class="col-sm-10"> <p class="card-text">{{post.context}}</p>
+                        </div>
+                    </div>
+                    </div>
                             {{ post.body | linebreaks }}
                     {% for comment in comments %}
                     <div class="row">
