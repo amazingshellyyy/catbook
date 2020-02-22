@@ -5,6 +5,7 @@
 {% endblock styles %}
 {% block script %}
 <link rel="stylesheet" href="{% static 'js/profile.js' %}" defer>
+<script defer type="text/javascript" src="{% static 'js/follow.js' %}"></script>
 {% endblock script %}
 
 {% block content %}
@@ -22,8 +23,15 @@
                     <li>Breed</li>
                     <li>Age</li>
                 </ul>
-                <button type="button" class="btn btn-primary mt-5">Edit</button>
-                <button type="button" class="btn btn-primary mt-5">Follow</button>
+                {% if not_current_user %}
+                    {% if following %}
+                        <button id="followBtn" type="button" class="btn btn-primary mt-5" style="opacity:0.7;"data-id="{{ user.id }}">Unfollow</button>
+                    {% else %}
+                        <button id="followBtn" type="button" class="btn btn-primary mt-5" data-id="{{ user.id }}">Follow</button>
+                    {% endif %}
+                {% else %}
+                    <button type="button" class="btn btn-primary mt-5">Edit</button>
+                {% endif %}
             </div>
         </div>
     </div>

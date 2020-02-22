@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from .models import Post, Comment, UserLikesPost
+from django.http import HttpResponse, JsonResponse
+from .models import Post, Comment, UserLikesPost, FollowingUser
 from .forms import PostForm, CommentForm, SearchForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -66,6 +66,16 @@ def profile(request, pk=None):
 	posts = Post.objects.filter(user=user)
 	comments = Comment.objects.filter()
 	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'comments': comments})
+	# ****Check if current user is not viewing their profile
+	if (request.user.id != pk):
+		not_current_user = True
+		# ******Check if current user is following this person
+		following = FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = pk).exists()
+		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'not_current_user': not_current_user})
+	else:
+		not_current_user = False
+	following = False
+	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'not_current_user': not_current_user})
 
 def post_detail(request, pk):
 	if(is_search_requested(request)):
@@ -198,15 +208,6 @@ def global_view(request, query = ''):
 
 @login_required
 def like_post(request, post_id):
-	# likes = 0
-	# if (post_id):
-	# 	post = Post.objects.get(id=int(post_id))
-	# 	if post is not None:
-	# 		likes = post.likes + 1
-	# 		post.likes = likes
-	# 		post.save()
-	# 	print(likes)
-	# return HttpResponse(likes)
 
 	likes = 0
 
@@ -238,6 +239,7 @@ def like_post(request, post_id):
 		likes = UserLikesPost.objects.filter(post_id=post_id).count()
 			
 	print(likes)	
+	print(HttpResponse(likes))
 	return HttpResponse(likes)
 
 @login_required
@@ -246,3 +248,32 @@ def activity_list(request):
 
 def about_us(request):
 	return render(request, 'about_us.html')
+	
+@login_required
+def follow_user(request, f_user_id):
+
+	print(request.user)
+
+	following = False
+
+	if f_user_id is not None:
+		follow_user = User.objects.get(id = f_user_id)
+
+		print(FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = f_user_id).exists())
+		print((request.user.id != f_user_id))
+
+		if follow_user is not None:
+			if not FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = f_user_id).exists() and  (request.user.id != f_user_id):
+
+				print('create follow entry')
+
+				new_follower = FollowingUser.objects.create(
+					user_id = request.user,
+					follow_user_id  = follow_user,
+					)
+				new_follower.save()
+
+				following = True
+			elif(request.user.id != f_user_id):
+				FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = f_user_id).delete()
+	return JsonResponse({"following": following})
