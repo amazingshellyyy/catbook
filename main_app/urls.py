@@ -1,5 +1,6 @@
 from django.urls import path, re_path, include
 from . import views
+from django.test import SimpleTestCase, override_settings
 
 urlpatterns = [
 	path('', views.index, name='index'),
