@@ -7,7 +7,11 @@ from django.urls import reverse_lazy
 from .models import Image, ProfileImage
 from .forms import ImageForm
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from django.utils.decorators import method_decorator
 
+@method_decorator(csrf_exempt, name='dispatch')
 class ImageCreateView(CreateView):
     # template_name = 'test_img/image_form.html'
     model = Image
@@ -20,14 +24,19 @@ class ImageCreateView(CreateView):
         # return redirect('profile')
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        images = Image.objects.all()
+        user = self.request.user
+        images = Image.objects.filter(user = user)
         context['images'] = images
         return context
 
+@csrf_exempt
+def save_image(request):
+    if request.method == 'POST':
+        image = ImageForm(request.POST)
+        image.image_url = request.image_url
+        image.user = request.user
+        image.save()
+        return HttpResponseRedirect('http://http://127.0.0.1:8000/')
+    else:
+        return redirect('profile', pk=request.user.pk)
 
-def save_image(request, url):
-    new_profileImage = ProfileImage
-    new_ProfileImage.image_url = url
-    new_profileImage.user=request.user
-    new_profileImage.save()
-    return render(request, 'index.html')

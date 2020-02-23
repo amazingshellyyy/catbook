@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
-
+{% load static%}
+{% block script %}
+<script type="text/javascript" src="{% static 'js/image.js' %}" defer></script>
+{% endblock script %}
 {% block content %}
   <h2>{{user.username}}</h2>
+  <h2 id="userId">{{user.id}}</h2>
   <h3>Please upload image that are 1:1</h3>
 
  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Save</button>
+    <button type="submit">Upload</button>
   </form>
 
   <table>
@@ -15,7 +19,7 @@
       {% for image in images %}
         <tr>
           <td><a href="{{ image.upload.url }}" target="_blank">{{ image.upload.name }}</a></td> 
-          <img src="{{ image.upload.url }}" style="width:150px;">
+          <img id="profileImg" src="{{ image.upload.url }}" style="width:150px;height:150px;">
           {% comment %} <td>{{ image.uploaded_at }}</td>
           <td>{{ image.upload.size|filesizeformat }}</td>
           <td>{{ user.id }}</td> {% endcomment %}
@@ -26,4 +30,9 @@
         </tr> 
       {% endfor %}
   </table>
+
+  <button id="save" type="button" class="btn btn-primary mt-5">Save Image
+</button> 
+  <button id="back" type="button" class="btn btn-primary mt-5" style="display:none;" onclick="location.href='{% url 'profile' pk=user.pk %}';">back to Profile
+</button> 
 {% endblock %}

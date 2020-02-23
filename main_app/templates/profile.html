@@ -4,15 +4,22 @@
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% endblock styles %}
 {% block script %}
-<link rel="stylesheet" href="{% static 'js/profile.js' %}" defer>
+<script defer type="text/javascript" src="{% static 'js/profile.js' %}"></script>
 <script defer type="text/javascript" src="{% static 'js/follow.js' %}"></script>
 {% endblock script %}
+{% block nav_left%}
+<li class="nav-item">
+          <a class="nav-link" href="{% url 'global_view'%}">Global</a>
+        </li>
+{% endblock nav_left%}
 {% block nav_right%}
-<form method="POST" class="form-inline my-2 my-lg-0 mr-2">
+<div class="search-bar form-inline">
+<form method="POST" class="form-inline my-2 my-lg-0">
     {% csrf_token %}
     <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit">Search</button>
+    <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit"><ion-icon class="search-icon" name="search-outline"></ion-icon></button>
 </form>
+</div>
 {% if user.is_authenticated %}
 <li class="nav-item">
     <a class="nav-link" href="{% url 'logout'%}">Log Out</a>
@@ -31,7 +38,11 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                <img class="profile-img" src="{% static 'images/user-placeholder.jpg'%}" alt="">
+            {% for image in images %}
+        <tr>
+          <td><a href="{{ image.upload.url }}" target="_blank"><img class="profile-img" src="{{ image.upload.url }}"></a></td> 
+          
+        {% endfor%}
                 <a href="{% url 'upload'%}">upload</a>
             </div>
             <div class="col-sm-8">

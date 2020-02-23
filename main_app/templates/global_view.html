@@ -3,9 +3,42 @@
 {% block styles %}
 <script defer src="{% static 'js/like.js' %}"></script>
 {% endblock styles %}
+{% block nav_left%}
+<div class="search-bar form-inline">
+<form method="POST" class="form-inline my-2 my-lg-0">
+    {% csrf_token %}
+    <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit"><ion-icon class="search-icon" name="search-outline"></ion-icon></button>
+</form>
+</div>
+<li class="nav-item">
+          <a class="nav-link" href="{% url 'global_view'%}">Global</a>
+        </li>
+{% endblock nav_left%}
+{% block nav_right%}
 
+{% if user.is_authenticated %}
+{% comment %} <img href="{{ image.upload.url }}"> {% endcomment %}
+
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'profile' pk=user.pk%}">Profile</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout'%}">Log Out</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout'%}">Log Out</a>
+</li>
+{% else %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'login'%}">Log In</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'signup'%}">Sign Up</a>
+</li>
+{% endif %}
+{% endblock nav_right%}
 {% block content %}
-<h1>This is the Global View</h1>
 <main>
 	{% for post in posts %}
 	<div class="container">

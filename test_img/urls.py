@@ -5,5 +5,5 @@ from . import views
 
 urlpatterns = [
     url('', views.ImageCreateView.as_view(), name='upload'),
-    url('save_image', views.save_image, name='save_image'),
+    url('save_image/', views.save_image, name='save_image'),
 ]
