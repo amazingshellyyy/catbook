@@ -43,9 +43,11 @@ class FollowingUser(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'user_id')
     follow_user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'follow_user_id')
 
-    # def activity_following_users():
-    #     activity = Post.objects.select_related('follow_user_id').gets(id = id)
-    #     return activity
+    def activity_following_users(id):
+        activity = Post.objects.raw("select * from main_app_post left outer join main_app_followinguser on (main_app_post.user_id = main_app_followinguser.follow_user_id_id) where main_app_followinguser.user_id_id =" + str(id))
+
+        # [print(a) for a in activity]
+        return activity
 
 class UserLikesPost(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)

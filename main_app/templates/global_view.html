@@ -39,12 +39,27 @@
 {% endif %}
 {% endblock nav_right%}
 {% block content %}
+<div class="container mb-2 mt-4">
+    <div class="row">
+        <div class="col-sm-3">
+        
+        </div>
+        <div class="col-sm-6">
+            {% if query %}
+                <h2 class="text-center">Search Results for: "{{ query }}"</h2>
+            {% endif %}
+        </div>
+        <div class="col-sm-3">
+
+        </div>
+    </div>
+</div>
 <main>
 	{% for post in posts %}
 	<div class="container">
   <div class="row">
       <div class="col-sm-3"></div>
-      <div class="card col-sm-6" style="width: 18rem;">
+      <div class="card col-sm-6 mb-3" style="width: 18rem;">
           <div class="card-body">
               <div class="row">
                   <div class="col-sm-2"><img class="profile-img mb-3"
@@ -69,13 +84,3 @@
 	{% endfor %}
 </main>
 {% endblock content %}
-
-<!-- <div>
-		<a href="">
-			<p>{{ post.title }}</p>
-		</a>
-		<small>Created: {{post.date}}</small>
-		<p>{{ post.context }}</p>
-		<button class="like-btn" data-id="{{ post.id}}">Likes: {% if post.likes > 0 %} {{ post.likes }} {% else %} None, ur cat ugly :( {% endif %}</button>
-		<span>Last Updated: {{ post.updateDate }}</span>
-	</div> -->
