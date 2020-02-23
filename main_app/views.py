@@ -53,7 +53,7 @@ def is_search_requested(request):
 
 # Create your views here.
 def index(request):
-	load_fake()
+	# load_fake()
 	# if user search redirect to global view
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
@@ -77,7 +77,7 @@ def profile(request, pk=None):
 	follower_count = FollowingUser.objects.filter(follow_user_id = user).count()
 
 	# ========== Changes from Submaster ======
-	# return render(request, 'profile.html', {'user':user, 'posts' : posts, 'comments': comments})
+	# return render(request, 'profile.html', {'user':user, 'posts' : posts})
 
 
 	# ****Check if current user is not viewing their profile
