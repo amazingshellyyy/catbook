@@ -209,7 +209,7 @@ def global_view(request, query = ''):
 			# Return users with global_view
 			filtered_users = User.objects.filter(username__icontains = q)
 			print(filtered_users)
-			return render(request, 'global_view.html', {'posts': posts})
+			return render(request, 'global_view.html', {'posts': posts, 'query': q})
 
 	if (query):
 		posts = Post.post_query(query)
@@ -217,7 +217,7 @@ def global_view(request, query = ''):
 		# Return users with global_view
 		filtered_users = User.objects.filter(username__icontains = query)
 		print(filtered_users)
-		return render(request, 'global_view.html', {'posts': posts})
+		return render(request, 'global_view.html', {'posts': posts, 'query': query })
 
 	posts = Post.post_relevent()
 

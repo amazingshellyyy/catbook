@@ -5,7 +5,23 @@
 {% endblock styles %}
 
 {% block content %}
-<h1>This is the Global View</h1>
+<div class="container mb-3 mt-3">
+    <div class="row">
+        <div class="col-sm-3">
+        
+        </div>
+        <div class="col-sm-6">
+            {% if query %}
+                <h2>Search Results for: "{{ query }}"</h2>
+            {% else %}
+                <h2>Posts</h2>
+            {% endif %}
+        </div>
+        <div class="col-sm-3">
+
+        </div>
+    </div>
+</div>
 <main>
 	{% for post in posts %}
 	<div class="container">
