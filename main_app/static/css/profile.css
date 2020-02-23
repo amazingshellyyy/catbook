@@ -1,12 +1,19 @@
+.profile-img-box {
+  position:relative;
+  bottom:-2.5rem;
+}
 .profile-img {
+  width:200px;
   height:200px;
+ border-radius: 50%;
 }
 
 .box1 {
-  padding: 50px 0;
+  padding-top:25px;
   background-color: #FFF3C4;
+  /* margin-bottom:15vh; */
+  
 }
-
 
 .nav-pills .nav-link {
   border-radius: 0;
@@ -20,6 +27,9 @@
   border-radius: 0;
 }
 
+.first-tab {
+  margin-left:250px;
+}
 .tab-icon {
   height: 1.5rem;
   width: 1.5rem;

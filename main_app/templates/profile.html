@@ -9,16 +9,18 @@
 {% endblock script %}
 {% block nav_left%}
 <li class="nav-item">
-          <a class="nav-link" href="{% url 'global_view'%}">Global</a>
-        </li>
+    <a class="nav-link" href="{% url 'global_view'%}">Global</a>
+</li>
 {% endblock nav_left%}
 {% block nav_right%}
 <div class="search-bar form-inline">
-<form method="POST" class="form-inline my-2 my-lg-0">
-    {% csrf_token %}
-    <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit"><ion-icon class="search-icon" name="search-outline"></ion-icon></button>
-</form>
+    <form method="POST" class="form-inline my-2 my-lg-0">
+        {% csrf_token %}
+        <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit">
+            <ion-icon class="search-icon" name="search-outline"></ion-icon>
+        </button>
+    </form>
 </div>
 {% if user.is_authenticated %}
 <li class="nav-item">
@@ -38,28 +40,35 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-            {% for image in images %}
-        <tr>
-          <td><a href="{{ image.upload.url }}" target="_blank"><img class="profile-img" src="{{ image.upload.url }}"></a></td> 
-          
-        {% endfor%}
-                <a href="{% url 'upload'%}">upload</a>
+                <div>
+                    <div class="profile-img-box">
+                        {% for image in images %}
+                        <a href="{{ image.upload.url }}" target="_blank"><img class="img-thumbnail profile-img"
+                                src="{{ image.upload.url }}"></a>
+                        {% endfor%}
+                        <a href="{% url 'upload'%}">upload</a>
+                    </div>
+                </div>
+
+
             </div>
             <div class="col-sm-8">
                 <h2>{{ user.username }}</h2>
                 <p>{{ user.email }}</p>
                 <h4>Followers: {{ follower_count }}</h4>
                 {% if current_user %}
-                    <button type="button" class="btn btn-primary mt-5"
-                    onclick="location.href="{% url 'profile_edit' pk=user.pk %}">
+                <button type="button" class="btn btn-primary mt-5" onclick="location.href="
+                    {% url 'profile_edit' pk=user.pk %}">
                     <ion-icon name="create-outline"></ion-icon>Edit Profile
-                </button> 
+                </button>
                 {% else %}
-                    {% if following %}
-                        <button id="followBtn" type="button" class="btn btn-primary mt-5" style="opacity:0.7;"data-id="{{ user.id }}">Unfollow</button>
-                    {% else %}
-                        <button id="followBtn" type="button" class="btn btn-primary mt-5" data-id="{{ user.id }}">Follow</button>
-                    {% endif %}
+                {% if following %}
+                <button id="followBtn" type="button" class="btn btn-primary mt-5" style="opacity:0.7;"
+                    data-id="{{ user.id }}">Unfollow</button>
+                {% else %}
+                <button id="followBtn" type="button" class="btn btn-primary mt-5"
+                    data-id="{{ user.id }}">Follow</button>
+                {% endif %}
                 {% endif %}
             </div>
         </div>
@@ -67,7 +76,7 @@
 </div>
 <div class="container mt-2">
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-        <li class="nav-item">
+        <li class="nav-item first-tab">
             <a class="nav-link active" id="pills-posts-tab" data-toggle="pill" href="#pills-posts" role="tab"
                 aria-controls="pills-posts" aria-selected="true">
                 <ion-icon name="person-outline" class="tab-icon"></ion-icon>
@@ -141,7 +150,8 @@
                             <div class="row">
                                 <div class="col-sm-2"><img class="profile-img"
                                         src="{% static 'images/user-placeholder.jpg'%}" alt="" style="height:50px;">
-                                        <a href="{% url 'profile' pk=post.user.id %}" class="card-text">{{post.user.username}}</a>
+                                    <a href="{% url 'profile' pk=post.user.id %}"
+                                        class="card-text">{{post.user.username}}</a>
                                 </div>
                                 <div class="col-sm-10">
                                     <a href="{% url 'post_detail' pk=post.pk %}" class="card-title">{{post.title}}</a>
@@ -152,10 +162,11 @@
                             <a href="#" class="card-link">Like <ion-icon name="heart"
                                     style="position:relative;top:3px;">
                                 </ion-icon>{{post.likes}}</a>
-                            <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon name="chatbox-outline" style="position:relative;top:3px;"></ion-icon></a>
+                            <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon
+                                    name="chatbox-outline" style="position:relative;top:3px;"></ion-icon></a>
                             <div></div>
                             <!-- {{ post.body | linebreaks }} -->
-                            
+
                         </div>
                         <!-- {% for comment in comments %}
                         <div class="row">
@@ -168,23 +179,25 @@
                         {% endfor %} -->
                     </div>
                     <div class="col-sm-3"></div>
-                    
+
                 </div>
-                
+
                 {% endfor %}
-    
+
             </div>
         </div>
         <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
             <h3>Followers</h3>
             <div id="followers">
-            {% if followers %}
+                {% if followers %}
                 {% for f in followers %}
-                    <div><a href="{% url 'profile' pk=f.user_id.id %}">{{ f.user_id }}</a></div>
+                <div><a href="{% url 'profile' pk=f.user_id.id %}">{{ f.user_id }}</a></div>
                 {% endfor %}
-            {% else %}
-                <div><p>0</p></div>
-            {% endif %}
+                {% else %}
+                <div>
+                    <p>0</p>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
