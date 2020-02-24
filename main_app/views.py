@@ -72,18 +72,19 @@ def profile(request, pk=None):
 	print(user)
 	print(f'request user {request.user}')
 	posts = Post.objects.filter(user=user)
-	followers = FollowingUser.objects.filter(follow_user_id = user)
 	comments = Comment.objects.filter()
-	follower_count = FollowingUser.objects.filter(follow_user_id = user).count()
 	activity = FollowingUser.activity_following_users(pk)
+	follower_count = FollowingUser.objects.filter(follow_user_id = user).count()
 	# ****Check if current user is not viewing their profile
 	if (request.user.id != pk and request.user != user):
 		current_user = False
 		# ******Check if current user is following this person
+		followers = FollowingUser.objects.filter(follow_user_id = user)
 		following = FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = pk).exists()
 		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'current_user': current_user, 'followers': followers, 'comments': comments, 'follower_count': follower_count, 'activity': activity})
 	else:
 		current_user = True
+		followers = FollowingUser.objects.filter(user_id = user)
 	following = False
 	print(current_user)
 
