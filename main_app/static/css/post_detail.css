@@ -1,27 +1,53 @@
-.profile-img {
-    height:200px;
-}
 
-.box1 {
-    padding: 50px 0;
-    background-color: #FFF3C4;
-}
-
-
-.nav-pills .nav-link {
-    border-radius: 0;
-    color:#CB6E17;
+ 
+  .box1{
+    /* padding-top:25px; */
+    /* background-color: #FFF3C4; */
+    /* margin-bottom:15vh; */
+    background-color: #e9ebee;
     
-}
+  }
+ 
+ 
+  .box1 >.container {
+    padding-top:10vh;
+    background-color: white;
+    padding-bottom: 2.5rem;
+    min-height: 100vh;
+  }
+  
 
-.nav-pills .nav-link.active{
-    color:#CB6E17;
-    background-color:white;
-    border-bottom: #CB6E17 5px solid;
-    border-radius: 0;
-}
-
-.tab-icon {
-    height: 1.5rem;
-    width: 1.5rem;
-}
+  
+   #create-btn {
+     margin-left: 1rem;
+   }
+  
+  .post {
+    border-bottom:2px solid #e9ebee;
+  }
+  .card-title {
+    margin:5px 0;
+    font-size: 1.2rem;
+  }
+   .post-user {
+     margin-bottom: 0;
+     font-size: 1.3rem;
+     font-weight:700;
+   }
+  
+   .comment {
+     margin-left: 1rem;
+     padding-left: 1rem;
+     padding-right: 1rem;
+     background-color: #e9ebee;
+     border-radius:1rem;
+     margin-bottom: 0;
+   }
+  
+   .comment-date {
+     padding-top: .3rem;
+     margin-left: 1rem;
+     font-size: .8rem;
+     opacity: .7;
+     
+   }

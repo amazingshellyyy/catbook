@@ -1,3 +1,4 @@
+console.log('hii')
 const handleLikes = () => {
 	event.preventDefault();
 

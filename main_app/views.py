@@ -5,6 +5,7 @@ from .forms import PostForm, CommentForm, SearchForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from faker import Faker
+from test_img.models import Image
 
 # *******Fake Data*********
 # NOTE: This function is called in on the landing page to create the fake data. If you do not comment it out, you will make a lot of entries
@@ -73,6 +74,14 @@ def profile(request, pk=None):
 	print(f'request user {request.user}')
 	posts = Post.objects.filter(user=user)
 	comments = Comment.objects.filter()
+	follower_count = FollowingUser.objects.filter(follow_user_id = user).count()
+	images = Image.objects.filter(user = user)
+	
+
+	# ========== Changes from Submaster ======
+	# return render(request, 'profile.html', {'user':user, 'posts' : posts, 'comments': comments})
+
+
 	activity = FollowingUser.activity_following_users(pk)
 	follower_count = FollowingUser.objects.filter(follow_user_id = user).count()
 	# ****Check if current user is not viewing their profile
@@ -81,14 +90,14 @@ def profile(request, pk=None):
 		# ******Check if current user is following this person
 		followers = FollowingUser.objects.filter(follow_user_id = user)
 		following = FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = pk).exists()
-		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'current_user': current_user, 'followers': followers, 'comments': comments, 'follower_count': follower_count, 'activity': activity})
+		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'current_user': current_user, 'followers': followers, 'comments': comments, 'follower_count': follower_count, 'images':images,'activity': activity})
 	else:
 		current_user = True
 		followers = FollowingUser.objects.filter(user_id = user)
 	following = False
 	print(current_user)
 
-	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'current_user': current_user, 'followers': followers, 'comments': comments, 'follower_count': follower_count, 'activity': activity})
+	return render(request, 'profile.html', {'user':user, 'posts' : posts, 'following': following, 'current_user': current_user, 'followers': followers, 'comments': comments, 'follower_count': follower_count, 'images':images,'activity': activity})
 
 # -------- Post views -------- #
 def post_detail(request, pk):
@@ -196,6 +205,7 @@ def comment_delete(request, pk):
 	return redirect('comment_list')
 
 def global_view(request, query = ''):
+
 	if request.method == 'POST':
 		form = SearchForm(request.POST)
 		if form.is_valid():
@@ -218,7 +228,7 @@ def global_view(request, query = ''):
 
 	posts = Post.post_relevent()
 
-	return render(request, 'global_view.html', {'posts': posts })
+	return render(request, 'global_view.html', {'posts': posts})
 
 @login_required
 def like_post(request, post_id):

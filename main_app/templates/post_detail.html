@@ -5,46 +5,54 @@
 {% endblock styles %}
 
 {% block content %}
-
+<div class="box1">
 <div class="container">
     <div class="posts">
-        <h3>{{ post.title }}</h3>
         <div class="row">
             <div class="col-sm-3"></div>
             <div class="card col-sm-6" style="width: 18rem;">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-2"><img class="profile-img"
-                                src="{% static 'images/user-placeholder.jpg'%}" alt="" style="height:50px;">
+                    <div class="post">
+                        <div class="row">
+                            <div class="col-sm-2"><img class="profile-img"
+                                    src="{% static 'images/user-placeholder.png'%}" alt=""
+                                    style="height:50px;width:50px">
+                            </div>
+                            <div class="col-sm-10">
+                                <div><a class="post-user">{{ post.user.username}}</a></div>
+                                <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
+                                {% if post.user == user%}
+                                <a href="{% url 'post_edit' pk=post.pk %}">Edit</a>
+                                <a href="{% url 'profile' pk=post.pk %}" class="delete">Delete</a>
+                                {% endif %}
+                            </div>
                         </div>
-                        <div class="col-sm-10">
-                            <h5 class="card-title">{{post.title}}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
-                            <a href="{% url 'post_edit' pk=post.pk %}">Edit</a>
-                            <a href="{% url 'profile' pk=post.pk %}" class="delete">Delete</a>
+                        <div class="card-title"><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></div>
+                        <p class="card-text">
+                            {{post.context}}</p>
+                        <div class="mb-2">
+                            <a href="#" class="card-link">Like <ion-icon name="heart"
+                                    style="position:relative;top:3px;">
+                                </ion-icon>{{post.likes}}</a>
+                            <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment
+                                <ion-icon name="chatbox-outline" style="position:relative;top:3px;">
+                                </ion-icon></a>
                         </div>
                     </div>
-                    <p class="card-text">{{post.context}}</p>
-                    <a href="#" class="card-link">Like <ion-icon name="heart"
-                            style="position:relative;top:3px;">
-                        </ion-icon>{{post.likes}}</a>
-                    <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon name="chatbox-outline"
-                            style="position:relative;top:3px;"></ion-icon></a>
-                    <div class="card-body" style="border-top:1px solid grey;">
-                    <div class="row">
-                        <div class="col-sm-2"><img class="profile-img"
-                                src="{% static 'images/user-placeholder.jpg'%}" alt="" style="height:50px;">
-                        </div>
-                        <div class="col-sm-10"> <p class="card-text">{{post.context}}</p>
-                        </div>
-                    </div>
-                    </div>
-                            {{ post.body | linebreaks }}
+                    <!-- here -->
+                    {{ post.body | linebreaks }}
                     {% for comment in comments %}
-                    <div class="row">
-                        <div class="col-sm-10">
-                            <h5 class="card-title font-weight-normal">{{comment.context}}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted font-weight-normal">{{comment.user.username}} - {{comment.date}}</h6>
+                    <div class="row mb-3">
+                        <div>
+                            <div class="row text-nowrap">
+                                <div class="pl-4 pr-0"> <a href="{% url 'profile' pk=comment.user.pk %}"
+                                        class="mb-0 font-weight-normal">{{comment.user.username}}</a></div>
+                                <div class="">
+                                    <p class="comment text-truncate">{{comment.context}}</p>
+                                </div>
+                            </div>
+                            <div class="card-subtitle text-muted font-weight-normal comment-date">
+                                {{comment.date}}</div>
                         </div>
                         {{ comment.body | linebreaks }}
                     </div>
@@ -54,5 +62,6 @@
             <div class="col-sm-3"></div>
         </div>
     </div>
+</div>
 </div>
 {% endblock %}

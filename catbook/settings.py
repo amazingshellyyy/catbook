@@ -9,26 +9,37 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
+import environ
 import os
-
+PROJECT_ROOT = environ.Path(__file__)-2
+PROJECT_ROOT.file(".env3")
+environ.Env.read_env(PROJECT_ROOT(".env3"))
+# environ.Env.read_env()
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+print(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '4kt@3y_r^o7kh39k%0qh63l99kievir5rf2kyx9h1#g=u5!shb'
-
+# SECRET_KEY = env('SECRET_KEY')
+# print (SECRET_KEY)
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
+TEST = env('TEST')
+print(TEST)
 
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
 hosts = [
-    'localhost'
+    'localhost',
+    '127.0.0.1'
 ]
 
 print(hosts)
@@ -37,6 +48,7 @@ ALLOWED_HOSTS = hosts
 
 
 # Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -48,7 +60,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'main_app',
     'accounts',
-
+    'storages',
+    'test_img',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -159,3 +172,21 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, '../main_app/static'),
 ]
+
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+# AWS_LOCATION = 'static/'
+
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'main_app/static'),
+# ]
+# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+DEFAULT_FILE_STORAGE = 'catbook.storage_backends.MediaStorage'  

@@ -9,11 +9,13 @@
 </li>
 {% endblock nav_left %}
 {% block nav_right%}
-<form method="POST" class="form-inline my-2 my-lg-0 mr-2">
-          {% csrf_token %}
-          <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit">Search</button>
-        </form>
+<div class="search-bar form-inline">
+<form method="POST" class="form-inline my-2 my-lg-0">
+    {% csrf_token %}
+    <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit"><ion-icon class="search-icon" name="search-outline"></ion-icon></button>
+</form>
+</div>
         {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'profile' pk=user.pk %}">Profile</a>
@@ -36,7 +38,7 @@
     <div class="row text-center pt-5">
       <h2 class="col-sm-12 title">Enjoy sharing every moment you have with your cat</h2>
     </div>
-    <button type="button" class="btn btn-primary mt-5 join-btn">Join Our Community!</button>
+    <button type="button" class="btn btn-primary mt-5 join-btn" onclick="location.href='{% url 'global_view'%}';">Join Our Community!</button>
   </div>
 </div>
 <div class="box2">

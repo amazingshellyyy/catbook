@@ -27,6 +27,8 @@ class Post(models.Model):
         # filtered = Post.objects.filter(title__icontains=query, context__icontains=query)
         return filtered_posts
 
+    def __str__(self):
+        return self.context
 
 class Comment(models.Model):
     context = models.CharField(max_length = 400)

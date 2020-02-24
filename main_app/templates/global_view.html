@@ -1,11 +1,48 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block styles %}
-<script defer src="{% static 'js/like.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/global_view.css' %}">
 {% endblock styles %}
+{% block script %}
+<script defer src="{% static 'js/like.js' %}"></script>
+{% endblock script%}
+{% block nav_left%}
+<div class="search-bar form-inline">
+<form method="POST" class="form-inline my-2 my-lg-0">
+    {% csrf_token %}
+    <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit"><ion-icon class="search-icon" name="search-outline"></ion-icon></button>
+</form>
+</div>
+<li class="nav-item">
+          <a class="nav-link" href="{% url 'global_view'%}">Global</a>
+        </li>
+{% endblock nav_left%}
+{% block nav_right%}
 
+{% if user.is_authenticated %}
+{% comment %} <img href="{{ image.upload.url }}"> {% endcomment %}
+
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'profile' pk=user.pk%}">Profile</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout'%}">Log Out</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout'%}">Log Out</a>
+</li>
+{% else %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'login'%}">Log In</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'signup'%}">Sign Up</a>
+</li>
+{% endif %}
+{% endblock nav_right%}
 {% block content %}
-<div class="container mb-2 mt-4">
+<!-- <div class="container mb-2 mt-4">
     <div class="row">
         <div class="col-sm-3">
         
@@ -19,34 +56,67 @@
 
         </div>
     </div>
-</div>
-<main>
+</div> -->
+<div class="box1">
+    <div class="container">
 	{% for post in posts %}
-	<div class="container">
+	
   <div class="row">
-      <div class="col-sm-3"></div>
-      <div class="card col-sm-6 mb-3" style="width: 18rem;">
-          <div class="card-body">
-              <div class="row">
-                  <div class="col-sm-2"><img class="profile-img mb-3"
-                          src="{% static 'images/user-placeholder.jpg'%}" alt="" style="height:50px;">
-                          <a href="{% url 'profile' pk=post.user.id %}" class="card-text">{{post.user.username}}</a>
-                  </div>
-                  <div class="col-sm-10">
-                      <a href="{% url 'post_detail' pk=post.pk %}" class="card-title">{{post.title}}</a>
-                      <h6 class="card-subtitle mb-2 text-muted">Updated: {{post.updateDate}}</h6>
-                      <p class="card-text">{{post.context}}</p>
-                  </div>
-              </div>
-              <a href="#" class="card-link like-btn" data-id="{{ post.id }}"> Like <ion-icon name="heart" style="position:relative;top:3px;" data-id="{{ post.id }}">
-                </ion-icon>{{post.likes}}</a>
-              <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment <ion-icon name="chatbox-outline"
-                      style="position:relative;top:3px;"></ion-icon></a>
-          </div>
-      </div>
-      <div class="col-sm-3"></div>
-  </div>
-  </div>
-	{% endfor %}
-</main>
+            <div class="col-sm-3"></div>
+            <div class="card col-sm-6" style="width: 18rem;">
+                <div class="card-body">
+                    <div class="post">
+                        <div class="row">
+                            <div class="col-sm-2"><img class="profile-img"
+                                    src="{% static 'images/user-placeholder.png'%}" alt=""
+                                    style="height:50px;width:50px">
+                            </div>
+                            <div class="col-sm-10">
+                                <div><a class="post-user">{{ post.user.username}}</a></div>
+                                <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
+                                {% if post.user == user%}
+                                <a href="{% url 'post_edit' pk=post.pk %}">Edit</a>
+                                <a href="{% url 'profile' pk=post.pk %}" class="delete">Delete</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="card-title"><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></div>
+                        <p class="card-text">
+                            {{post.context}}</p>
+                        <div class="mb-2">
+                            <a href="#" class="card-link">Like <ion-icon name="heart"
+                                    style="position:relative;top:3px;">
+                                </ion-icon>{{post.likes}}</a>
+                            <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment
+                                <ion-icon name="chatbox-outline" style="position:relative;top:3px;">
+                                </ion-icon></a>
+                        </div>
+                    </div>
+                    <!-- here -->
+                    {{ post.body | linebreaks }}
+                    {% for comment in comments %}
+                    <div class="row mb-3">
+                        <div>
+                            <div class="row text-nowrap">
+                                <div class="pl-4 pr-0"> <a href="{% url 'profile' pk=comment.user.pk %}"
+                                        class="mb-0 font-weight-normal">{{comment.user.username}}</a></div>
+                                <div class="">
+                                    <p class="comment text-truncate">{{comment.context}}</p>
+                                </div>
+                            </div>
+                            <div class="card-subtitle text-muted font-weight-normal comment-date">
+                                {{comment.date}}</div>
+                        </div>
+                        {{ comment.body | linebreaks }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    
+ 
+    {% endfor %}
+</div>
+</div>
 {% endblock content %}
