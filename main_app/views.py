@@ -19,7 +19,7 @@ def load_fake():
 		# ***** Create Fake User ************
 		for _ in range(10):
 			user = User.objects.create_user(
-				username = fake.name().split()[0],
+				username = fake.name().split(" ")[0],
 				email = fake.email(),
 				password = default_pass,
 			)
@@ -151,7 +151,7 @@ def post_edit(request, pk):
 @login_required
 def post_delete(request, pk):
 	Post.objects.get(id = pk).delete()
-	return redirect('profile.html')
+	return redirect('profile', pk=request.user.pk)
 
 # -------- Comment views -------- #
 @login_required
