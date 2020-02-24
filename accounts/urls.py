@@ -6,6 +6,6 @@ from main_app.views import profile
 
 urlpatterns = [
     path('<int:pk>/edit', views.profile_edit, name='profile_edit'),
+    path('', TemplateView.as_view(template_name='social_app/index.html')),
     url(r'^', include('allauth.urls')),
-   
 ]

@@ -5,12 +5,30 @@
 {% endblock styles %}
 
 {% block content %}
-    <section class="form-section">
+    <!-- <section class="form-section">
         <h1>{{header}}</h1>
         <form  method="POST" class="comment-form">
             {% csrf_token %}
             {{form.as_p}}
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-    </section>
+    </section> -->
+    <h1>{{header}}</h1>
+    <div class="box1">
+        <div class="container text-center">
+            <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6 inner-box">
+                <form action="{% url 'comment_create' %}" method="POST" claass="comment-form">
+                    {% csrf_token %}
+                    <p>
+                        <input type="text" name="title" maxlength="400" minlength="2" required placeholder="Comment">
+                    </p>
+                        <button class="btn" type="submit">Submit</button>
+                </form>
+            </div>
+            <div class="col-sm-6"></div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
