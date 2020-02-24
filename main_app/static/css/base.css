@@ -76,6 +76,9 @@ footer {
     height:30px;
     margin:auto 0;
   }
+  .form>.form-inline {
+    margin-top: 0;
+  }
 }
 
 /* Medium devices (tablets, 768px and up) */
@@ -85,5 +88,8 @@ footer {
     /* height:80vw; */
     border:none;
     padding:0 0.75rem;
+  }
+  .form>.form-inline {
+    margin-top: 0;
   }
 }
