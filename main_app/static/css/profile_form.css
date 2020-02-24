@@ -1,0 +1,52 @@
+.box1 {
+  min-height: 90vh;
+  padding-top: 15vh;
+}
+.form-section{
+  width: max-content;
+  margin: 2em auto;
+  color: black;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+.form-section form {
+  width: 100%;
+}
+
+.form-section p {
+  display: flex;
+  flex-direction: column;
+}
+label {
+  text-align: left;
+}
+input{
+  background-color:transparent;
+  border:1px solid #dddfe2;
+  color: #1d2129;
+  line-height: 16px;
+  width: 100%;
+  padding: .5rem .3rem;
+  /* margin: 8px 0; */
+  box-sizing: border-box;
+  
+}
+
+.btn-primary{
+
+  border: none;
+  border-radius: 5%;
+  font-size: 1em;
+  float: right;
+  
+background-color: #F0B429;
+color:white;
+padding: .5rem .3rem;
+
+}
+
+form > p > span {
+  display: none;
+}

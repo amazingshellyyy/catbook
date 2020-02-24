@@ -73,6 +73,9 @@ p{
 
 /* Small devices (landscape phones, 576px and up) */
 @media (max-width: 576px) { 
+  .box1 {
+    max-height: 50vh;
+  }
   .content {
     background-color: rgba(255,255,255,.5);
     margin-top: 0;
@@ -89,14 +92,25 @@ p{
   .content > h3 {
    border-bottom: #F0B429 5px solid;
   }
+.title {
+    padding-top: 15vh;
+    font-family: 'Lato', sans-serif;
+}
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (max-width: 768px) { 
+  .box1 {
+    max-height: 50vh;
+  }
   .content {
     background-color: rgba(255,255,255,.5);
     margin-top: 0;
     margin-bottom: 0;
     padding: 30px;
   }
+  .title {
+    padding-top: 15vh;
+    font-family: 'Lato', sans-serif;
+}
 }

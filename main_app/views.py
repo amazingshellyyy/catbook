@@ -19,7 +19,7 @@ def load_fake():
 		# ***** Create Fake User ************
 		for _ in range(10):
 			user = User.objects.create_user(
-				username = fake.name().split()[0],
+				username = fake.name().split(" ")[0],
 				email = fake.email(),
 				password = default_pass,
 			)
@@ -146,7 +146,7 @@ def post_edit(request, pk):
 @login_required
 def post_delete(request, pk):
 	Post.objects.get(id = pk).delete()
-	return redirect('profile.html')
+	return redirect('profile', pk=request.user.pk)
 
 # -------- Comment views -------- #
 @login_required
@@ -207,23 +207,24 @@ def global_view(request, query = ''):
 			q = form.cleaned_data['query']
 			posts = Post.post_query(q)
 			print(posts)
-
+			comments = Comment.objects.all()
 			# Return users with global_view
 			filtered_users = User.objects.filter(username__icontains = q)
 			print(filtered_users)
-			return render(request, 'global_view.html', {'posts': posts, 'query': q})
+			return render(request, 'global_view.html', {'posts': posts, 'query': q,'comments':comments})
 
 	if (query):
 		posts = Post.post_query(query)
 		print(posts)
+		comments = Comment.objects.all()
 		# Return users with global_view
 		filtered_users = User.objects.filter(username__icontains = query)
 		print(filtered_users)
-		return render(request, 'global_view.html', {'posts': posts, 'query': query })
+		return render(request, 'global_view.html', {'posts': posts, 'query': query,'comments':comments })
 
 	posts = Post.post_relevent()
-
-	return render(request, 'global_view.html', {'posts': posts})
+	comments = Comment.objects.all()
+	return render(request, 'global_view.html', {'posts': posts, 'comments':comments})
 
 @login_required
 def like_post(request, post_id):

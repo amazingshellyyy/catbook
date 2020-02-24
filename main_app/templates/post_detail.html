@@ -3,27 +3,59 @@
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
 {% endblock styles %}
+{% block nav_left%}
+<div class="search-bar form-inline">
+<form method="POST" class="form-inline my-2 my-lg-0">
+    {% csrf_token %}
+    <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit"><ion-icon class="search-icon" name="search-outline"></ion-icon></button>
+</form>
+</div>
+<li class="nav-item">
+          <a class="nav-link" href="{% url 'global_view'%}">Global</a>
+        </li>
+{% endblock nav_left%}
+{% block nav_right%}
 
+{% if user.is_authenticated %}
+{% comment %} <img href="{{ image.upload.url }}"> {% endcomment %}
+
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'profile' pk=user.pk%}">Profile</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout'%}">Log Out</a>
+</li>
+
+{% else %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'login'%}">Log In</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'signup'%}">Sign Up</a>
+</li>
+{% endif %}
+{% endblock nav_right%}
 {% block content %}
 <div class="box1">
 <div class="container">
     <div class="posts">
         <div class="row">
             <div class="col-sm-3"></div>
-            <div class="card col-sm-6" style="width: 18rem;">
+            <div class="card col-sm-6" >
                 <div class="card-body">
                     <div class="post">
                         <div class="row">
-                            <div class="col-sm-2"><img class="profile-img"
+                            <div class="col-sm-3 col-md-2"><img class="profile-img"
                                     src="{% static 'images/user-placeholder.png'%}" alt=""
                                     style="height:50px;width:50px">
                             </div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-9 col-md-10">
                                 <div><a class="post-user">{{ post.user.username}}</a></div>
                                 <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
                                 {% if post.user == user%}
                                 <a href="{% url 'post_edit' pk=post.pk %}">Edit</a>
-                                <a href="{% url 'profile' pk=post.pk %}" class="delete">Delete</a>
+                                <a href="{% url 'post_delete' pk=post.pk %}" class="delete">Delete</a>
                                 {% endif %}
                             </div>
                         </div>

@@ -1,12 +1,13 @@
 from django import forms
 from .models import Image
-
+from django.utils.translation import ugettext_lazy as _
 
 class ImageForm(forms.Form):
     class Meta:
         model = Image
         fields = ['upload', ]
-    # def __init__(self, *args, **kwargs):
-    #     self.user = kwargs.pop('user')
-    #     super(ImageForm, self).__init__(*args, **kwargs)
-    
+        labels = {
+            'upload':_('choose image')
+        }
+
+       

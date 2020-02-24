@@ -52,3 +52,38 @@ footer {
   background-color: #FFF3C4;
   margin-bottom: 0px;
 }
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) { 
+  .form-inline > input[type=search] {
+    width:80%;
+    /* height:80vw; */
+    border:none;
+    padding:0 0.75rem;
+    background-color: transparent;
+  
+  }
+  .search-btn {
+    width:3vw;
+    border:none;
+    padding: 0;
+    float: right;
+    margin: 0;
+  }
+  .search-bar {
+    background-color: white;
+    height:30px;
+    margin:auto 0;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 768px) { 
+  .form-inline > input[type=search] {
+    width:80%;
+    /* height:80vw; */
+    border:none;
+    padding:0 0.75rem;
+  }
+}

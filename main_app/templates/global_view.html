@@ -14,21 +14,22 @@
     <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit"><ion-icon class="search-icon" name="search-outline"></ion-icon></button>
 </form>
 </div>
-<li class="nav-item">
-          <a class="nav-link" href="{% url 'global_view'%}">Global</a>
-        </li>
+
 {% endblock nav_left%}
 {% block nav_right%}
 
 {% if user.is_authenticated %}
 {% comment %} <img href="{{ image.upload.url }}"> {% endcomment %}
-
+<li class="nav-item">
+          <a class="nav-link" href="{% url 'global_view'%}">Global</a>
+        </li>
 <li class="nav-item">
     <a class="nav-link" href="{% url 'profile' pk=user.pk%}">Profile</a>
 </li>
 <li class="nav-item">
     <a class="nav-link" href="{% url 'logout'%}">Log Out</a>
 </li>
+
 {% else %}
 <li class="nav-item">
     <a class="nav-link" href="{% url 'login'%}">Log In</a>
@@ -39,36 +40,21 @@
 {% endif %}
 {% endblock nav_right%}
 {% block content %}
-<!-- <div class="container mb-2 mt-4">
-    <div class="row">
-        <div class="col-sm-3">
-        
-        </div>
-        <div class="col-sm-6">
-            {% if query %}
-                <h2 class="text-center">Search Results for: "{{ query }}"</h2>
-            {% endif %}
-        </div>
-        <div class="col-sm-3">
-
-        </div>
-    </div>
-</div> -->
 <div class="box1">
     <div class="container">
 	{% for post in posts %}
 	
   <div class="row">
-            <div class="col-sm-3"></div>
-            <div class="card col-sm-6" style="width: 18rem;">
+            <div class="col-sm-3 col-md-3 "></div>
+            <div class="card col-sm-6 col-md-6">
                 <div class="card-body">
                     <div class="post">
                         <div class="row">
-                            <div class="col-sm-2"><img class="profile-img"
+                            <div class="col-sm-3 col-md-2"><img class="profile-img"
                                     src="{% static 'images/user-placeholder.png'%}" alt=""
                                     style="height:50px;width:50px">
                             </div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-9 col-md-10">
                                 <div><a class="post-user">{{ post.user.username}}</a></div>
                                 <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
                                 {% if post.user == user%}
@@ -80,6 +66,7 @@
                         <div class="card-title"><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></div>
                         <p class="card-text">
                             {{post.context}}</p>
+                        {% if user.is_authenticated %}
                         <div class="mb-2">
                             <a href="#" class="card-link like-btn" data-id="{{ post.id }}">Like <ion-icon name="heart"
                                     style="position:relative;top:3px;" data-id="{{ post.id }}">
@@ -88,6 +75,16 @@
                                 <ion-icon name="chatbox-outline" style="position:relative;top:3px;">
                                 </ion-icon></a>
                         </div>
+                        {% else %}
+                        <div class="mb-2">
+                            <a href="#" class="card-link">Like <ion-icon name="heart"
+                                    style="position:relative;top:3px;">
+                                </ion-icon>{{post.likes}}</a>
+                            <a href="{% url 'login' %}" class="card-link">comment
+                                <ion-icon name="chatbox-outline" style="position:relative;top:3px;">
+                                </ion-icon></a>
+                        </div>
+                        {% endif%}
                     </div>
                     <!-- here -->
                     {{ post.body | linebreaks }}
@@ -109,7 +106,7 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="col-sm-3"></div>
+            <div class="col-sm-3 col-md-3"></div>
         </div>
     
  

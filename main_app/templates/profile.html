@@ -41,38 +41,37 @@
 <div class="box1">
     <div class="container">
         <div class="row">
-            <div class="col-sm-4">
-                <div>
+           
+                <div class="col-sm-4 col-md-4 img-box">
                     <div class="profile-img-box">
 
                         {% for image in images %}
                         <a href="{{ image.upload.url }}" target="_blank"><img class="img-thumbnail profile-img"
                                 src="{{ image.upload.url }}"></a>
                         {% endfor%}
-
                     </div>
                 </div>
-
-
-            </div>
-            <div class="col-sm-8">
+                <div class="col-sm-2 col-md-4">
+                        <h2 class="user-name">{{ user.username }}</h2>
+                        <!-- <span>{{ user.email }}</span> -->
+                        <p class="follow-num">Followers: {{ follower_count }}</p>
+                </div>
+                
+                <div class="col-sm-6 col-md-4 btn-con">
+                    
 
                 {% if current_user %}
-                <h2 class="user-name">{{ user.username }}</h2>
-                <!-- <span>{{ user.email }}</span> -->
-                <p>Followers: {{ follower_count }}</p>
-                <button type="button" class="btn btn-light mt-5 float-right profile-edit"
+                
+                <button type="button" class="btn btn-light profile-edit"
                     onclick="window.location.href=`{% url 'profile_edit' pk=user.pk %}`">
                     <ion-icon name="create-outline"></ion-icon>Edit Profile
                 </button>
-                <button type="button" class="btn btn-light mt-5 float-right profile-edit"
+                <button type="button" class="btn btn-light profile-edit"
                     onclick="window.location.href=`{% url 'upload' %}`">
                     <ion-icon name="create-outline"></ion-icon>Edit Profile Image
                 </button>
                 {% else %}
-                <h2 class="user-name">{{ user.username }}</h2>
-                <!-- <span>{{ user.email }}</span> -->
-                <p>Followers: {{ follower_count }}</p>
+                
                 {% if following %}
                 <button id="followBtn" type="button" class="btn btn-primary mt-3" style="opacity:0.7;"
                     data-id="{{ user.id }}">Unfollow</button>
@@ -111,13 +110,15 @@
         </ul>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-posts" role="tabpanel" aria-labelledby="pills-posts-tab">
-                <h3>Personal Post<button id="create-btn" type="button" class="btn btn-light" onclick="window.location.href=`{% url 'post_create' %}`"><ion-icon name="create-outline"></ion-icon>Create Post
+                <h3>Personal Post<button id="create-btn" type="button" class="btn btn-light"
+                        onclick="window.location.href=`{% url 'post_create' %}`">
+                        <ion-icon name="create-outline"></ion-icon>Create Post
                     </button></h3>
                 <div class="posts">
                     {% for post in posts%}
-                    <div class="row">
-                        <div class="col-sm-3"></div>
-                        <div class="card col-sm-6" style="width: 18rem;">
+                    <div class="row ">
+                        <div class="col-sm-1 col-md-2 col-lg-3"></div>
+                        <div class="col-sm-10 card col-md-8 col-lg-6">
                             <div class="card-body">
                                 <div class="post">
                                     <div class="row">
@@ -150,13 +151,13 @@
                                 <!-- here -->
                                 {{ post.body | linebreaks }}
                                 {% for comment in comments %}
-                                <div class="row mb-3">
+                                <div class="row">
                                     <div>
-                                        <div class=" row text-nowrap">
-                                            <div class="pl-4 pr-0"> <a href="{% url 'profile' pk=comment.user.pk %}"
-                                                    class="mb-0 font-weight-normal">{{comment.user.username}}</a></div>
+                                        <div class="row">
+                                            <div class=" pr-0"> <a href="{% url 'profile' pk=comment.user.pk %}"
+                                                    class="mb-0 font-weight-normal text-truncate  ">{{comment.user.username}}</a></div>
                                             <div class="">
-                                                <p class="comment text-truncate">{{comment.context}}</p>
+                                                <p class="comment text-truncate com-con">{{comment.context}}</p>
                                             </div>
                                         </div>
                                         <div class="card-subtitle text-muted font-weight-normal comment-date">
@@ -167,22 +168,24 @@
                                 {% endfor %}
                             </div>
                         </div>
-                        <div class="col-sm-3"></div>
+                        <div class="col-sm-1 col-md-2 col-lg-3"></div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
             {% if current_user %}
             <div class="tab-pane fade" id="pills-act-feed" role="tabpanel" aria-labelledby="pills-act-feed-tab">
-                <h3>Activity Feed<button id="create-btn" type="button" class="btn btn-light" onclick="window.location.href=`{% url 'post_create' %}`"><ion-icon name="create-outline"></ion-icon>Create Post
-                </button></h3>
+                <h3>Activity Feed<button id="create-btn" type="button" class="btn btn-light"
+                        onclick="window.location.href=`{% url 'post_create' %}`">
+                        <ion-icon name="create-outline"></ion-icon>Create Post
+                    </button></h3>
                 <div class="act-feed">
-                    
+
                     <!-- need to generate based on post commented, following post and post likes  -->
                     {% for post in activity %}
                     <div class="row">
-                        <div class="col-sm-3"></div>
-                        <div class="card col-sm-6" style="width: 18rem;">
+                        <div class="col-sm-1 col-md-2 col-lg-3"></div>
+                        <div class="col-sm-10 card col-md-8 col-lg-6" >
                             <div class="card-body">
                                 <div class="post">
                                     <div class="row">
@@ -210,7 +213,7 @@
                                         <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment
                                             <ion-icon name="chatbox-outline" style="position:relative;top:3px;">
                                             </ion-icon></a>
-                                
+
                                     </div>
                                 </div>
                                 <!-- here -->
@@ -222,7 +225,7 @@
                                             <div class="pl-4 pr-0"> <a href="{% url 'profile' pk=comment.user.pk %}"
                                                     class="mb-0 font-weight-normal">{{comment.user.username}}</a></div>
                                             <div class="">
-                                                <p class="comment text-truncate">{{comment.context}}</p>
+                                                <p class="comment text-truncate com-con">{{comment.context}}</p>
                                             </div>
                                         </div>
                                         <div class="card-subtitle text-muted font-weight-normal comment-date">
@@ -233,7 +236,7 @@
                                 {% endfor %}
                             </div>
                         </div>
-                        <div class="col-sm-3"></div>
+                        <div class="col-sm-1 col-md-2 col-lg-3"></div>
                     </div>
                     {% endfor %}
                 </div>
@@ -241,37 +244,44 @@
         {% endif %}
         <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
             {% if current_user %}
-                <h3>Following</h3>
-                <div id="followers" class="row">
+            <h3>Following</h3>
+            <div id="followers" class="row">
                 <div class="col-sm-2"></div>
                 <div class="col-sm-8">
                     {% if followers %}
-                        {% for f in followers %}
-                            <a href="{% url 'profile' pk=f.follow_user_id.id %}">{{ f.follow_user_id }}</a>
-                        {% endfor %}
+                    {% for f in followers %}
+                    <div class="follow"> <a href="{% url 'profile' pk=f.follow_user_id.id %}">{{ f.follow_user_id }}</a></div>
+                   
+                    {% endfor %}
                     {% else %}
-                        <div><p>You haven't follow anyone</p></div>
-                    {% endif %}
+                    <div>
+                        <p>no followers </p>
                     </div>
-                    <div class="col-sm-2"></div>
+                    {% endif %}
                 </div>
+                <div class="col-sm-2"></div>
+            </div>
             {% else %}
-                <h3>Followers</h3>
-                <div id="followers" class="row">
+            <h3>Followers</h3>
+            <div id="followers" class="row">
                 <div class="col-sm-2"></div>
                 <div class="col-sm-8">
                     {% if followers %}
-                        {% for f in followers %}
-                            <div><a href="{% url 'profile' pk=f.user_id.id %}">{{ f.user_id }}</a></div>
-                        {% endfor %}
+                    {% for f in followers %}
+                    <div class="follow"><a href="{% url 'profile' pk=f.user_id.id %}">{{ f.user_id }}</a></div>
+                    {% endfor %}
                     {% else %}
-                        <div><p>You don't have any followers</p></div>
-                    {% endif %}
+                    <div>
+                        <p>You don't have any followers</p>
                     </div>
-                    <div class="col-sm-2"></div>
+                    {% endif %}
                 </div>
+                <div class="col-sm-2"></div>
+            </div>
             {% endif %}
         </div>
     </div>
+</div>
+</div>
 </div>
 {% endblock %}
