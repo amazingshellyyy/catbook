@@ -76,11 +76,6 @@ def profile(request, pk=None):
 	comments = Comment.objects.filter()
 	follower_count = FollowingUser.objects.filter(follow_user_id = user).count()
 	images = Image.objects.filter(user = user)
-	
-
-	# ========== Changes from Submaster ======
-	# return render(request, 'profile.html', {'user':user, 'posts' : posts, 'comments': comments})
-
 
 	activity = FollowingUser.activity_following_users(pk)
 	follower_count = FollowingUser.objects.filter(follow_user_id = user).count()
