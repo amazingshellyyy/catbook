@@ -13,7 +13,7 @@
     <form method="POST" class="form-inline my-2 my-lg-0">
         {% csrf_token %}
         <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit">
+        <button class="btn btn-outline-success  my-sm-0 search-btn" type="submit">
             <ion-icon class="search-icon" name="search-outline"></ion-icon>
         </button>
     </form>
@@ -122,9 +122,10 @@
                             <div class="card-body">
                                 <div class="post">
                                     <div class="row">
-                                        <div class="col-sm-2"><img class="profile-img"
-                                                src="{% static 'images/user-placeholder.png'%}" alt=""
-                                                style="height:50px;width:50px">
+                                        <div class="col-sm-2">  {% for image in images %}
+                                            <a href="{{ image.upload.url }}" target="_blank"><img class="img-thumbnail"
+                                                    src="{{ image.upload.url }}" style="border-radius: 50%;" ></a>
+                                            {% endfor%}
                                         </div>
                                         <div class="col-sm-10">
                                             <div><a class="post-user">{{ user.username}}</a></div>
@@ -194,7 +195,7 @@
                                                 style="height:50px;width:50px">
                                         </div>
                                         <div class="col-sm-10">
-                                            <div><a class="post-user">{{ user.username}}</a></div>
+                                            <div><a class="post-user">{{ post.user.username}}</a></div>
                                             <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
                                             {% comment %} {% if post.user == user %}
                                             <a href="{% url 'post_edit' pk=post.pk %}">Edit</a>
@@ -207,9 +208,9 @@
                                     <p class="card-text">
                                         {{post.context}}</p>
                                     <div class="mb-2">
-                                        <a href="#" class="card-link">Like <ion-icon name="heart"
-                                                style="position:relative;top:3px;">
-                                            </ion-icon>{{post.likes}}</a>
+                                        <a href="#" class="card-link like-btn" data-id="{{ post.id }}">Like <ion-icon name="heart"
+                                            style="position:relative;top:3px;" data-id="{{ post.id }}">
+                                        </ion-icon>{{post.likes}}</a>
                                         <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment
                                             <ion-icon name="chatbox-outline" style="position:relative;top:3px;">
                                             </ion-icon></a>
@@ -219,11 +220,11 @@
                                 <!-- here -->
                                 {{ post.body | linebreaks }}
                                 {% for comment in comments %}
-                                <div class="row mb-3 ">
+                                <div class="row">
                                     <div>
-                                        <div class="row text-nowrap">
-                                            <div class="pl-4 pr-0"> <a href="{% url 'profile' pk=comment.user.pk %}"
-                                                    class="mb-0 font-weight-normal">{{comment.user.username}}</a></div>
+                                        <div class="row">
+                                            <div class=" pr-0"> <a href="{% url 'profile' pk=comment.user.pk %}"
+                                                    class="mb-0 font-weight-normal text-truncate  ">{{comment.user.username}}</a></div>
                                             <div class="">
                                                 <p class="comment text-truncate com-con">{{comment.context}}</p>
                                             </div>
