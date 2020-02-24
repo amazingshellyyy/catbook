@@ -27,15 +27,24 @@ print(BASE_DIR)
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '4kt@3y_r^o7kh39k%0qh63l99kievir5rf2kyx9h1#g=u5!shb'
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = '4kt@3y_r^o7kh39k%0qh63l99kievir5rf2kyx9h1#g=u5!shb'
+# SECRET_KEY = env('SECRET_KEY')
 # print (SECRET_KEY)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 TEST = env('TEST')
 print(TEST)
 
-ALLOWED_HOSTS = []
+DEBUG_PROPAGATE_EXCEPTIONS = True
+
+hosts = [
+    'localhost',
+    '127.0.0.1'
+]
+
+print(hosts)
+
+ALLOWED_HOSTS = hosts
 
 
 # Application definition

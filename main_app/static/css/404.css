@@ -1,0 +1,18 @@
+main {
+	height: 80vh;
+	width: 100vw;
+	background: linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.5)), url('https://images.unsplash.com/photo-1559596116-2422a28aa0fe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80');
+	background-size: cover;
+	background-repeat: no-repeat;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+main div {
+	background-color: rgba(255, 255, 255, 0.92);
+	padding: 20px;
+	border-radius: 2%;
+}
