@@ -33,6 +33,10 @@
 	padding: 30px;
 }
 
+p {
+	margin-top: 10px;
+}
+
 @media (max-width: 576px) {
 	img {
 		width: 20px;
