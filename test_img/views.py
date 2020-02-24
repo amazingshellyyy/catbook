@@ -19,6 +19,7 @@ class ImageCreateView(CreateView):
     success_url = reverse_lazy('upload')
     def form_valid(self, form):
         form.instance.user = self.request.user
+        
         print('upload success!')
         return super(ImageCreateView, self).form_valid(form)
         # return redirect('profile')
