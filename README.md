@@ -44,9 +44,8 @@ If the users click on their own post, they will also be able to edit and delete.
 * A post must have a user (One to One)
 
 ## Wireframes
-
-
-
+![catbook_wf1 (1)](https://user-images.githubusercontent.com/8944581/75180161-77c8a780-56f0-11ea-91f6-3015e083096d.jpg)
+![catbook_wf2 (1)](https://user-images.githubusercontent.com/8944581/75180167-7b5c2e80-56f0-11ea-9f7e-7a63355a6319.jpg)
 
 ## Data Models
 ![CatBook ERD (3)](https://user-images.githubusercontent.com/9824307/74788969-22137b80-5268-11ea-844c-51df76ad202b.png)
