@@ -137,8 +137,8 @@
                                     <p class="card-text">
                                         {{post.context}}</p>
                                     <div class="mb-2">
-                                        <a href="#" class="card-link">Like <ion-icon name="heart"
-                                                style="position:relative;top:3px;">
+                                        <a href="#" class="card-link like-btn" data-id="{{ post.id }}">Like <ion-icon name="heart"
+                                                style="position:relative;top:3px;" data-id="{{ post.id }}">
                                             </ion-icon>{{post.likes}}</a>
                                         <a href="{% url 'comment_create' pk=post.pk %}" class="card-link">comment
                                             <ion-icon name="chatbox-outline" style="position:relative;top:3px;">
