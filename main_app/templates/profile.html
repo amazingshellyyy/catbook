@@ -6,13 +6,9 @@
 {% block script %}
 <script defer type="text/javascript" src="{% static 'js/profile.js' %}"></script>
 <script defer type="text/javascript" src="{% static 'js/follow.js' %}"></script>
+<script defer type="text/javascript" src="{% static 'js/like.js' %}"></script>
 {% endblock script %}
 {% block nav_left%}
-<li class="nav-item">
-    <a class="nav-link" href="{% url 'global_view'%}">Global</a>
-</li>
-{% endblock nav_left%}
-{% block nav_right%}
 <div class="search-bar form-inline">
     <form method="POST" class="form-inline my-2 my-lg-0">
         {% csrf_token %}
@@ -22,6 +18,12 @@
         </button>
     </form>
 </div>
+{% endblock nav_left%}
+{% block nav_right%}
+
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'global_view'%}">Global</a>
+</li>
 {% if user.is_authenticated %}
 <li class="nav-item">
     <a class="nav-link" href="{% url 'logout'%}">Log Out</a>
@@ -59,11 +61,11 @@
                 <h2 class="user-name">{{ user.username }}</h2>
                 <!-- <span>{{ user.email }}</span> -->
                 <p>Followers: {{ follower_count }}</p>
-                <button type="button" class="btn btn-light mt-5 float-right"
+                <button type="button" class="btn btn-light mt-5 float-right profile-edit"
                     onclick="window.location.href=`{% url 'profile_edit' pk=user.pk %}`">
                     <ion-icon name="create-outline"></ion-icon>Edit Profile
                 </button>
-                <button type="button" class="btn btn-light mt-5 float-right"
+                <button type="button" class="btn btn-light mt-5 float-right profile-edit"
                     onclick="window.location.href=`{% url 'upload' %}`">
                     <ion-icon name="create-outline"></ion-icon>Edit Profile Image
                 </button>
@@ -124,10 +126,10 @@
                                         <div class="col-sm-10">
                                             <div><a class="post-user">{{ user.username}}</a></div>
                                             <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
-                                            {% if post.user == user %}
+                                            {% comment %} {% if post.user == user %}
                                             <a href="{% url 'post_edit' pk=post.pk %}">Edit</a>
-                                            <a href="{% url 'profile' pk=post.pk %}" class="delete">Delete</a>
-                                            {% endif %}
+                                            <a href="{% url 'post_delete' pk=post.pk %}" class="delete">Delete</a>
+                                            {% endif %} {% endcomment %}
                                         </div>
                                     </div>
                                     <div class="card-title"><a
@@ -148,11 +150,11 @@
                                 {% for comment in comments %}
                                 <div class="row mb-3">
                                     <div>
-                                        <div class="comment row text-nowrap">
-                                            <div class=" pr-0"> <a href="{% url 'profile' pk=comment.user.pk %}"
+                                        <div class=" row text-nowrap">
+                                            <div class="pl-4 pr-0"> <a href="{% url 'profile' pk=comment.user.pk %}"
                                                     class="mb-0 font-weight-normal">{{comment.user.username}}</a></div>
                                             <div class="">
-                                                <p class="pl-2 mb-0 text-truncate">{{comment.context}}</p>
+                                                <p class="comment text-truncate">{{comment.context}}</p>
                                             </div>
                                         </div>
                                         <div class="card-subtitle text-muted font-weight-normal comment-date">
@@ -188,10 +190,10 @@
                                         <div class="col-sm-10">
                                             <div><a class="post-user">{{ user.username}}</a></div>
                                             <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
-                                            {% if post.user == user %}
+                                            {% comment %} {% if post.user == user %}
                                             <a href="{% url 'post_edit' pk=post.pk %}">Edit</a>
                                             <a href="{% url 'profile' pk=post.pk %}" class="delete">Delete</a>
-                                            {% endif %}
+                                            {% endif %} {% endcomment %}
                                         </div>
                                     </div>
                                     <div class="card-title"><a
@@ -213,11 +215,11 @@
                                 {% for comment in comments %}
                                 <div class="row mb-3 ">
                                     <div>
-                                        <div class="comment row text-nowrap">
-                                            <div class=" pr-0"> <a href="{% url 'profile' pk=comment.user.pk %}"
+                                        <div class="row text-nowrap">
+                                            <div class="pl-4 pr-0"> <a href="{% url 'profile' pk=comment.user.pk %}"
                                                     class="mb-0 font-weight-normal">{{comment.user.username}}</a></div>
                                             <div class="">
-                                                <p class="pl-2 mb-0 text-truncate">{{comment.context}}</p>
+                                                <p class="comment text-truncate">{{comment.context}}</p>
                                             </div>
                                         </div>
                                         <div class="card-subtitle text-muted font-weight-normal comment-date">
