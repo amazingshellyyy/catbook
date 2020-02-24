@@ -46,3 +46,6 @@ input{
   padding: .5rem .3rem;
  
 }
+.btn-primary:hover {
+    background-color:#F7C948;
+  }

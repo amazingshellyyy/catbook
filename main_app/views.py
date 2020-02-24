@@ -212,23 +212,24 @@ def global_view(request, query = ''):
 			q = form.cleaned_data['query']
 			posts = Post.post_query(q)
 			print(posts)
-
+			comments = Comment.objects.all()
 			# Return users with global_view
 			filtered_users = User.objects.filter(username__icontains = q)
 			print(filtered_users)
-			return render(request, 'global_view.html', {'posts': posts, 'query': q})
+			return render(request, 'global_view.html', {'posts': posts, 'query': q,'comments':comments})
 
 	if (query):
 		posts = Post.post_query(query)
 		print(posts)
+		comments = Comment.objects.all()
 		# Return users with global_view
 		filtered_users = User.objects.filter(username__icontains = query)
 		print(filtered_users)
-		return render(request, 'global_view.html', {'posts': posts, 'query': query })
+		return render(request, 'global_view.html', {'posts': posts, 'query': query,'comments':comments })
 
 	posts = Post.post_relevent()
-
-	return render(request, 'global_view.html', {'posts': posts})
+	comments = Comment.objects.all()
+	return render(request, 'global_view.html', {'posts': posts, 'comments':comments})
 
 @login_required
 def like_post(request, post_id):

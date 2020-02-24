@@ -11,15 +11,15 @@
     <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit"><ion-icon class="search-icon" name="search-outline"></ion-icon></button>
 </form>
 </div>
-<li class="nav-item">
-          <a class="nav-link" href="{% url 'global_view'%}">Global</a>
-        </li>
+
 {% endblock nav_left%}
 {% block nav_right%}
 
 {% if user.is_authenticated %}
 {% comment %} <img href="{{ image.upload.url }}"> {% endcomment %}
-
+<li class="nav-item">
+          <a class="nav-link" href="{% url 'global_view'%}">Global</a>
+        </li>
 <li class="nav-item">
     <a class="nav-link" href="{% url 'profile' pk=user.pk%}">Profile</a>
 </li>
@@ -28,6 +28,9 @@
 </li>
 
 {% else %}
+<li class="nav-item">
+          <a class="nav-link" href="{% url 'global_view'%}">Global</a>
+        </li>
 <li class="nav-item">
     <a class="nav-link" href="{% url 'login'%}">Log In</a>
 </li>
