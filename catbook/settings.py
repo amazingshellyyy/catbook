@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import environ
 import os
 PROJECT_ROOT = environ.Path(__file__)-2
-PROJECT_ROOT.file(".env3")
-environ.Env.read_env(PROJECT_ROOT(".env3"))
+PROJECT_ROOT.file(".env/.env3")
+environ.Env.read_env(PROJECT_ROOT(".env/.env3"))
 # environ.Env.read_env()
 env = environ.Env(
     # set casting, default value
