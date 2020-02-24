@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView 
 from django.urls import reverse_lazy
-from .models import Image, ProfileImage
+from .models import Image
 from .forms import ImageForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt

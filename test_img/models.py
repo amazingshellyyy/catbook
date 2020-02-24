@@ -13,7 +13,3 @@ class Image(models.Model):
         return self.upload.name
     # def get_absolute_url(self):
     #     return reverse('profile', args=[self.user.id])
-
-class ProfileImage(models.Model):
-    image_url = models.CharField(max_length=700)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name= 'profile_image')
