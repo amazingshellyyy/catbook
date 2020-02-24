@@ -8,7 +8,4 @@ urlpatterns = [
     path('<int:pk>/edit', views.profile_edit, name='profile_edit'),
     path('', TemplateView.as_view(template_name='social_app/index.html')),
     url(r'^', include('allauth.urls')),
-    path('signup/', views.signup, name='signup'),
-    path('login/', views.login, name='login'),
-    path('logout/', views.logout, name='logout'),
 ]
