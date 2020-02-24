@@ -169,7 +169,7 @@
                 <div id="followers">
                     {% if followers %}
                         {% for f in followers %}
-                            <div><a href="{% url 'profile' pk=f.user_id.id %}">{{ f.follow_user_id }}</a></div>
+                            <div><a href="{% url 'profile' pk=f.follow_user_id.id %}">{{ f.follow_user_id }}</a></div>
                         {% endfor %}
                     {% else %}
                         <div><p>0</p></div>
