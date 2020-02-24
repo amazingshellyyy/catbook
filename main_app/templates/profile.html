@@ -164,16 +164,29 @@
             </div>
         </div>
         <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
-            <h3>Followers</h3>
-            <div id="followers">
-            {% if followers %}
-                {% for f in followers %}
-                    <div><a href="{% url 'profile' pk=f.user_id.id %}">{{ f.user_id }}</a></div>
-                {% endfor %}
+            {% if current_user %}
+                <h3>Following</h3>
+                <div id="followers">
+                    {% if followers %}
+                        {% for f in followers %}
+                            <div><a href="{% url 'profile' pk=f.follow_user_id.id %}">{{ f.follow_user_id }}</a></div>
+                        {% endfor %}
+                    {% else %}
+                        <div><p>0</p></div>
+                    {% endif %}
+                    </div>
             {% else %}
-                <div><p>0</p></div>
+                <h3>Followers</h3>
+                <div id="followers">
+                    {% if followers %}
+                        {% for f in followers %}
+                            <div><a href="{% url 'profile' pk=f.user_id.id %}">{{ f.user_id }}</a></div>
+                        {% endfor %}
+                    {% else %}
+                        <div><p>0</p></div>
+                    {% endif %}
+                    </div>
             {% endif %}
-            </div>
         </div>
     </div>
 </div>
