@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% load static%}
+{% block styles%}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock styles%}
+{% block nav_left%}
+<div class="search-bar form-inline">
+<form method="POST" class="form-inline my-2 my-lg-0">
+    {% csrf_token %}
+    <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit"><ion-icon class="search-icon" name="search-outline"></ion-icon></button>
+</form>
+</div>
+
+{% endblock nav_left%}
+{% block nav_right%}
+
+{% if user.is_authenticated %}
+{% comment %} <img href="{{ image.upload.url }}"> {% endcomment %}
+<li class="nav-item">
+          <a class="nav-link" href="{% url 'global_view'%}">Global</a>
+        </li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'profile' pk=user.pk%}">Profile</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout'%}">Log Out</a>
+</li>
+
+{% else %}
+<li class="nav-item">
+          <a class="nav-link" href="{% url 'global_view'%}">Global</a>
+        </li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'login'%}">Log In</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'signup'%}">Sign Up</a>
+</li>
+{% endif %}
+{% endblock nav_right%}
+{% block content %}
+{% if error %}
+<p style="background-color: firebrick;">{{error}}</p>
+{% endif %}
+<div class="box1">
+  <div class="container text-center">
+    <div class="row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-6 inner-box">
+          <form action="{% url 'signup' %}" method="POST">
+            {% csrf_token %}
+            <p>
+              <input type="text" name="username" maxlength="25" minlength="2" required placeholder="Username">
+            </p>
+            <p>
+              <input type="email" name="email" maxlength="25" minlength="2" required placeholder="Email">
+            </p>
+           
+            <p>
+              <input type="password" name="password" maxlength="25" minlength="4" required placeholder="Password">
+            </p>
+            <p>
+              <input type="password" name="password2" maxlength="25" minlength="4" required placeholder="Enter your password again">
+            </p>
+            <button class="signup-btn" type="submit">Sign up</button>
+
+            <hr>
+            {% comment %} google sign in button here, the route is wrong, need change {% endcomment %}
+            <a href="{% provider_login_url 'google' %}"><img id="signInButton" src="http://www.setyourowntests.com/_/rsrc/1468869481521/help/accounts/btn_google_signin_dark_normal_web%402x.png" style="width:60%;"></a>
+            <div><a href="{% url 'login' %}">Already have an account? Log in here!</a></div>
+          </form>
+        
+      </div>
+      <div class="col-sm-6"></div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

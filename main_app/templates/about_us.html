@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/about.css' %}">
+{% endblock styles %}
+{% block nav_left%}
+<div class="search-bar form-inline">
+    <form method="POST" class="form-inline my-2 my-lg-0">
+        {% csrf_token %}
+        <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit">
+            <ion-icon class="search-icon" name="search-outline"></ion-icon>
+        </button>
+    </form>
+</div>
+
+{% endblock nav_left%}
+{% block nav_right%}
+
+{% if user.is_authenticated %}
+{% comment %} <img href="{{ image.upload.url }}"> {% endcomment %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'global_view'%}">Global</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'profile' pk=user.pk%}">Profile</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout'%}">Log Out</a>
+</li>
+
+{% else %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'global_view'%}">Global</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'login'%}">Log In</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'signup'%}">Sign Up</a>
+</li>
+{% endif %}
+{% endblock nav_right%}
+{% block content %}
+<div class="hero">
+    <div class="container m-0">
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-6 heading">
+                <h1>ABOUT CATBOOK</h1>
+                <h5>who we are</h5>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box1">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 content text-center">
+                <img class="img-thumbnail" src="{% static 'images/shelly.jpeg'%}" alt="">
+                <h3 class="text-center">Shelly Cheng</h3>
+                <a href="https://github.com/amazingshellyyy" class="btn btn-outline-secondary" id="gitbutton"
+                    role="button" aria-pressed="true">@amazingshellyyy</a>
+                <p class="text-left">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio vitae impedit ipsa illo incidunt ipsam
+                    facere, cupiditate corrupti totam tenetur ea in voluptatibus, ex deleniti at placeat libero aperiam
+                    eius.</p>
+            </div>
+            <div class="col-sm-4 content text-center">
+                <img class="img-thumbnail" src="{% static 'images/Kenneth.jpeg'%}" alt="">
+                <h3 class="text-center">Kenneth Surban</h3>
+                <a href="https://github.com/ksrawr" class="btn btn-outline-secondary" id="gitbutton" role="button"
+                    aria-pressed="true">@ksrawr</a>
+                <p class="text-left">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio vitae impedit ipsa illo incidunt ipsam
+                    facere, cupiditate corrupti totam tenetur ea in voluptatibus, ex deleniti at placeat libero aperiam
+                    eius.</p>
+            </div>
+            <div class="col-sm-4 content text-center">
+                <img class="img-thumbnail" src="{% static 'images/John.jpeg'%}" alt="">
+                <h3 class="text-center">John Roman</h3>
+                <a href="https://github.com/johnofhyrule" class="btn btn-outline-secondary" id="gitbutton"
+                    role="button" aria-pressed="true">@johnofhyrule</a>
+                <p class="text-left">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio vitae impedit ipsa illo incidunt ipsam
+                    facere, cupiditate corrupti totam tenetur ea in voluptatibus, ex deleniti at placeat libero aperiam
+                    eius.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

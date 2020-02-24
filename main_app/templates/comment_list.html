@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<ul class="comments">
+    <h2>
+        Comments 
+        <a href="{% url 'comment_create' %}">(+)</a>
+    </h2>
+    {% for comment in comments %}
+        <li class="track">
+            <a href="{% url 'comment_detail' pk=song.pk %}">
+                {{ comment.context }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/image_form.css' %}">
+{% endblock styles %}
+{% block script %}
+<script type="text/javascript" src="{% static 'js/image.js' %}" defer></script>
+{% endblock script %}
+{% block content %}
+<div class="box1">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-6">
+     
+        <h2 style="display:none;" id="userId">{{user.id}}</h2>
+        <h3>Please upload profile image that are 1:1</h3>
+      
+       <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button class="btn btn-outline-secondary" type="submit">Upload</button>
+        </form>
+      
+        <table>
+          <h2></h2>
+            {% for image in images %}
+              <tr>
+                <td><a href="{{ image.upload.url }}" target="_blank">{{ image.upload.name }}</a></td> 
+                <img id="profileImg" src="{{ image.upload.url }}" style="width:150px;height:150px;">
+              </tr>
+             {% empty %}
+               <tr>
+                <td colspan="3">No data.</td>
+              </tr> 
+            {% endfor %}
+        </table>
+      
+        <button id="save" type="button" class="btn btn-primary">Save Image
+      </button> 
+        <button id="back" type="button" class="btn btn-primary" style="display:none;" onclick="location.href='{% url 'profile' pk=user.pk %}';">back to Profile
+      </button>
+      </div>
+      <div class="col-sm-3"></div>
+  
+</div>
+</div> 
+</div>
+{% endblock %}

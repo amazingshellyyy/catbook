@@ -1,0 +1,29 @@
+.box1 {
+    background-color: lightgray;
+    background-size: cover;
+    background-repeat: no-repeat; 
+    width: 100vw;
+    height: 50vh;
+    background-position: center;
+}
+.box2 {
+    background-color: white;
+    background-size: cover;
+    background-repeat: no-repeat; 
+    width: 100vw;
+    height: 50vh;
+    background-position: center;
+}
+.box3 {
+    background-color: lightgray;
+    background-size: cover;
+    background-repeat: no-repeat; 
+    width: 100vw;
+    height: 50vh;
+    background-position: center;
+}
+
+#gitbutton {
+    background-color: #F7C948;
+    outline: none;
+}
