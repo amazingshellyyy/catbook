@@ -1,18 +1,50 @@
 .profile-img-box {
   position:relative;
   bottom:-2.5rem;
+  width:175px;
+  height:175px;
+  margin-left:2rem;
+  border-radius: 50%;
+  background-image: url('../images/user-placeholder.png');
+  /* background-color: #CB6E17; */
+  
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 .profile-img {
-  width:200px;
-  height:200px;
+  width:180px;
+  height:180px;
  border-radius: 50%;
 }
-
-.box1 {
-  padding-top:25px;
-  background-color: #FFF3C4;
+.user-name {
+  font-size: 1.5rem;
+  font-weight:700;
+}
+.box1, .box2 {
+  /* padding-top:25px; */
+  /* background-color: #FFF3C4; */
   /* margin-bottom:15vh; */
+  background-color: #e9ebee;
   
+}
+.box2 {
+  min-height: 80vh;
+}
+.box1 > .container, .box2 > .container {
+  background-color: white;
+  padding:0;
+  
+}
+.box1 >.container {
+  padding-top:2.5rem;
+  background-color: #fffbea;
+}
+.box2 > .container {
+  padding-bottom: 10vh;
+}
+#followBtn {
+  background-color: #F0B429;
+  border:none;
 }
 
 .nav-pills .nav-link {
@@ -35,3 +67,41 @@
   width: 1.5rem;
   color:#CB6E17;
 }
+
+.tab-pane > h3 {
+  /* text-align: center; */
+  margin-left: 250px;
+}
+ #create-btn {
+   margin-left: 1rem;
+ }
+
+.post {
+  border-bottom:2px solid #e9ebee;
+}
+.card-title {
+  margin:5px 0;
+  font-size: 1.2rem;
+}
+ .post-user {
+   margin-bottom: 0;
+   font-size: 1.3rem;
+   font-weight:700;
+ }
+
+ .comment {
+   margin-left: 1rem;
+   padding-left: 1rem;
+   padding-right: 1rem;
+   background-color: #e9ebee;
+   border-radius:1rem;
+   margin-bottom: 0;
+ }
+
+ .comment-date {
+   padding-top: .3rem;
+   margin-left: 1rem;
+   font-size: .8rem;
+   opacity: .7;
+   
+ }
