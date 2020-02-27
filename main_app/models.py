@@ -26,6 +26,8 @@ class Post(models.Model):
         
         return filtered_posts
 
+    def __str__(self):
+        return self.context
 
 class Comment(models.Model):
     context = models.CharField(max_length = 400)

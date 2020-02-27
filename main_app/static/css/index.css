@@ -11,7 +11,7 @@ p{
   font-size: 18px;
 }
 .join-btn {
-  background-color:#CB6E17;
+  background-color:#F0B429;
   border: none;
   margin-bottom: 5vh;
 }
@@ -73,6 +73,9 @@ p{
 
 /* Small devices (landscape phones, 576px and up) */
 @media (max-width: 576px) { 
+  .box1 {
+    max-height: 50vh;
+  }
   .content {
     background-color: rgba(255,255,255,.5);
     margin-top: 0;
@@ -87,16 +90,27 @@ p{
     height: 100%;
   }
   .content > h3 {
-   border-bottom: #CB6E17 5px solid;
+   border-bottom: #F0B429 5px solid;
   }
+.title {
+    padding-top: 15vh;
+    font-family: 'Lato', sans-serif;
+}
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (max-width: 768px) { 
+  .box1 {
+    max-height: 50vh;
+  }
   .content {
     background-color: rgba(255,255,255,.5);
     margin-top: 0;
     margin-bottom: 0;
     padding: 30px;
   }
+  .title {
+    padding-top: 15vh;
+    font-family: 'Lato', sans-serif;
+}
 }

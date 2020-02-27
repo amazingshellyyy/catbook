@@ -1,0 +1,66 @@
+.box1 {
+  min-height: 90vh;
+  padding-top: 15vh;
+}
+.form-section{
+  width: max-content;
+  margin: 2em auto;
+  color: black;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+.form-section form {
+  width: 100%;
+}
+
+.form-section p {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.btn-primary, button{
+
+  border: none;
+  border-radius: 5%;
+  font-size: 1em;
+  /* float: right; */
+  
+background-color: #F0B429;
+color:white;
+padding: .5rem .3rem;
+
+}
+
+#save, #back {
+  float:right;
+  margin-bottom: 30px;
+}
+
+label {
+  display: none;
+}
+input {
+  color: #6c757d;
+  border-color: #6c757d;
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}

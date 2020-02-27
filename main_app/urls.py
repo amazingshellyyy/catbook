@@ -1,8 +1,10 @@
 from django.urls import path, re_path, include
 from . import views
+from django.test import SimpleTestCase, override_settings
 
 urlpatterns = [
 	path('', views.index, name='index'),
+	path('about/', views.about_us, name = 'about_us'),
 	path('<int:pk>/', views.profile, name = 'profile'),
 	path('posts/new', views.post_create, name = 'post_create'),
 	path('posts/<int:pk>', views.post_detail, name = 'post_detail'),
@@ -19,4 +21,5 @@ urlpatterns = [
 	])),
 	path('like_post/<int:post_id>/', views.like_post, name="like_post"),
 	path('follow_user/<int:f_user_id>/', views.follow_user, name="follow_user"),
+	path('get_followers/<int:pk>/', views.get_followers, name="get_followers"),
 ]

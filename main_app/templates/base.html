@@ -11,14 +11,19 @@
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   {% block styles %}
   {% endblock styles %}
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
   {% block script %}
   {% endblock script %}
   <title>CatBook | Worldwide Cat Social Network</title>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">CatBook</a>
+  <nav class="navbar navbar-expand-lg  navbar-light nav-custom">
+  <div class="container">
+    <a class="navbar-brand logo" href="{% url 'index'%}"><img src="{% static 'images/c-white-2.svg'%}"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -26,32 +31,40 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#">About Us</a>
-        </li>
+      {% block nav_left%}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'global_view' %}">Home</a>
+      </li>
+      {% endblock nav_left%}
 
       </ul>
 
       <ul class="navbar-nav ml-auto">
-        <form method="POST" class="form-inline my-2 my-lg-0 mr-2">
-          {% csrf_token %}
-          <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit">Search</button>
-        </form>
-        {% if user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="/accounts/logout">Log Out</a>
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="/accounts/login">Log In</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/accounts/register">Sign Up</a>
-        </li>
-        {% endif %}
+      {% block nav_right %}
+      <form method="POST" class="form-inline my-2 my-lg-0 mr-2">
+        {% csrf_token %}
+        <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit">Search</button>
+      </form>
+      {% if user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile' pk=user.pk %}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout'%}">Log Out</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'login'%}">Log In</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'signup'%}">Sign Up</a>
+      </li>
+      {% endif %}
+        {% endblock nav_right %}
       </ul>
 
+    </div>
     </div>
   </nav>
 
@@ -60,77 +73,6 @@
   <!-- Footer -->
   <footer class="page-footer font-small blue pt-4">
 
-    <!-- Footer Links -->
-    <div class="container-fluid text-center text-md-left">
-
-      <!-- Grid row -->
-      <div class="row">
-
-        <!-- Grid column -->
-        <div class="col-md-6 mt-md-0 mt-3">
-
-          <!-- Content -->
-          <h5 class="text-uppercase">Footer Content</h5>
-          <p>Here you can use rows and columns to organize your footer content.</p>
-
-        </div>
-        <!-- Grid column -->
-
-        <hr class="clearfix w-100 d-md-none pb-3">
-
-        <!-- Grid column -->
-        <div class="col-md-3 mb-md-0 mb-3">
-
-          <!-- Links -->
-          <h5 class="text-uppercase">Links</h5>
-
-          <ul class="list-unstyled">
-            <li>
-              <a href="#!">Link 1</a>
-            </li>
-            <li>
-              <a href="#!">Link 2</a>
-            </li>
-            <li>
-              <a href="#!">Link 3</a>
-            </li>
-            <li>
-              <a href="#!">Link 4</a>
-            </li>
-          </ul>
-
-        </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
-        <div class="col-md-3 mb-md-0 mb-3">
-
-          <!-- Links -->
-          <h5 class="text-uppercase">Links</h5>
-
-          <ul class="list-unstyled">
-            <li>
-              <a href="#!">Link 1</a>
-            </li>
-            <li>
-              <a href="#!">Link 2</a>
-            </li>
-            <li>
-              <a href="#!">Link 3</a>
-            </li>
-            <li>
-              <a href="#!">Link 4</a>
-            </li>
-          </ul>
-
-        </div>
-        <!-- Grid column -->
-
-      </div>
-      <!-- Grid row -->
-
-    </div>
-    <!-- Footer Links -->
 
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">Copyright © 2020 &nbsp CatBook.Inc &nbsp All Right Reserved
@@ -140,9 +82,14 @@
   </footer>
   <!-- Footer -->
   {% comment %} bootstrap {% endcomment %}
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  {% comment %} <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-  </script>
+  </script> {% endcomment %}
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
   </script>
