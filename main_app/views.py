@@ -228,8 +228,13 @@ def global_view(request, query = ''):
 			return render(request, 'global_view.html', {'posts': posts, 'query': q})
 
 	if (query):
-		posts = Post.post_query(query)
-		print(posts)
+
+		posts = Image.objects.raw("select i.upload, p.* from test_img_image i right outer join main_app_post p on (p.user_id = i.user_id) where p.title like '%%" + str(query) + "%%' order by date desc")
+
+		if posts is None:
+			posts = Post.post_query(query)
+			print(posts)
+
 		# comments = Comment.objects.all()
 		# Return users with global_view
 		filtered_users = User.objects.filter(username__icontains = query)
