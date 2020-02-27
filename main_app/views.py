@@ -13,13 +13,11 @@ def load_fake():
 	default_pass = '1234'
 	fake = Faker()
 	
-	# print(fake.date_time_this_month(before_now=True, after_now=False, tzinfo=None))
-
 	if(User.objects.all().count() <= 5):
 		# ***** Create Fake User ************
 		for _ in range(10):
 			user = User.objects.create_user(
-				username = fake.name().split(" ")[0],
+				username = fake.name().split(" ")[ 0],
 				email = fake.email(),
 				password = default_pass,
 			)
@@ -54,7 +52,7 @@ def is_search_requested(request):
 
 # Create your views here.
 def index(request):
-	# load_fake()
+	load_fake()
 	# if user search redirect to global view
 	if(is_search_requested(request)):
 		return redirect('global_view', request.POST['query'])
@@ -71,21 +69,28 @@ def profile(request, pk=None):
 	else:
 		user = User.objects.get(pk=pk)
 	print(user)
-	posts = Post.objects.filter(user=user)
-
-	comments = Comment.objects.filter()
+	comments = Comment.objects.filter(user = request.user)
 	follower_count = FollowingUser.objects.filter(follow_user_id = user).count()
 	images = Image.objects.filter(user = user)
 
 	activity = FollowingUser.activity_following_users(pk)
 	follower_count = FollowingUser.objects.filter(follow_user_id = user).count()
+
+	posts = Image.objects.raw("select i.upload, p.* from test_img_image i right outer join main_app_post p on (p.user_id = i.user_id) where i.user_id=" + str(user.id) + " order by date")	
+
+	if posts is None:
+		posts = Post.objects.filter(user=request.user)
+		print(posts)
+	else:
+		for p in posts:
+			print(p.title)
+
 	# ****Check if current user is not viewing their profile
 	if (request.user.id != pk and request.user != user):
 		current_user = False
 		# ******Check if current user is following this person
 		followers = FollowingUser.objects.filter(follow_user_id = user)
 		following = FollowingUser.objects.filter(user_id = request.user.id, follow_user_id = pk).exists()
-
 		return render(request, 'profile.html', {'user': user, 'posts': posts, 'following': following, 'current_user': current_user, 'followers': followers, 'comments': comments, 'follower_count': follower_count, 'images':images,'activity': activity})
 	else:
 		current_user = True
@@ -206,26 +211,34 @@ def global_view(request, query = ''):
 		form = SearchForm(request.POST)
 		if form.is_valid():
 			q = form.cleaned_data['query']
-			posts = Post.post_query(q)
-			print(posts)
-			comments = Comment.objects.all()
+
+			# print(f"select i.upload, p.* from test_img_image i right outer join main_app_post p on (p.user_id = i.user_id) where p.title like '%" + str(q) + "%' order by date")
+
+			posts = Image.objects.raw("select i.upload, p.* from test_img_image i right outer join main_app_post p on (p.user_id = i.user_id) where p.title like '%%" + str(q) + "%%' order by date desc")
+
+			if posts is None:
+				posts = Post.post_query(q)
+				print(posts)
+
+			# comments = Comment.objects.all()
 			# Return users with global_view
-			filtered_users = User.objects.filter(username__icontains = q)
-			print(filtered_users)
-			return render(request, 'global_view.html', {'posts': posts, 'query': q,'comments':comments})
+			# filtered_users = User.objects.filter(username__icontains = q)
+			# print(filtered_users)
+
+			return render(request, 'global_view.html', {'posts': posts, 'query': q})
 
 	if (query):
 		posts = Post.post_query(query)
 		print(posts)
-		comments = Comment.objects.all()
+		# comments = Comment.objects.all()
 		# Return users with global_view
 		filtered_users = User.objects.filter(username__icontains = query)
 		print(filtered_users)
-		return render(request, 'global_view.html', {'posts': posts, 'query': query,'comments':comments })
+		return render(request, 'global_view.html', {'posts': posts, 'query': query})
 
-	posts = Post.post_relevent()
-	comments = Comment.objects.all()
-	return render(request, 'global_view.html', {'posts': posts, 'comments':comments})
+	posts = Image.objects.raw("select i.upload, p.* from test_img_image i right outer join main_app_post p on (p.user_id = i.user_id) order by date desc")
+	# comments = Comment.objects.all()
+	return render(request, 'global_view.html', {'posts': posts})
 
 @login_required
 def like_post(request, post_id):
